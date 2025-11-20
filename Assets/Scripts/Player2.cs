@@ -18,7 +18,7 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        xSpeed = 2f;
+        xSpeed = 5f;
         // Debug.Log(playerRigidBody.mass);
     }
 
