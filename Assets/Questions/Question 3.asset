@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372169372d26d1442bce6dbd5f45acf9, type: 3}
+  m_Name: Question 3
+  m_EditorClassIdentifier: 
+  question: "Before administering rapid-acting insulin, which patient \nparameter
+    must be confirmed?"
+  answers:
+  - "Patient\u2019s last blood glucose level"
+  - "Patient\u2019s blood pressure"
+  - "Patient\u2019s temperature"
+  - "Patient\u2019s oxygen saturation"
+  correctAnswerIndex: 0
+  feedback:
+  - Glucose check ensures safe insulin dosing and prevents hypoglycemia.
+  - BP does not determine insulin dose; risk of inappropriate administration.
+  - Temperature is unrelated; risk of dosing without metabolic context.
+  - SpO2 does not affect insulin needs; potential hypoglycemia risk.
+  severities: 00000000010000000100000002000000
