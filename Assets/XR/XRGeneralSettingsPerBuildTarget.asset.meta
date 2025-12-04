@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 0de26e86fa11a4fc68ca91bd6683a3de
+=======
+guid: 37171b7997120486b8574f9334ce3cbf
+>>>>>>> PlayerPickup1
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
