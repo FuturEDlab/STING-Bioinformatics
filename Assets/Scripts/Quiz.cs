@@ -33,7 +33,22 @@ public class Quiz : MonoBehaviour
 
                 int capturedIndex = i;
                 btn.onClick.AddListener(() => scenario.OnAnswerSelected(capturedIndex));
+
+                // Ensure button is interactable when a new question shows
+                btn.interactable = true;
             }
+        }
+    }
+
+    // New helper so other scripts can enable/disable answer buttons
+    public void SetButtonsInteractable(bool interactable)
+    {
+        foreach (var btnGo in answerButtons)
+        {
+            if (btnGo == null) continue;
+            Button btn = btnGo.GetComponent<Button>();
+            if (btn != null)
+                btn.interactable = interactable;
         }
     }
 }
