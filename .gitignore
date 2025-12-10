@@ -27,8 +27,13 @@
 # Visual Studio cache directory
 .vs/
 
-# VS Code idea directory
+# VS code idea directory
 .idea/
+
+# Unity burst compiler
+[Bb]urstCache/
+[Bb]urstDebugInformation/
+BurstDebugInformation_DoNotShip/
 
 # Gradle cache directory
 .gradle/
