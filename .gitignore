@@ -33,7 +33,7 @@
 # Unity burst compiler
 [Bb]urstCache/
 [Bb]urstDebugInformation/
-BurstDebugInformation_DoNotShip/
+*BurstDebugInformation_DoNotShip/
 
 # Gradle cache directory
 .gradle/
