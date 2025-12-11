@@ -1,49 +1,65 @@
 using UnityEngine;
-using System.Collections.Generic;
+// using System.Collections.Generic;
+// using System.Linq;
+using BNG;
 
-public class InteractableGroup : Interactable
+public class InteractableGroup: MonoBehaviour
 {
-    [Tooltip("Drag Interactable objects here (children or anywhere in scene).")]
-    [SerializeField] private List<Interactable> members = new List<Interactable>();
+    [SerializeField] private bool applyNeededChildComponents;
 
-    public override void Interact(PlayerInteractor byWhom)
+    private void OnValidate()
     {
-        if (byWhom == null || members == null || members.Count == 0) return;
+        if (Application.isPlaying) return;
 
-      
-        Interactable nearest = null;
-        float bestDistSqr = float.PositiveInfinity;
-        Vector3 who = byWhom.transform.position;
-
-        foreach (var m in members)
-        {
-            if (m == null || !m.isActiveAndEnabled) continue;
-            float d2 = (m.transform.position - who).sqrMagnitude;
-            if (d2 < bestDistSqr)
-            {
-                bestDistSqr = d2;
-                nearest = m;
-            }
-        }
+        Grabbable grabbableObject;
+        Rigidbody rigidObject;
+        if (!applyNeededChildComponents) return;
         
-        if (nearest != null)
-            nearest.Interact(byWhom);
-
-      
-        foreach (var m in members)
+        foreach (Transform child in transform)
         {
-            if (m == null || !m.isActiveAndEnabled || m == nearest) continue;
-
-            if (m is PickupItem pi)
+            if (child.GetComponent<Grabbable>() == null)
             {
-                pi.CollectWithoutHolding();
+                grabbableObject = child.gameObject.AddComponent<Grabbable>();
+                grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
+                grabbableObject.RemoteGrabbable = true;
             }
-            else
+            
+            if (child.GetComponent<Rigidbody>() == null)
             {
-                m.Interact(byWhom);
+                rigidObject = child.gameObject.AddComponent<Rigidbody>();
+                rigidObject.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
+            
+        }
+        // string allNames = string.Join(", ", members.Select(m => m.name));
+        // Debug.Log($"[{allNames}]");
+        //
+        // foreach (Transform child in transform)
+        // {
+        //     // members.Add(child.gameObject);
+        //     Debug.Log(child.gameObject.name);
+        // }
+    }
+    
+    private void Awake()
+    {
+
+        Grabbable grabbableObject;
+        Rigidbody rigidObject;
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Grabbable>() == null)
+            {
+                grabbableObject = child.gameObject.AddComponent<Grabbable>();
+                grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
+                grabbableObject.RemoteGrabbable = true;
+            }
+            
+            if (child.GetComponent<Rigidbody>() == null)
+            {
+                rigidObject = child.gameObject.AddComponent<Rigidbody>();
+                rigidObject.collisionDetectionMode = CollisionDetectionMode.Continuous;
             }
         }
-
-        Debug.Log($"Group interact: {DisplayName} (attached 1, collected {members.Count - 1})");
     }
 }
