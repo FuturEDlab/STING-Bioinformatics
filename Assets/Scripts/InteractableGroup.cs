@@ -6,6 +6,9 @@ using BNG;
 public class InteractableGroup: MonoBehaviour
 {
     [SerializeField] private bool applyNeededChildComponents;
+    [SerializeField] private Material glowMaterial;
+
+    public Material GlowMaterial => glowMaterial;
 
     private void OnValidate()
     {
