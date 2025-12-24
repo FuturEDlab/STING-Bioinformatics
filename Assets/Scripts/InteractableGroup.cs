@@ -8,10 +8,9 @@ public class InteractableGroup: MonoBehaviour
     [SerializeField] private bool applyNeededChildComponents;
     [SerializeField] private bool applyPickUp;
     [SerializeField] private PickUpGroup group;
-    // [SerializeField] private Material glowMaterial;
+    [SerializeField] private Material glowMaterial;
 
-    // public Material GlowMaterial => glowMaterial;
-    
+    public Material GlowMaterial => glowMaterial;
 
     private void OnValidate()
     {
@@ -19,33 +18,37 @@ public class InteractableGroup: MonoBehaviour
         
         if (!applyNeededChildComponents) return;
         
-        if (!applyPickUp) return;
+        // if (!applyPickUp) return;
         
         foreach (Transform child in transform)
         {
-            group.AddDefault_PickUpComponents(child);
+            if (applyPickUp && group != null)
+            {
+                group.AddDefault_PickUpComponents(child);
+            }
+            if (child.GetComponent<GlowRadius>() == null)
+            {
+                child.gameObject.AddComponent<GlowRadius>();
+            }
         }
-        // string allNames = string.Join(", ", members.Select(m => m.name));
-        // Debug.Log($"[{allNames}]");
-        //
-        // foreach (Transform child in transform)
-        // {
-        //     // members.Add(child.gameObject);
-        //     Debug.Log(child.gameObject.name);
-        // }
+        
     }
     
     private void Awake()
     {
-
+    
         // Grabbable grabbableObject;
         // Transform grabPoint;
         // Rigidbody rigidObject;
-        if (!applyPickUp) return;
+        // if (!applyPickUp) return;
         
         foreach (Transform child in transform)
         {
-            group.AddDefault_PickUpComponents(child);
+            if (child.GetComponent<GlowRadius>() == null)
+            {
+                child.gameObject.AddComponent<GlowRadius>();
+            }
+            // group.AddDefault_PickUpComponents(child);
         }
     }
 }

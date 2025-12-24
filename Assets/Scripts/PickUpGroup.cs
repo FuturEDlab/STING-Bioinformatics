@@ -6,9 +6,6 @@ using BNG;
 public class PickUpGroup : MonoBehaviour
 {
     [SerializeField] private bool applyNeededChildComponents;
-    [SerializeField] private Material glowMaterial;
-
-    public Material GlowMaterial => glowMaterial;
 
     public void AddDefault_PickUpComponents(Transform Child)
     {
@@ -59,30 +56,23 @@ public class PickUpGroup : MonoBehaviour
             
             AddDefault_PickUpComponents(child);
         }
-        // string allNames = string.Join(", ", members.Select(m => m.name));
-        // Debug.Log($"[{allNames}]");
-        //
-        // foreach (Transform child in transform)
-        // {
-        //     // members.Add(child.gameObject);
-        //     Debug.Log(child.gameObject.name);
-        // }
+        
     }
     
-    private void Awake()
-    {
-
-        // Grabbable grabbableObject;
-        // Transform grabPoint;
-        // Rigidbody rigidObject;
-        foreach (Transform child in transform)
-        {
-            if (child.GetComponent<InteractableGroup>() != null)
-            {
-                continue;
-            }
-            
-            AddDefault_PickUpComponents(child);
-        }
-    }
+    // private void Awake()
+    // {
+    //
+    //     // Grabbable grabbableObject;
+    //     // Transform grabPoint;
+    //     // Rigidbody rigidObject;
+    //     foreach (Transform child in transform)
+    //     {
+    //         if (child.GetComponent<InteractableGroup>() != null)
+    //         {
+    //             continue;
+    //         }
+    //         
+    //         AddDefault_PickUpComponents(child);
+    //     }
+    // }
 }

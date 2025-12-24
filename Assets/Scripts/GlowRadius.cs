@@ -18,7 +18,7 @@ public class GlowRadius : MonoBehaviour
 
     private List<Material> rendMaterials;
     // private Color defaultColor;
-    private PickUpGroup parentComponent;
+    private InteractableGroup parentComponent;
     private bool glowAdded = false;
     private Vector3 closestPoint;
 
@@ -33,7 +33,7 @@ public class GlowRadius : MonoBehaviour
     void Start()
     {
         Debug.Log($"{this.transform.position}");
-        parentComponent = GetComponentInParent<PickUpGroup>();
+        parentComponent = GetComponentInParent<InteractableGroup>();
         Debug.Log($"{parentComponent.GlowMaterial}");
         objectCollider = GetComponent<Collider>();
         // Debug.Log($"{this.transform.localPosition}");
