@@ -1,24 +1,23 @@
 using UnityEngine;
 using BNG;
+// using NUnit.Framework;
+using System.Collections.Generic;
 
 public class NonPickUpGroup : MonoBehaviour
 {
+    
     private void Awake()
     {
-
-        Grabbable grabbableObject;
-        Rigidbody rigidObject;
+        
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<Grabbable>() != null)
+            if (child.TryGetComponent(out Grabbable grabbableObject))
             {
-                grabbableObject = child.gameObject.GetComponent<Grabbable>();
                 Destroy(grabbableObject);
             }
-
-            if (child.GetComponent<Rigidbody>() != null)
+            
+            if (child.TryGetComponent(out Rigidbody rigidObject))
             {
-                rigidObject = child.gameObject.GetComponent<Rigidbody>();
                 Destroy(rigidObject);
             }
         }

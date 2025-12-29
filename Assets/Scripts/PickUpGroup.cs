@@ -10,25 +10,26 @@ public class PickUpGroup : MonoBehaviour
     public void AddDefault_PickUpComponents(Transform Child)
     {
         Grabbable grabbableObject;
-        Transform grabPoint;
+        // Transform grabPoint;
         Rigidbody rigidObject;
         
-        grabPoint = Child.transform.Find("GrabPoint");
+        // grabPoint = Child.transform.Find("GrabPoint");
         if (Child.GetComponent<Grabbable>() == null)
         {
             grabbableObject = Child.gameObject.AddComponent<Grabbable>();
             grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
+            // grabbableObject.Grabtype.
             grabbableObject.RemoteGrabbable = true;
 
-            if (grabbableObject.GrabPoints == null) 
-            {
-                grabbableObject.GrabPoints = new List<Transform>();
-            }
+            // if (grabbableObject.GrabPoints == null) 
+            // {
+            //     grabbableObject.GrabPoints = new List<Transform>();
+            // }
 
-            if (grabPoint != null)
-            {
-                grabbableObject.GrabPoints.Add(grabPoint);
-            }
+            // if (grabPoint != null)
+            // {
+            //     grabbableObject.GrabPoints.Add(grabPoint);
+            // }
         }
             
         if (Child.GetComponent<Rigidbody>() == null)

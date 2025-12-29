@@ -50,6 +50,7 @@ public class GlowRadius : MonoBehaviour
         if (InputBridge.Instance != null)
         {
             playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
+            // InputBridge.Instance.
             // playerBody = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>().transform;
             // Debug.Log($"{playerBody.localPosition}");
         }
@@ -59,6 +60,12 @@ public class GlowRadius : MonoBehaviour
     void Update()
     {
         if (!playerController) return;
+
+        // if (InputBridge.Instance.XButtonDown)
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            renderer.material.color = Color.cyan;
+        }
         
         // Debug.Log($"{playerController.transform.position}");
         // Debug.Log($"{playerController.transform.localPosition}");
@@ -67,8 +74,14 @@ public class GlowRadius : MonoBehaviour
         distance = Vector3.Distance(closestPoint, playerController.transform.position); 
         Debug.Log(distance);
 
-        if (distance <= MaxGlowDistance && !glowAdded)
+        if (distance <= MaxGlowDistance && !glowAdded && Input.GetKeyDown(KeyCode.L))
         {
+            // if (Input.GetKeyDown(KeyCode.L))
+            // {
+            //     // renderer.material.color = Color.cyan;
+            //     renderer.material.SetColor("_Color", Color.cyan);
+            // }
+            renderer.material.SetColor("_Color", Color.cyan);
             rendMaterials.Add(parentComponent.GlowMaterial);
             // GetComponent<Renderer>().materials = rendMaterials.ToArray();
             renderer.materials = rendMaterials.ToArray();
