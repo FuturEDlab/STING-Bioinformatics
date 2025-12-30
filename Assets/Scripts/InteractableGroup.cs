@@ -26,9 +26,9 @@ public class InteractableGroup: MonoBehaviour
             {
                 group.AddDefault_PickUpComponents(child);
             }
-            if (child.GetComponent<GlowRadius>() == null)
+            if (child.GetComponent<Interact>() == null)
             {
-                child.gameObject.AddComponent<GlowRadius>();
+                child.gameObject.AddComponent<Interact>();
             }
         }
         
@@ -44,9 +44,9 @@ public class InteractableGroup: MonoBehaviour
         
         foreach (Transform child in transform)
         {
-            if (child.GetComponent<GlowRadius>() == null)
+            if (child.GetComponent<Interact>() == null)
             {
-                child.gameObject.AddComponent<GlowRadius>();
+                child.gameObject.AddComponent<Interact>();
             }
             // group.AddDefault_PickUpComponents(child);
         }

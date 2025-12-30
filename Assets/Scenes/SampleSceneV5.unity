@@ -421,7 +421,6 @@ GameObject:
   - component: {fileID: 52174138}
   - component: {fileID: 52174142}
   - component: {fileID: 52174141}
-  - component: {fileID: 52174143}
   m_Layer: 0
   m_Name: Rubix
   m_TagString: Untagged
@@ -616,19 +615,6 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
---- !u!114 &52174143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52174136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812f5751736d24056a4561db363b91ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxGlowDistance: 0.9
 --- !u!1 &85759100
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +789,7 @@ GameObject:
   - component: {fileID: 89690917}
   - component: {fileID: 89690922}
   - component: {fileID: 89690921}
-  - component: {fileID: 89690920}
+  - component: {fileID: 89690923}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -902,19 +888,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89690915}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &89690920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89690915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812f5751736d24056a4561db363b91ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxGlowDistance: 0.9
 --- !u!54 &89690921
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1013,6 +986,22 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &89690923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89690915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  MaxGlowDistance: 0.9
 --- !u!1 &99937791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,7 +2081,8 @@ GameObject:
   - component: {fileID: 838270607}
   - component: {fileID: 838270606}
   - component: {fileID: 838270605}
-  - component: {fileID: 838270608}
+  - component: {fileID: 838270609}
+  - component: {fileID: 838270610}
   m_Layer: 0
   m_Name: CapsuleVillian
   m_TagString: Untagged
@@ -2191,7 +2181,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838270603}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &838270608
+--- !u!114 &838270609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2200,10 +2190,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 838270603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812f5751736d24056a4561db363b91ab, type: 3}
+  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 838270610}
+        m_TargetAssemblyTypeName: CapsuleVillian, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   MaxGlowDistance: 0.9
+--- !u!114 &838270610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838270603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0d27c67210c42a4a139e61a9520654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &847023778
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,6 +2452,10 @@ PrefabInstance:
     - target: {fileID: 4864490123495703556, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
       propertyPath: GroundedLayers.m_Bits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184150831130160948, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6339670902795989110, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
       propertyPath: ClosestGrabbable
@@ -3447,7 +3468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776839d336d334c65a92238988fb361e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  applyNeededChildComponents: 1
+  applyNeededChildComponents: 0
   applyPickUp: 0
   group: {fileID: 0}
   glowMaterial: {fileID: 2100000, guid: d83acf7e226cd49e891dd49639aa9d20, type: 2}
@@ -3899,6 +3920,7 @@ GameObject:
   - component: {fileID: 1905244443}
   - component: {fileID: 1905244442}
   - component: {fileID: 1905244445}
+  - component: {fileID: 1905244446}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -4006,10 +4028,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905244440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812f5751736d24056a4561db363b91ab, type: 3}
+  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1905244446}
+        m_TargetAssemblyTypeName: CapsulePro, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   MaxGlowDistance: 0.9
+--- !u!114 &1905244446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905244440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cfe4ed176cc443daba024274ca9aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1964602097
 GameObject:
   m_ObjectHideFlags: 0

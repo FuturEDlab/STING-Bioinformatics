@@ -21,6 +21,8 @@ public class GlowRadius : MonoBehaviour
     private InteractableGroup parentComponent;
     private bool glowAdded = false;
     private Vector3 closestPoint;
+    private Vector3 defaultScale;
+    private bool isNewScale = false;
 
     void AddGlowMaterial(Material glowMat)
     {
@@ -28,10 +30,25 @@ public class GlowRadius : MonoBehaviour
         materials.Add(glowMat);
         GetComponent<Renderer>().materials = materials.ToArray();
     }
+
+    void ChangeObjectScale()
+    {
+        if (isNewScale)
+        {
+            transform.localScale = defaultScale;
+            isNewScale = false;
+        }
+        else
+        {
+            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            isNewScale = true;
+        }
+    }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        defaultScale = transform.localScale;
         Debug.Log($"{this.transform.position}");
         parentComponent = GetComponentInParent<InteractableGroup>();
         Debug.Log($"{parentComponent.GlowMaterial}");
@@ -62,10 +79,11 @@ public class GlowRadius : MonoBehaviour
         if (!playerController) return;
 
         // if (InputBridge.Instance.XButtonDown)
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            renderer.material.color = Color.cyan;
-        }
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //     transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        //     // renderer.material.color = Color.cyan;
+        // }
         
         // Debug.Log($"{playerController.transform.position}");
         // Debug.Log($"{playerController.transform.localPosition}");
@@ -74,14 +92,14 @@ public class GlowRadius : MonoBehaviour
         distance = Vector3.Distance(closestPoint, playerController.transform.position); 
         Debug.Log(distance);
 
-        if (distance <= MaxGlowDistance && !glowAdded && Input.GetKeyDown(KeyCode.L))
+        if (distance <= MaxGlowDistance && !glowAdded)
         {
             // if (Input.GetKeyDown(KeyCode.L))
             // {
             //     // renderer.material.color = Color.cyan;
             //     renderer.material.SetColor("_Color", Color.cyan);
             // }
-            renderer.material.SetColor("_Color", Color.cyan);
+            // renderer.material.SetColor("_Color", Color.cyan);
             rendMaterials.Add(parentComponent.GlowMaterial);
             // GetComponent<Renderer>().materials = rendMaterials.ToArray();
             renderer.materials = rendMaterials.ToArray();
@@ -98,6 +116,23 @@ public class GlowRadius : MonoBehaviour
             // parentComponent.GlowMaterial.SetFloat("_Scale", 1f);
             // objectAppearance.material.color = defaultColor;
         }
+        
+        //
+        if (InputBridge.Instance.XButtonDown && glowAdded)
+        {
+            ChangeObjectScale();
+            // transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            // renderer.material.color = Color.cyan;
+        }
+
+        // if (distance <= MaxGlowDistance)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.L))
+        //     {
+        //         transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        //         // renderer.material.color = Color.cyan;
+        //     }
+        // }
         
         // renderer.materials = rendMaterials.ToArray();
         // GetComponent<Renderer>().materials = rendMaterials.ToArray();
