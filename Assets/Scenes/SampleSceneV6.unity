@@ -421,7 +421,6 @@ GameObject:
   - component: {fileID: 52174138}
   - component: {fileID: 52174142}
   - component: {fileID: 52174141}
-  - component: {fileID: 52174143}
   m_Layer: 0
   m_Name: Rubix
   m_TagString: Untagged
@@ -616,34 +615,6 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
---- !u!114 &52174143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52174136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1905244446}
-        m_TargetAssemblyTypeName: CapsulePro, Assembly-CSharp
-        m_MethodName: Interact
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  MaxGlowDistance: 0.9
 --- !u!1 &85759100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,7 +1076,8 @@ MonoBehaviour:
   applyNeededChildComponents: 0
   applyPickUp: 1
   group: {fileID: 1140121916}
-  glowMaterial: {fileID: 2100000, guid: d83acf7e226cd49e891dd49639aa9d20, type: 2}
+  glowMaterial: {fileID: 2100000, guid: f32dbff2a80ab454886a03cbaf2acd2b, type: 2}
+  interactButton: 0
 --- !u!1 &201699030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,6 +1514,7 @@ MonoBehaviour:
   applyPickUp: 0
   group: {fileID: 0}
   glowMaterial: {fileID: 0}
+  interactButton: 0
 --- !u!1 &450613560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3525,7 +3498,8 @@ MonoBehaviour:
   applyNeededChildComponents: 0
   applyPickUp: 0
   group: {fileID: 0}
-  glowMaterial: {fileID: 2100000, guid: d83acf7e226cd49e891dd49639aa9d20, type: 2}
+  glowMaterial: {fileID: 2100000, guid: f32dbff2a80ab454886a03cbaf2acd2b, type: 2}
+  interactButton: 1
 --- !u!1 &1483424973
 GameObject:
   m_ObjectHideFlags: 0

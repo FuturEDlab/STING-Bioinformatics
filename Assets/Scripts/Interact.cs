@@ -4,12 +4,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using BNG;
 
+public enum InteractInput
+{
+    XButton,
+    AButton,
+    YButton,
+    BButton,
+    LeftTrigger,
+    RightTrigger,
+    LeftGrip,
+    RightGrip,
+}
+
 public class Interact : MonoBehaviour
 {
     // [SerializeField] private GameObject GlowObject;
     // [SerializeField] private Component interactionBehaviour;
     [SerializeField] private UnityEvent onInteract;
     [SerializeField] private float MaxGlowDistance = .90f;
+    // [SerializeField] private InteractInput interactButton;
     
     private IInteraction interaction;
     private BNGPlayerController playerController;
@@ -45,6 +58,7 @@ public class Interact : MonoBehaviour
     {
         // interaction = interactionBehaviour as IInteraction;
         // defaultScale = transform.localScale;
+        // Debug.Log(interactButton);
         Debug.Log($"{this.transform.position}");
         parentComponent = GetComponentInParent<InteractableGroup>();
         Debug.Log($"{parentComponent.GlowMaterial}");
@@ -52,7 +66,7 @@ public class Interact : MonoBehaviour
         objectCollider = GetComponent<Collider>();
         renderer = GetComponent<Renderer>();
         rendMaterials = new List<Material>(renderer.materials);
-        Debug.Log($"{parentComponent.GlowMaterial.GetFloat("_Scale")}");
+        // Debug.Log($"{parentComponent.GlowMaterial.GetFloat("_Scale")}");
         
         if (InputBridge.Instance != null)
         {
@@ -84,13 +98,39 @@ public class Interact : MonoBehaviour
             glowAdded = false;
         }
         
-        if (Input.GetKeyDown(KeyCode.L) && glowAdded)
+        // if (Input.GetKeyDown(KeyCode.L) && glowAdded)
         // if (InputBridge.Instance.XButtonDown && glowAdded)
+        if (IsInteractButtonPressed() && glowAdded)
         {
             onInteract.Invoke();
             // interaction?.Interactt();
             // ChangeObjectScale();
         }
         
+    }
+    
+    private bool IsInteractButtonPressed()
+    {
+        switch (parentComponent.InteractButton)
+        {
+            case InteractInput.XButton:
+                return InputBridge.Instance.XButtonDown;
+            case InteractInput.AButton:
+                return InputBridge.Instance.AButtonDown;
+            case InteractInput.YButton:
+                return InputBridge.Instance.YButtonDown;
+            case InteractInput.BButton:
+                return InputBridge.Instance.BButtonDown;
+            case InteractInput.RightTrigger:
+                return InputBridge.Instance.RightTriggerDown; // or whichever trigger
+            case InteractInput.LeftTrigger:
+                return InputBridge.Instance.LeftTriggerDown;
+            case InteractInput.RightGrip:
+                return InputBridge.Instance.RightGripDown; // or whichever grip
+            case InteractInput.LeftGrip:
+                return InputBridge.Instance.LeftGripDown;
+            default:
+                return false;
+        }
     }
 }

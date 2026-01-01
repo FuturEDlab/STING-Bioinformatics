@@ -9,9 +9,10 @@ public class InteractableGroup: MonoBehaviour
     [SerializeField] private bool applyPickUp;
     [SerializeField] private PickUpGroup group;
     [SerializeField] private Material glowMaterial;
+    [SerializeField] private InteractInput interactButton;
 
     public Material GlowMaterial => glowMaterial;
-
+    public InteractInput InteractButton => interactButton;
     private void OnValidate()
     {
         if (Application.isPlaying) return;
