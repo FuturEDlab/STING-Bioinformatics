@@ -421,6 +421,8 @@ GameObject:
   - component: {fileID: 52174138}
   - component: {fileID: 52174142}
   - component: {fileID: 52174141}
+  - component: {fileID: 52174143}
+  - component: {fileID: 52174144}
   m_Layer: 0
   m_Name: Rubix
   m_TagString: Untagged
@@ -615,6 +617,38 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &52174143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52174136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5b1b54556836a49948cf0f09394c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RingOnValidPickup: 1
+  RingOnValidRemotePickup: 1
+  RingHelperScale: 0.8
+--- !u!114 &52174144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52174136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  MaxGlowDistance: 0.9
+  detectionAngle: 30
 --- !u!1 &85759100
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +825,7 @@ GameObject:
   - component: {fileID: 89690921}
   - component: {fileID: 89690923}
   - component: {fileID: 89690924}
+  - component: {fileID: 89690925}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -1015,6 +1050,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   MaxGlowDistance: 0.9
+  detectionAngle: 30
 --- !u!114 &89690924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,6 +1063,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cfe4ed176cc443daba024274ca9aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &89690925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89690915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5b1b54556836a49948cf0f09394c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RingOnValidPickup: 1
+  RingOnValidRemotePickup: 1
+  RingHelperScale: 0.8
 --- !u!1 &99937791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776839d336d334c65a92238988fb361e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  applyNeededChildComponents: 0
+  applyNeededChildComponents: 1
   applyPickUp: 1
   group: {fileID: 1140121916}
   glowMaterial: {fileID: 2100000, guid: f32dbff2a80ab454886a03cbaf2acd2b, type: 2}
@@ -1529,6 +1580,7 @@ GameObject:
   - component: {fileID: 450613561}
   - component: {fileID: 450613565}
   - component: {fileID: 450613566}
+  - component: {fileID: 450613567}
   m_Layer: 0
   m_Name: MarSphere
   m_TagString: Untagged
@@ -1725,6 +1777,21 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &450613567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450613560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5b1b54556836a49948cf0f09394c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RingOnValidPickup: 1
+  RingOnValidRemotePickup: 1
+  RingHelperScale: 0.8
 --- !u!1 &560541294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1806,7 @@ GameObject:
   - component: {fileID: 560541295}
   - component: {fileID: 560541300}
   - component: {fileID: 560541299}
+  - component: {fileID: 560541301}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -1935,6 +2003,21 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &560541301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560541294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5b1b54556836a49948cf0f09394c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RingOnValidPickup: 1
+  RingOnValidRemotePickup: 1
+  RingHelperScale: 0.8
 --- !u!1 &616909555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,6 +2319,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   MaxGlowDistance: 0.9
+  detectionAngle: 30
 --- !u!114 &838270610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2713,7 +2797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93d698c6ad514dd7a87438ae99c9497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  applyNeededChildComponents: 0
+  applyNeededChildComponents: 1
 --- !u!1 &1207808448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,6 +4159,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   MaxGlowDistance: 0.9
+  detectionAngle: 30
 --- !u!114 &1905244446
 MonoBehaviour:
   m_ObjectHideFlags: 0

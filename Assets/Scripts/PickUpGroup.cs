@@ -10,6 +10,7 @@ public class PickUpGroup : MonoBehaviour
     public void AddDefault_PickUpComponents(Transform Child)
     {
         Grabbable grabbableObject;
+        GrabbableRingHelper ringHelper;
         // Transform grabPoint;
         Rigidbody rigidObject;
         
@@ -30,6 +31,12 @@ public class PickUpGroup : MonoBehaviour
             // {
             //     grabbableObject.GrabPoints.Add(grabPoint);
             // }
+        }
+
+        if (Child.GetComponent<GrabbableRingHelper>() == null)
+        {
+            ringHelper = Child.gameObject.AddComponent<GrabbableRingHelper>();
+            ringHelper.RingHelperScale = 0.8f;
         }
             
         if (Child.GetComponent<Rigidbody>() == null)

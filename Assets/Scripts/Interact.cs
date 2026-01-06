@@ -22,6 +22,7 @@ public class Interact : MonoBehaviour
     // [SerializeField] private Component interactionBehaviour;
     [SerializeField] private UnityEvent onInteract;
     [SerializeField] private float MaxGlowDistance = .90f;
+    [SerializeField] private float detectionAngle = 25f;
     // [SerializeField] private InteractInput interactButton;
     
     private IInteraction interaction;
@@ -36,6 +37,8 @@ public class Interact : MonoBehaviour
     private InteractableGroup parentComponent;
     private bool glowAdded;
     private Vector3 closestPoint;
+    private Transform cam;
+    private bool isFacingCamera;
     // private Vector3 defaultScale;
     // private bool isNewScale;
 
@@ -68,22 +71,48 @@ public class Interact : MonoBehaviour
         rendMaterials = new List<Material>(renderer.materials);
         // Debug.Log($"{parentComponent.GlowMaterial.GetFloat("_Scale")}");
         
-        if (InputBridge.Instance != null)
-        {
-            playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
-        }
+        // if (InputBridge.Instance != null)
+        // {
+        //     playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
+        // }
+
+        // if (Camera.main != null)
+        // {
+        //     cam = Camera.main.transform;
+        // }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!playerController) return;
+        // if (!playerController) return;
+        
+        if (!playerController && InputBridge.Instance)
+        {
+            playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
+        }
+
+        if (!cam && Camera.main)
+        {
+            cam = Camera.main.transform;
+        }
+        
+        if (!playerController || !cam) return;
+        // Debug.Log(Camera.main.transform.rotation.eulerAngles);
         
         // Debug.Log($"{playerController.transform.position}");
         // Debug.Log($"{playerController.transform.localPosition}");
-        closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
-        distance = Vector3.Distance(closestPoint, playerController.transform.position); 
+        
+        // closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
+        closestPoint = objectCollider.ClosestPoint(cam.position);
+        // distance = Vector3.Distance(transform.position, playerController.transform.position);
+        // distance = Vector3.Distance(closestPoint, playerController.transform.position); 
+        distance = Vector3.Distance(closestPoint, cam.position); 
         Debug.Log(distance);
+        // Vector3 directionToObject = (transform.position - playerController.transform.position).normalized;
+        Vector3 directionToObject = (transform.position - cam.position).normalized;
+        // float angle = Vector3.Angle(playerController.transform.forward, directionToObject);
+        float angle = Vector3.Angle(cam.forward, directionToObject);
 
         if (distance <= MaxGlowDistance && !glowAdded)
         {
@@ -98,11 +127,17 @@ public class Interact : MonoBehaviour
             glowAdded = false;
         }
         
-        // if (Input.GetKeyDown(KeyCode.L) && glowAdded)
+        // if (!glowAdded) return;
+
+        // isFacingCamera = IsLookingAtObject();
+        isFacingCamera = angle <= detectionAngle;
+        Debug.Log($"Angle: {angle} | Facing: {isFacingCamera}");
+        
+        if (Input.GetKeyDown(KeyCode.L) && glowAdded && isFacingCamera)
         // if (InputBridge.Instance.XButtonDown && glowAdded)
-        if (IsInteractButtonPressed() && glowAdded)
+        // if (IsInteractButtonPressed() && glowAdded)
         {
-            onInteract.Invoke();
+            onInteract?.Invoke();
             // interaction?.Interactt();
             // ChangeObjectScale();
         }
@@ -132,5 +167,32 @@ public class Interact : MonoBehaviour
             default:
                 return false;
         }
+    }
+    
+    private bool IsLookingAtObject()
+    {
+        if (objectCollider == null) return false;
+    
+        // Use collider bounds (works even without renderer)
+        Bounds bounds = objectCollider.bounds;
+        Ray ray = new Ray(playerController.transform.position, playerController.transform.forward);
+    
+        // Check if ray intersects the bounds
+        float distancee;
+        return bounds.IntersectRay(ray, out distancee) && distance <= MaxGlowDistance;
+        
+        
+        
+        
+        // RaycastHit hit;
+        //
+        // if (Physics.Raycast(ray, out hit, MaxGlowDistance))
+        // {
+        //     // Check if the raycast hit THIS object or any of its children
+        //     return hit.collider.gameObject == gameObject || 
+        //            hit.collider.transform.IsChildOf(transform);
+        // }
+        //
+        // return false;
     }
 }
