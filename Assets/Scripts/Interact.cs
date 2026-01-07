@@ -23,6 +23,8 @@ public class Interact : MonoBehaviour
     [SerializeField] private UnityEvent onInteract;
     [SerializeField] private float MaxGlowDistance = .90f;
     [SerializeField] private float detectionAngle = 25f;
+    [SerializeField] private Transform leftHandAnchor;
+    [SerializeField] private Transform rightHandAnchor;
     // [SerializeField] private InteractInput interactButton;
     
     private IInteraction interaction;
@@ -39,6 +41,7 @@ public class Interact : MonoBehaviour
     private Vector3 closestPoint;
     private Transform cam;
     private bool isFacingCamera;
+    private bool isHandNear = false;
     // private Vector3 defaultScale;
     // private bool isNewScale;
 
@@ -98,11 +101,19 @@ public class Interact : MonoBehaviour
         }
         
         if (!playerController || !cam) return;
+
+        // if (!leftHandAnchor) return;
         // Debug.Log(Camera.main.transform.rotation.eulerAngles);
         
         // Debug.Log($"{playerController.transform.position}");
         // Debug.Log($"{playerController.transform.localPosition}");
-        
+        if (leftHandAnchor != null)
+        {
+            Debug.Log($"left hand pos: {leftHandAnchor.position}");
+            float leftDist = Vector3.Distance(transform.position, leftHandAnchor.position);
+            Debug.Log($"left dist: {leftDist}");
+        }
+
         // closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
         closestPoint = objectCollider.ClosestPoint(cam.position);
         // distance = Vector3.Distance(transform.position, playerController.transform.position);
@@ -133,7 +144,7 @@ public class Interact : MonoBehaviour
         isFacingCamera = angle <= detectionAngle;
         Debug.Log($"Angle: {angle} | Facing: {isFacingCamera}");
         
-        if (Input.GetKeyDown(KeyCode.L) && glowAdded && isFacingCamera)
+        if (Input.GetKeyDown(KeyCode.L) && glowAdded && isHandNear)
         // if (InputBridge.Instance.XButtonDown && glowAdded)
         // if (IsInteractButtonPressed() && glowAdded)
         {
@@ -166,6 +177,24 @@ public class Interact : MonoBehaviour
                 return InputBridge.Instance.LeftGripDown;
             default:
                 return false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("LeftHand") || other.CompareTag("RightHand"))
+        {
+            isHandNear = true;
+            Debug.Log($"Hand Near ? {isHandNear}");
+        }
+    }
+    
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("LeftHand") || other.CompareTag("RightHand"))
+        {
+            isHandNear = false;
+            Debug.Log($"Hand Near ? {isHandNear}");
         }
     }
     
