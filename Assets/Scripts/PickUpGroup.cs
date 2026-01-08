@@ -11,6 +11,7 @@ public class PickUpGroup : MonoBehaviour
     {
         Grabbable grabbableObject;
         GrabbableRingHelper ringHelper;
+        StableRelease releasedObject;
         // Transform grabPoint;
         Rigidbody rigidObject;
         
@@ -37,6 +38,11 @@ public class PickUpGroup : MonoBehaviour
         {
             ringHelper = Child.gameObject.AddComponent<GrabbableRingHelper>();
             ringHelper.RingHelperScale = 0.8f;
+        }
+        
+        if (Child.GetComponent<StableRelease>() == null)
+        {
+            Child.gameObject.AddComponent<StableRelease>();
         }
             
         if (Child.GetComponent<Rigidbody>() == null)

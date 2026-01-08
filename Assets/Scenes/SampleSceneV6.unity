@@ -647,7 +647,7 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls: []
-  MaxGlowDistance: 0.9
+  MaxGlowDistance: 2
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
@@ -1051,7 +1051,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  MaxGlowDistance: 0.9
+  MaxGlowDistance: 2
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
@@ -1811,6 +1811,7 @@ GameObject:
   - component: {fileID: 560541300}
   - component: {fileID: 560541299}
   - component: {fileID: 560541301}
+  - component: {fileID: 560541302}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -2022,6 +2023,18 @@ MonoBehaviour:
   RingOnValidPickup: 1
   RingOnValidRemotePickup: 1
   RingHelperScale: 0.8
+--- !u!114 &560541302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560541294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eabf74097df347d68771ba87672e292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &616909555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,7 +2335,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  MaxGlowDistance: 0.9
+  MaxGlowDistance: 2
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
@@ -4180,7 +4193,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  MaxGlowDistance: 0.9
+  MaxGlowDistance: 2
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}

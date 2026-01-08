@@ -21,7 +21,7 @@ public class Interact : MonoBehaviour
     // [SerializeField] private GameObject GlowObject;
     // [SerializeField] private Component interactionBehaviour;
     [SerializeField] private UnityEvent onInteract;
-    [SerializeField] private float MaxGlowDistance = .90f;
+    [SerializeField] private float MaxGlowDistance = 2f;
     [SerializeField] private float detectionAngle = 25f;
     [SerializeField] private Transform leftHandAnchor;
     [SerializeField] private Transform rightHandAnchor;
@@ -41,7 +41,9 @@ public class Interact : MonoBehaviour
     private Vector3 closestPoint;
     private Transform cam;
     private bool isFacingCamera;
-    private bool isHandNear = false;
+    private bool isLeftHandNear;
+    private bool isRightHandNear;
+    private bool isHandNear => isLeftHandNear || isRightHandNear;
     // private Vector3 defaultScale;
     // private bool isNewScale;
 
@@ -114,11 +116,11 @@ public class Interact : MonoBehaviour
             Debug.Log($"left dist: {leftDist}");
         }
 
-        // closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
-        closestPoint = objectCollider.ClosestPoint(cam.position);
+        closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
+        // closestPoint = objectCollider.ClosestPoint(cam.position);
         // distance = Vector3.Distance(transform.position, playerController.transform.position);
-        // distance = Vector3.Distance(closestPoint, playerController.transform.position); 
-        distance = Vector3.Distance(closestPoint, cam.position); 
+        distance = Vector3.Distance(closestPoint, playerController.transform.position); 
+        // distance = Vector3.Distance(closestPoint, cam.position); 
         Debug.Log(distance);
         // Vector3 directionToObject = (transform.position - playerController.transform.position).normalized;
         Vector3 directionToObject = (transform.position - cam.position).normalized;
@@ -146,7 +148,7 @@ public class Interact : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.L) && glowAdded && isHandNear)
         // if (InputBridge.Instance.XButtonDown && glowAdded)
-        // if (IsInteractButtonPressed() && glowAdded)
+        // if (IsInteractButtonPressed() && glowAdded && isHandNear)
         {
             onInteract?.Invoke();
             // interaction?.Interactt();
@@ -182,19 +184,29 @@ public class Interact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("LeftHand") || other.CompareTag("RightHand"))
+        if (other.CompareTag("LeftHand"))
         {
-            isHandNear = true;
-            Debug.Log($"Hand Near ? {isHandNear}");
+            isLeftHandNear = true;
+            Debug.Log($"Left Hand Near: {isLeftHandNear}");
+        }
+        else if (other.CompareTag("RightHand"))
+        {
+            isRightHandNear = true;
+            Debug.Log($"Right Hand Near: {isRightHandNear}");
         }
     }
-    
+
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("LeftHand") || other.CompareTag("RightHand"))
+        if (other.CompareTag("LeftHand"))
         {
-            isHandNear = false;
-            Debug.Log($"Hand Near ? {isHandNear}");
+            isLeftHandNear = false;
+            Debug.Log($"Left Hand Near: {isLeftHandNear}");
+        }
+        else if (other.CompareTag("RightHand"))
+        {
+            isRightHandNear = false;
+            Debug.Log($"Right Hand Near: {isRightHandNear}");
         }
     }
     

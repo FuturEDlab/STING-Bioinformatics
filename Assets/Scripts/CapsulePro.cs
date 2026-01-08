@@ -1,17 +1,23 @@
 using UnityEngine;
+using BNG;
 
 public class CapsulePro : MonoBehaviour
 {
     private Vector3 defaultPosition;
     private bool isNewPosition;
+    private Grabbable grabbableObj;
+    private bool isBeingHeld;
+    
 
     void Start()
     {
         defaultPosition = transform.localPosition;
+        grabbableObj = GetComponent<Grabbable>();
     }
     
     public void Interact()
     {
+        if (grabbableObj != null && grabbableObj.BeingHeld) return;
         ChangeObjectPosition();
     }
     
