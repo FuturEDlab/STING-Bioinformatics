@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 52174143}
   - component: {fileID: 52174144}
   - component: {fileID: 52174145}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rubix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 89690924}
   - component: {fileID: 89690925}
   - component: {fileID: 89690926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1612,7 +1612,7 @@ GameObject:
   - component: {fileID: 450613566}
   - component: {fileID: 450613567}
   - component: {fileID: 450613568}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MarSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1719,7 +1719,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 4
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1851,7 +1851,7 @@ GameObject:
   - component: {fileID: 560541299}
   - component: {fileID: 560541301}
   - component: {fileID: 560541302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1959,7 +1959,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2610,19 +2610,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3044703715400566358, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
-      propertyPath: m_Center.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3044703715400566358, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
-      propertyPath: m_StepOffset
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 3984670938149433749, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
-      propertyPath: GroundedLayers.m_Bits
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3984670938730832702, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
       propertyPath: GroundedLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
@@ -2675,38 +2663,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1328778849921410231, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1370202447}
-    - targetCorrespondingSourceObject: {fileID: 7413387958390096736, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1061379331}
   m_SourcePrefab: {fileID: 100100000, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
---- !u!1 &1061379330 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7413387958390096736, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
-  m_PrefabInstance: {fileID: 1061379329}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1061379331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061379330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!1 &1073499865
 GameObject:
   m_ObjectHideFlags: 0
@@ -3035,7 +2992,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/BNG Framework/Scenes/XR Demo.unity
+    guid: a1360534006d3f845bc79b46b93cfec5
+  - enabled: 0
     path: Assets/Scenes/SampleSceneV6.unity
     guid: c05320748738843c89d833da4516837a
   - enabled: 0

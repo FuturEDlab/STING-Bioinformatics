@@ -2,16 +2,18 @@ using UnityEngine;
 using System.Collections.Generic;
 // using System.Linq;
 using BNG;
+using Unity.VisualScripting;
 
 public class PickUpGroup : MonoBehaviour
 {
     [SerializeField] private bool applyNeededChildComponents;
+    // private int grabLayer;
 
     public void AddDefault_PickUpComponents(Transform Child)
     {
         Grabbable grabbableObject;
         GrabbableRingHelper ringHelper;
-        StableRelease releasedObject;
+        // StableRelease releasedObject;
         // Transform grabPoint;
         Rigidbody rigidObject;
         
@@ -22,6 +24,11 @@ public class PickUpGroup : MonoBehaviour
             grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
             // grabbableObject.Grabtype.
             grabbableObject.RemoteGrabbable = true;
+            // grabLayer = LayerMask.NameToLayer("Grabb");
+            // if (grabLayer != 1)
+            // {
+            //     Child.gameObject.layer = grabLayer;
+            // }
 
             // if (grabbableObject.GrabPoints == null) 
             // {
@@ -49,6 +56,7 @@ public class PickUpGroup : MonoBehaviour
         {
             rigidObject = Child.gameObject.AddComponent<Rigidbody>();
             rigidObject.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rigidObject.angularDamping = 0.5f;
         }
     }
 
