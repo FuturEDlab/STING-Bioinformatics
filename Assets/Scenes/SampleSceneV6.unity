@@ -565,7 +565,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 1
+  RemoteGrabbable: 0
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   CanDropMidGrab: 0
@@ -985,7 +985,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 1
+  RemoteGrabbable: 0
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   CanDropMidGrab: 0
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 1
+  RemoteGrabbable: 0
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   CanDropMidGrab: 0
@@ -1994,7 +1994,7 @@ MonoBehaviour:
   GrabPhysics: 0
   GrabMechanic: 1
   GrabSpeed: 15
-  RemoteGrabbable: 1
+  RemoteGrabbable: 0
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   CanDropMidGrab: 0
@@ -2915,6 +2915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   applyNeededChildComponents: 1
+  playerCollider: {fileID: 1516371805}
 --- !u!1 &1207808448
 GameObject:
   m_ObjectHideFlags: 0
@@ -3933,6 +3934,11 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!143 &1516371805 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 3044703715400566358, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
+  m_PrefabInstance: {fileID: 1061379329}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1662682113
 GameObject:
   m_ObjectHideFlags: 0

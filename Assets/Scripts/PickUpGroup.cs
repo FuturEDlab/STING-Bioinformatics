@@ -7,7 +7,10 @@ using Unity.VisualScripting;
 public class PickUpGroup : MonoBehaviour
 {
     [SerializeField] private bool applyNeededChildComponents;
+    [SerializeField] private Collider playerCollider;
     // private int grabLayer;
+    
+    public Collider PlayerCollider => playerCollider;
 
     public void AddDefault_PickUpComponents(Transform Child)
     {
