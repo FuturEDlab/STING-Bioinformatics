@@ -1,14 +1,17 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 // using System.Linq;
 using BNG;
 using Unity.VisualScripting;
 
+[ExecuteAlways]
 public class PickUpGroup : MonoBehaviour
 {
-    [SerializeField] private bool applyNeededChildComponents;
+    // [SerializeField] private bool applyNeededChildComponents;
     [SerializeField] private Collider playerCollider;
     // private int grabLayer;
+    private int lastChildCount = 0;
     
     public Collider PlayerCollider => playerCollider;
 
@@ -26,7 +29,7 @@ public class PickUpGroup : MonoBehaviour
             grabbableObject = Child.gameObject.AddComponent<Grabbable>();
             grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
             // grabbableObject.Grabtype.
-            grabbableObject.RemoteGrabbable = true;
+            grabbableObject.RemoteGrabbable = false;
             // grabLayer = LayerMask.NameToLayer("Grabb");
             // if (grabLayer != 1)
             // {
@@ -62,15 +65,12 @@ public class PickUpGroup : MonoBehaviour
             rigidObject.angularDamping = 0.5f;
         }
     }
-
-    private void OnValidate()
+    
+    
+    private void OnTransformChildrenChanged()
     {
+        Debug.Log("OnTransform chichi fyeeeee!!!");
         if (Application.isPlaying) return;
-
-        // Grabbable grabbableObject;
-        // Transform grabPoint;
-        // Rigidbody rigidObject;
-        if (!applyNeededChildComponents) return;
         
         foreach (Transform child in transform)
         {
@@ -80,9 +80,45 @@ public class PickUpGroup : MonoBehaviour
             }
             
             AddDefault_PickUpComponents(child);
+            
         }
-        
     }
+    
+    
+
+    // private void OnValidate()
+    // {
+    //     if (Application.isPlaying) return;
+    //
+    //     // Grabbable grabbableObject;
+    //     // Transform grabPoint;
+    //     // Rigidbody rigidObject;
+    //     
+    //     // if (!applyNeededChildComponents) return;
+    //     
+    //     
+    //     // Check if child count changed
+    //     if (transform.childCount != lastChildCount)
+    //     {
+    //         Debug.Log($"Child count changed from {lastChildCount} to {transform.childCount}");
+    //         lastChildCount = transform.childCount;
+    //         
+    //         foreach (Transform child in transform)
+    //         {
+    //             if (child.GetComponent<InteractableGroup>() != null)
+    //             {
+    //                 continue;
+    //             }
+    //             
+    //             if (child.GetComponent<Grabbable>() == null)
+    //             {
+    //                 Debug.Log($"Adding components to {child.name}");
+    //                 AddDefault_PickUpComponents(child);
+    //             }
+    //         }
+    //     }
+    //     
+    // }
     
     // private void Awake()
     // {
