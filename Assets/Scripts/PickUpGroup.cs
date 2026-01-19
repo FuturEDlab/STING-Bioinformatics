@@ -1,17 +1,12 @@
-using System;
+// using System;
 using UnityEngine;
-using System.Collections.Generic;
-// using System.Linq;
 using BNG;
-using Unity.VisualScripting;
 
 [ExecuteAlways]
 public class PickUpGroup : MonoBehaviour
 {
-    // [SerializeField] private bool applyNeededChildComponents;
+    
     [SerializeField] private Collider playerCollider;
-    // private int grabLayer;
-    private int lastChildCount = 0;
     
     public Collider PlayerCollider => playerCollider;
 
@@ -19,32 +14,13 @@ public class PickUpGroup : MonoBehaviour
     {
         Grabbable grabbableObject;
         GrabbableRingHelper ringHelper;
-        // StableRelease releasedObject;
-        // Transform grabPoint;
         Rigidbody rigidObject;
-        
-        // grabPoint = Child.transform.Find("GrabPoint");
+
         if (Child.GetComponent<Grabbable>() == null)
         {
             grabbableObject = Child.gameObject.AddComponent<Grabbable>();
             grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
-            // grabbableObject.Grabtype.
             grabbableObject.RemoteGrabbable = false;
-            // grabLayer = LayerMask.NameToLayer("Grabb");
-            // if (grabLayer != 1)
-            // {
-            //     Child.gameObject.layer = grabLayer;
-            // }
-
-            // if (grabbableObject.GrabPoints == null) 
-            // {
-            //     grabbableObject.GrabPoints = new List<Transform>();
-            // }
-
-            // if (grabPoint != null)
-            // {
-            //     grabbableObject.GrabPoints.Add(grabPoint);
-            // }
         }
 
         if (Child.GetComponent<GrabbableRingHelper>() == null)
@@ -66,10 +42,9 @@ public class PickUpGroup : MonoBehaviour
         }
     }
     
-    
+#if UNITY_EDITOR
     private void OnTransformChildrenChanged()
     {
-        Debug.Log("OnTransform chichi fyeeeee!!!");
         if (Application.isPlaying) return;
         
         foreach (Transform child in transform)
@@ -79,61 +54,15 @@ public class PickUpGroup : MonoBehaviour
                 continue;
             }
             
+            if (child.TryGetComponent(out Interact interactComp))
+            {
+                DestroyImmediate(interactComp);
+            }
+            
             AddDefault_PickUpComponents(child);
             
         }
     }
-    
-    
+#endif
 
-    // private void OnValidate()
-    // {
-    //     if (Application.isPlaying) return;
-    //
-    //     // Grabbable grabbableObject;
-    //     // Transform grabPoint;
-    //     // Rigidbody rigidObject;
-    //     
-    //     // if (!applyNeededChildComponents) return;
-    //     
-    //     
-    //     // Check if child count changed
-    //     if (transform.childCount != lastChildCount)
-    //     {
-    //         Debug.Log($"Child count changed from {lastChildCount} to {transform.childCount}");
-    //         lastChildCount = transform.childCount;
-    //         
-    //         foreach (Transform child in transform)
-    //         {
-    //             if (child.GetComponent<InteractableGroup>() != null)
-    //             {
-    //                 continue;
-    //             }
-    //             
-    //             if (child.GetComponent<Grabbable>() == null)
-    //             {
-    //                 Debug.Log($"Adding components to {child.name}");
-    //                 AddDefault_PickUpComponents(child);
-    //             }
-    //         }
-    //     }
-    //     
-    // }
-    
-    // private void Awake()
-    // {
-    //
-    //     // Grabbable grabbableObject;
-    //     // Transform grabPoint;
-    //     // Rigidbody rigidObject;
-    //     foreach (Transform child in transform)
-    //     {
-    //         if (child.GetComponent<InteractableGroup>() != null)
-    //         {
-    //             continue;
-    //         }
-    //         
-    //         AddDefault_PickUpComponents(child);
-    //     }
-    // }
 }
