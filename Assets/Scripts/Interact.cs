@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using BNG;
+using UnityEditor;
 
 public enum InteractInput
 {
@@ -26,6 +27,8 @@ public class Interact : MonoBehaviour
     [SerializeField] private Transform leftHandAnchor;
     [SerializeField] private Transform rightHandAnchor;
     // [SerializeField] private InteractInput interactButton;
+    // [SerializeField] private List<MonoScript> customInteractScripts;
+    [SerializeField] private List<GameObject> otherObjectsAffected;
     
     private IInteraction interaction;
     private BNGPlayerController playerController;
