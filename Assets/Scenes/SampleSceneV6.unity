@@ -151,7 +151,6 @@ Transform:
   m_Children:
   - {fileID: 1447482790}
   - {fileID: 1207808452}
-  - {fileID: 201699031}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &13409989
@@ -652,6 +651,7 @@ MonoBehaviour:
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
+  otherObjectsAffected: []
 --- !u!114 &52174145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,6 +1069,7 @@ MonoBehaviour:
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
+  otherObjectsAffected: []
 --- !u!114 &89690924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cfe4ed176cc443daba024274ca9aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsToChange: []
 --- !u!114 &89690925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,6 +1172,8 @@ GameObject:
   - component: {fileID: 201699034}
   - component: {fileID: 201699033}
   - component: {fileID: 201699032}
+  - component: {fileID: 201699035}
+  - component: {fileID: 201699036}
   m_Layer: 0
   m_Name: Rectangle
   m_TagString: Untagged
@@ -1190,7 +1194,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 13409988}
+  m_Father: {fileID: 1447482790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &201699032
 BoxCollider:
@@ -1266,6 +1270,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201699030}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &201699035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201699030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cfe4ed176cc443daba024274ca9aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToChange:
+  - {fileID: 1905244440}
+--- !u!114 &201699036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201699030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13883a4524ee4d13bc70de9f3c9da6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 201699035}
+        m_TargetAssemblyTypeName: CapsulePro, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  MaxGlowDistance: 2
+  detectionAngle: 25
+  leftHandAnchor: {fileID: 0}
+  rightHandAnchor: {fileID: 0}
+  otherObjectsAffected: []
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,6 +2426,7 @@ MonoBehaviour:
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
+  otherObjectsAffected: []
 --- !u!114 &838270610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3580,6 +3631,7 @@ Transform:
   m_Children:
   - {fileID: 1905244441}
   - {fileID: 838270604}
+  - {fileID: 201699031}
   m_Father: {fileID: 13409988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1447482791
@@ -4181,6 +4233,7 @@ MonoBehaviour:
   detectionAngle: 30
   leftHandAnchor: {fileID: 0}
   rightHandAnchor: {fileID: 0}
+  otherObjectsAffected: []
 --- !u!114 &1905244446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4193,6 +4246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cfe4ed176cc443daba024274ca9aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsToChange: []
 --- !u!1 &1964602097
 GameObject:
   m_ObjectHideFlags: 0
