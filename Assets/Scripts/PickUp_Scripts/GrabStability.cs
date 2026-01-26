@@ -1,14 +1,13 @@
 using UnityEngine;
 using BNG;
 
-public class StableRelease : MonoBehaviour
+public class GrabStability : MonoBehaviour
 {
     private Rigidbody rb;
     private Grabbable grabbable;
     private Collider coll;
     private bool wasHeldLastFrame;
     private PickUpGroup parentObject;
-    private IgnoreColliders s;
 
     void Start()
     {
@@ -16,10 +15,6 @@ public class StableRelease : MonoBehaviour
         grabbable = GetComponent<Grabbable>();
         coll = GetComponent<Collider>();
         parentObject = GetComponentInParent<PickUpGroup>();
-        // s.CollidersToIgnore.Add(pla);
-        // if (grabbable)
-        //     // grabbable.OnRelease.AddListener(OnReleased);
-        //     // grabbable.Release;
     }
 
     void Update()
@@ -29,19 +24,13 @@ public class StableRelease : MonoBehaviour
         if (grabbable.BeingHeld)
         {
             Physics.IgnoreCollision(coll, parentObject.PlayerCollider, true);
-            // coll.enabled = false;
-            // coll.isTrigger = true;
-            // rb.isKinematic = true;
-            // rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
         else
         {
             Physics.IgnoreCollision(coll, parentObject.PlayerCollider, false);
-            // coll.enabled = true;
-            // coll.isTrigger = false;
-            // rb.isKinematic = false;
         }
         
+        // This is right after releasing object to prevent excessive spinning
         if (wasHeldLastFrame && !grabbable.BeingHeld)
         {
             rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 10f);
@@ -49,10 +38,4 @@ public class StableRelease : MonoBehaviour
         
         wasHeldLastFrame = grabbable.BeingHeld;
     }
-
-    // void OnReleased(Grabbable g)
-    // {
-    //     rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 10f);
-    //     // rb.angularDrag = 5f;
-    // }
 }

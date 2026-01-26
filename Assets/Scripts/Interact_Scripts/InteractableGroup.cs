@@ -5,7 +5,10 @@ using BNG;
 [ExecuteAlways]
 public class InteractableGroup: MonoBehaviour
 {
+    [Tooltip("Keep this turned on when interactable item is also allowed to be picked up")]
     [SerializeField] private bool applyPickUp;
+    [Tooltip("This is for extracting the PickUpGroup script from the parent GameObject" +
+             " (PickUpItems)")]
     [SerializeField] private PickUpGroup group;
     [SerializeField] private Material glowMaterial;
     [SerializeField] private InteractInput interactButton;
@@ -15,14 +18,17 @@ public class InteractableGroup: MonoBehaviour
 
     private void Remove_PickUpComponents(Transform Child)
     {
+        // "Action" type is for functions that return void (nothing)
         Action<UnityEngine.Object> DestroyComponent;
         
         if (Application.isPlaying)
         {
+            // Destroy is meant for run time only
             DestroyComponent = Destroy;
         }
         else
         {
+            // DestroyImmediate is meant for edit mode only
             DestroyComponent = DestroyImmediate;
         }
         
@@ -36,7 +42,7 @@ public class InteractableGroup: MonoBehaviour
             DestroyComponent(grabbableObject);
         }
             
-        if (Child.TryGetComponent(out StableRelease stableObject))
+        if (Child.TryGetComponent(out GrabStability stableObject))
         {
             DestroyComponent(stableObject);
         }
@@ -50,12 +56,12 @@ public class InteractableGroup: MonoBehaviour
 #if UNITY_EDITOR
     private void OnTransformChildrenChanged()
     {
-        Debug.Log("OnTransform chichi fyeeeee!!!");
         if (Application.isPlaying) return;
         
+        // Iterate through all child transforms of this GameObject
         foreach (Transform child in transform)
         {
-            if (applyPickUp && group != null)
+            if (applyPickUp && (group != null))
             {
                 group.AddDefault_PickUpComponents(child);
             }
@@ -76,6 +82,7 @@ public class InteractableGroup: MonoBehaviour
     {
         if (!Application.isPlaying) return;
         
+        // Iterate through all child transforms of this GameObject
         foreach (Transform child in transform)
         {
             if (!applyPickUp)

@@ -1,4 +1,3 @@
-// using System;
 using UnityEngine;
 using BNG;
 
@@ -29,9 +28,9 @@ public class PickUpGroup : MonoBehaviour
             ringHelper.RingHelperScale = 0.8f;
         }
         
-        if (Child.GetComponent<StableRelease>() == null)
+        if (Child.GetComponent<GrabStability>() == null)
         {
-            Child.gameObject.AddComponent<StableRelease>();
+            Child.gameObject.AddComponent<GrabStability>();
         }
             
         if (Child.GetComponent<Rigidbody>() == null)
@@ -47,6 +46,7 @@ public class PickUpGroup : MonoBehaviour
     {
         if (Application.isPlaying) return;
         
+        // Iterate through all child transforms of this GameObject
         foreach (Transform child in transform)
         {
             if (child.GetComponent<InteractableGroup>() != null)

@@ -7,11 +7,10 @@ public class CapsulePro : MonoBehaviour
     [Tooltip("If you want multiple objects to do an action when interacting with selected object," +
              " add those objects here. Disclaimer: Selected object will need to be added as well if" +
              " you want this object to act along with other objects")]
-    [SerializeField] private List<GameObject> objectsToChange;
+    [SerializeField] private List<GameObject> objectsToChange = new List<GameObject>();
     
-    private List<Vector3> defaultPositions;
-    private List<Transform> affectedObjects;
-    private bool isNewPosition;
+    private List<Vector3> defaultPositions = new List<Vector3>();
+    private List<Transform> affectedObjects = new List<Transform>();
     private Grabbable grabbableObj;
     private Interact interactComponent;
 
@@ -24,7 +23,6 @@ public class CapsulePro : MonoBehaviour
             // return;
         }
         
-        // Initialize lists for each object
         foreach (GameObject obj in objectsToChange)
         {
             if (obj != null)
@@ -58,12 +56,11 @@ public class CapsulePro : MonoBehaviour
         for (int i = 0; i < affectedObjects.Count; i++)
         {
             Vector3 currentPos = affectedObjects[i].localPosition;
-            Debug.Log($"current y position: {currentPos.y}. This is obj number {i}");
 
+            // Check if object has returned to its default Y position
             if (Mathf.Approximately(currentPos.y, defaultPositions[i].y))
             {
                 affectedObjects[i].localPosition = new Vector3(currentPos.x, currentPos.y + 0.20f, currentPos.z);
-                Debug.Log($"new y position: {affectedObjects[i].localPosition.y}. This is obj number {i}");
             }
             else
             {
