@@ -6,8 +6,10 @@ public class PickUpGroup : MonoBehaviour
 {
     
     [SerializeField] private Collider playerCollider;
+    [SerializeField] private Collider[] objectsToCollideWith;
     
     public Collider PlayerCollider => playerCollider;
+    // public Collider ObjectsToCollideWith => objectsToCollideWith;
 
     public void AddDefault_PickUpComponents(Transform Child)
     {
@@ -20,6 +22,7 @@ public class PickUpGroup : MonoBehaviour
             grabbableObject = Child.gameObject.AddComponent<Grabbable>();
             grabbableObject.GrabPhysics = GrabPhysics.PhysicsJoint;
             grabbableObject.RemoteGrabbable = false;
+            grabbableObject.SecondaryGrabBehavior = OtherGrabBehavior.SwapHands;
         }
 
         if (Child.GetComponent<GrabbableRingHelper>() == null)

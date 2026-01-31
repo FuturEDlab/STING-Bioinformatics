@@ -8,6 +8,7 @@ public class GrabStability : MonoBehaviour
     private Collider coll;
     private bool wasHeldLastFrame;
     private PickUpGroup parentObject;
+    private int originalLayer;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class GrabStability : MonoBehaviour
         grabbable = GetComponent<Grabbable>();
         coll = GetComponent<Collider>();
         parentObject = GetComponentInParent<PickUpGroup>();
+        originalLayer = gameObject.layer;
     }
 
     void Update()
@@ -24,10 +26,12 @@ public class GrabStability : MonoBehaviour
         if (grabbable.BeingHeld)
         {
             Physics.IgnoreCollision(coll, parentObject.PlayerCollider, true);
+            gameObject.layer = LayerMask.NameToLayer("Grabb");
         }
         else
         {
             Physics.IgnoreCollision(coll, parentObject.PlayerCollider, false);
+            gameObject.layer = originalLayer;
         }
         
         // This is right after releasing object to prevent excessive spinning

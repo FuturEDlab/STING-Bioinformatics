@@ -5,14 +5,18 @@ using BNG;
 
 public enum InteractInput
 {
-    XButton,
-    AButton,
-    YButton,
-    BButton,
-    LeftTrigger,
-    RightTrigger,
-    LeftGrip,
-    RightGrip,
+    [InspectorName("X or A")]
+    X_AButton,
+
+    // [InspectorName("Y Button / B Button")]
+    [InspectorName("Y or B")]
+    B_YButton,
+
+    [InspectorName("LeftTrigger or RightTrigger")]
+    Left_RightTrigger,
+    
+    [InspectorName("LeftGrip or RightGrip")]
+    Left_RightGrip,
 }
 
 public class Interact : MonoBehaviour
@@ -79,7 +83,8 @@ public class Interact : MonoBehaviour
         // won't work regardless.
         if (!glowAdded) return;
         
-        if (IsInteractButtonPressed() && isHandNear)
+        // if (Input.GetKeyDown(KeyCode.L) && isHandNear) // delete/uncomment when done testing in Unity Editor!
+        if (IsInteractButtonPressed() && isHandNear) // Uncomment when done testing in Unity Editor!
         {
             onInteract?.Invoke();
         }
@@ -88,24 +93,26 @@ public class Interact : MonoBehaviour
     
     private bool IsInteractButtonPressed()
     {
+        InputBridge input = InputBridge.Instance;
         switch (parentComponent.InteractButton)
         {
-            case InteractInput.XButton:
-                return InputBridge.Instance.XButtonDown;
-            case InteractInput.AButton:
-                return InputBridge.Instance.AButtonDown;
-            case InteractInput.YButton:
-                return InputBridge.Instance.YButtonDown;
-            case InteractInput.BButton:
-                return InputBridge.Instance.BButtonDown;
-            case InteractInput.RightTrigger:
-                return InputBridge.Instance.RightTriggerDown;
-            case InteractInput.LeftTrigger:
-                return InputBridge.Instance.LeftTriggerDown;
-            case InteractInput.RightGrip:
-                return InputBridge.Instance.RightGripDown;
-            case InteractInput.LeftGrip:
-                return InputBridge.Instance.LeftGripDown;
+            case InteractInput.X_AButton:
+                return (input.XButtonDown && !input.AButton) ||
+                       (input.AButtonDown && !input.XButton);
+            
+            case InteractInput.B_YButton:
+                return (input.YButtonDown && !input.BButton) ||
+                       (input.BButtonDown && !input.YButton);
+            
+            case InteractInput.Left_RightTrigger:
+                // return input.LeftTriggerDown ^ input.RightTriggerDown;
+                return (input.LeftTriggerDown && input.RightTrigger < 0.1f) ||
+                       (input.RightTriggerDown && input.LeftTrigger < 0.1f);
+            
+            case InteractInput.Left_RightGrip:
+                return (input.LeftGripDown && input.RightGrip < 0.1f) ||
+                       (input.RightGripDown && input.LeftGrip < 0.1f);
+            
             default:
                 return false;
         }
