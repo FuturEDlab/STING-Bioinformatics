@@ -4,11 +4,14 @@ using BNG;
 [ExecuteAlways]
 public class PickUpGroup : MonoBehaviour
 {
-    
+    [SerializeField] private GameObject ground;
     [SerializeField] private Collider playerCollider;
     [SerializeField] private Collider[] objectsToCollideWith;
     
+    
+    
     public Collider PlayerCollider => playerCollider;
+    public GameObject Ground => ground;
     // public Collider ObjectsToCollideWith => objectsToCollideWith;
 
     public void AddDefault_PickUpComponents(Transform Child)
