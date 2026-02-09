@@ -78,7 +78,7 @@ public class GrabStability : MonoBehaviour
     {
         // This function makes sure objects doesn't fall below floor
         // and prevents physic glitches from occuring when released
-        // object is inside the player's body.
+        // object is inside the player's body!
         
         float floorHeight = groundObj.transform.position.y;
         
