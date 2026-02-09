@@ -151,10 +151,8 @@ public class GrabStability : MonoBehaviour
             CheckTableIntersection();
             CorrectObjectPosition();
             
-            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 10f); // Prevents
             // excessive spinning when object lands on floor
-
             StartCoroutine(ReleasePhysics());
         }
         
