@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 296bd507fbc094aa49599786a106f4dc
+=======
+guid: 295f5a1d2905f4324993631648d2056c
+>>>>>>> PlayerPickup1
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
