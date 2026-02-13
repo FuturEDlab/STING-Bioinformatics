@@ -7,7 +7,7 @@ Example: Fixed a bug where players couldn’t grab certain objects due to a miss
 
 Is this related to a task/issue?
 - [ ] No
-- [ X ] Yes — Fixes #15
+- [X] Yes — Fixes #15
 
 ---
 
