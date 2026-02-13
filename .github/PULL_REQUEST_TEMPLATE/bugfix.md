@@ -5,6 +5,10 @@
 [Insert a short summary of the bug and how you fixed it]  
 Example: Fixed a bug where players couldn’t grab certain objects due to a missing collider tag.
 
+Is this related to a task/issue?
+- [ ] No
+- [ ] Yes — Change the <insert> to the ID/# of the task in the following sentence: Fixes #<insert>.
+
 ---
 
 ## How did you test it?
@@ -28,6 +32,10 @@ Tested in GrabScene on Meta Quest 2. Grabbing works now across all objects. No n
 Could this cause other problems?
 - [ ] No
 - [ ] Yes — [Briefly explain any risks here]
+
+Did you change any project settings? (Ex: Player settings, physics engine settings, quality settings references, anything in the project settings menu, etc.)
+- [ ] No
+- [ ] Yes — [Briefly explain here.]
 
 ---
 
