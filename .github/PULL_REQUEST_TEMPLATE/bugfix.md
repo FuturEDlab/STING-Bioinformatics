@@ -7,7 +7,7 @@ Example: Fixed a bug where players couldn’t grab certain objects due to a miss
 
 Is this related to a task/issue?
 - [ ] No
-- [ ] Yes — Change the <insert> to the ID/# of the task in the following sentence: Fixes #<insert>.
+- [ X ] Yes — Fixes #15
 
 ---
 
