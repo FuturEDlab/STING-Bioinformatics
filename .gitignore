@@ -8,3 +8,4 @@ UserSettings/
 *.apk
 *.aab
 
+.DS_Store
