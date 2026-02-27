@@ -4,6 +4,7 @@
     public class SettingsUIController : MonoBehaviour
     {
         // [SerializeField] private PlayerManager playManage;
+        /* NOTE: field variable above may come in handy later */
         
         [Header("Toggles")]
         public Toggle locomotion;
@@ -62,6 +63,12 @@
             locomotion.isOn = s.locomotionEnabled;
             SettingsManager.Instance.Save();
             
+            /*
+            NOTE: Comments below show a possible way to wire the settings up
+            with the Asset or GameObject when the settings can be
+            modified by the player at any point during the game.
+            */
+            
             // if (playManage == null) return;
             // playManage.WireLocomotion(locomotion.isOn);
         }
@@ -72,6 +79,12 @@
             snapTurning.isOn = s.snapTurningEnabled;
             SettingsManager.Instance.Save();
             
+            /*
+            NOTE: Comments below show a possible way to wire the settings up
+            with the Asset or GameObject when the settings can be
+            modified by the player at any point during the game.
+            */
+            
             // if (playManage == null) return;
             // playManage.WireSnapTurn(snapTurning.isOn);
         }
@@ -81,6 +94,12 @@
             s.teleportationEnabled = value;
             teleportation.isOn = s.teleportationEnabled;
             SettingsManager.Instance.Save();
+            
+            /*
+            NOTE: Comments below show a possible way to wire the settings up
+            with the Asset or GameObject when the settings can be
+            modified by the player at any point during the game.
+            */
             
             // if (playManage == null) return;
             // playManage.WireTeleport(teleportation.isOn);

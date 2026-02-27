@@ -3,17 +3,28 @@ using BNG;
 
 public class PlayerManager : MonoBehaviour
 {
+    /*
+    Look at SampleSceneV6 scene to see how this script can be used
+    and doing so will also show what should be inserted into each
+    serialized field when in the Unity Editor.
+    */
+    
     [SerializeField] private LocomotionManager locoManager;
     [SerializeField] private GameObject locoMotion;
     [SerializeField] private PlayerTeleport teleportPlayer;
     [SerializeField] private SmoothLocomotion smoothLoco;
     [SerializeField] private PlayerRotation playerRotate;
 
+    private SettingsManager sInstance;
     private SettingsData settings;
     
     void Start()
     {
+        sInstance = SettingsManager.Instance;
+        if (sInstance == null) return;
         settings = SettingsManager.Instance.CurrentSettings;
+        if (settings == null) return;
+        
         WireLocomotion(settings.locomotionEnabled);
         WireSnapTurn(settings.snapTurningEnabled);
         WireTeleport(settings.teleportationEnabled);
