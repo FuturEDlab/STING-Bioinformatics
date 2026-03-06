@@ -31,17 +31,18 @@ public class TVBehavior : MonoBehaviour
         Ray rayLeft = new Ray(leftHand.transform.position, leftHand.transform.forward);
         
         RaycastHit hit;
-        if (Physics.Raycast(rayRight, out hit, 10))
+        if (Physics.Raycast(rayRight, out hit, 20))
         {
             if (hit.collider.CompareTag("TV"))
             {
                 Debug.Log("hit TV");
                 TurnOnTV();
+                return;
             }
             // Debug.Log("TV dealioooo");
             // TurnOnTV();
         }
-        else if (Physics.Raycast(rayLeft, out hit, 10))
+        if (Physics.Raycast(rayLeft, out hit, 20))
         {
             // if (hit.collider.gameObject == gameObject)
             if (hit.collider.CompareTag("TV"))
@@ -62,6 +63,7 @@ public class TVBehavior : MonoBehaviour
             // Material[] mats = renderer.materials;
             rendMaterials[0] = silverMaterial;
             renderer.materials = rendMaterials;
+            Debug.Log($"on tv -> {renderer.materials}");
         }
         else
         {
@@ -81,5 +83,6 @@ public class TVBehavior : MonoBehaviour
     {
         rendMaterials[0] = greyGlossMaterial;
         renderer.materials = rendMaterials;
+        Debug.Log($"off tv -> {renderer.materials}");
     }
 }

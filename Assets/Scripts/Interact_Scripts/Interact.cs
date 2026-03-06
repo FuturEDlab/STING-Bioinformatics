@@ -33,6 +33,7 @@ public class Interact : MonoBehaviour
     private List<Material> rendMaterials;
     
     private InteractableGroup parentComponent;
+    private int glowMaterialIndex = -1;
     private bool glowAdded;
     private Vector3 closestPoint;
     
@@ -46,7 +47,6 @@ public class Interact : MonoBehaviour
         parentComponent = GetComponentInParent<InteractableGroup>();
         objectCollider = GetComponent<Collider>();
         renderer = GetComponent<Renderer>();
-        rendMaterials = new List<Material>(renderer.materials);
     }
 
     // Update is called once per frame
@@ -67,13 +67,19 @@ public class Interact : MonoBehaviour
 
         if (distance <= MaxGlowDistance && !glowAdded)
         {
+            rendMaterials = new List<Material>(renderer.materials);
             rendMaterials.Add(parentComponent.GlowMaterial);
+            glowMaterialIndex = rendMaterials.Count - 1;
+            // Debug.Log(rendMaterials);
             renderer.materials = rendMaterials.ToArray();
             glowAdded = true;
         }
         else if (distance > MaxGlowDistance && glowAdded)
         {
-            rendMaterials.Remove(parentComponent.GlowMaterial);
+            rendMaterials = new List<Material>(renderer.materials);
+            // rendMaterials.Remove(parentComponent.GlowMaterial);
+            rendMaterials.RemoveAt(glowMaterialIndex);
+            // Debug.Log(renderer.materials[0].color);
             renderer.materials = rendMaterials.ToArray();
             glowAdded = false;
         }
@@ -83,8 +89,8 @@ public class Interact : MonoBehaviour
         // won't work regardless.
         if (!glowAdded) return;
         
-        if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
-        // if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
+        // if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
+        if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
         {
             onInteract?.Invoke();
         }
