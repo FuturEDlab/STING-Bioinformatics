@@ -27,6 +27,9 @@ public class TVBehavior : MonoBehaviour
         
         rendMaterials = renderer.materials;
         
+        // rightHand.gameObject.SetActive(true);
+        // leftHand.gameObject.SetActive(true);
+        
         Ray rayRight = new Ray(rightHand.transform.position, rightHand.transform.forward);
         Ray rayLeft = new Ray(leftHand.transform.position, leftHand.transform.forward);
         

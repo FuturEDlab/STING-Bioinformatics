@@ -40,8 +40,8 @@ public class Draggable : MonoBehaviour
         // currentPosition = playerController.transform.position;
         // delta = currentPosition - lastPosition;
 
-        if (Input.GetKey(KeyCode.B))
-        // if (OnlyLeftGripPressed())
+        // if (Input.GetKey(KeyCode.B))
+        if (OnlyLeftGripPressed())
         {
             // currentPosition = playerController.transform.position;
             // delta = currentPosition - lastPosition;
@@ -91,19 +91,21 @@ public class Draggable : MonoBehaviour
             // }
         }
         
-        if (Input.GetKeyUp(KeyCode.B))
+        // if (Input.GetKeyUp(KeyCode.B))
+        if (input.LeftGrip < 0.1f && transform.parent != originalParent)
         {
             transform.SetParent(originalParent);
         }
 
-        if (Input.GetKey(KeyCode.X))
-        // if (OnlyRightGripPressed())
+        // if (Input.GetKey(KeyCode.X))
+        if (OnlyRightGripPressed())
         {
             // Debug.Log("right hand touching while right button down");
             transform.SetParent(playerController.transform);
         }
         
-        if (Input.GetKeyUp(KeyCode.X))
+        if (input.RightGrip < 0.1f && transform.parent != originalParent)
+        // if (Input.GetKeyUp(KeyCode.X))
         {
             transform.SetParent(originalParent);
         }
