@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using BNG;
+using Unity.VisualScripting;
+using System.Collections;
 
 public class Draggable : MonoBehaviour
 {
@@ -9,6 +12,10 @@ public class Draggable : MonoBehaviour
 
     private bool touchingRight;
     private bool touchingLeft;
+
+    private Collider coll;
+
+    // private Collider playerColl;
     // private bool isDragging = false;
     private bool isDraggingLeft = false;
     private bool isDraggingRight = false;
@@ -28,10 +35,22 @@ public class Draggable : MonoBehaviour
     private Transform originalParent;
     private Quaternion lastRotation;
     private CharacterController characterController;
+    private Vector3 smoothedDelta;
+    private Vector3 cachedLeftHandPosition;
+    // private JointHelper jntHelper;
+    private int originalLayer;
+    private Vector3 targetPosition;
+    private Vector3 lastMonitorPosition;
+    [SerializeField]
+    private float springStrength = 1000f;
+    [SerializeField]
+    private float damping = 100f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+   
+         
         dragGroup = GetComponentInParent<DraggableGroup>();
         input = InputBridge.Instance;
         if (!input) return;
@@ -41,7 +60,12 @@ public class Draggable : MonoBehaviour
         lastPositionLeft = dragGroup.LeftHand.transform.position;
         lastPositionRight = dragGroup.RightHand.transform.position;
         rb = GetComponent<Rigidbody>();
+        // if (!rb) return;
         originalParent = transform.parent;
+        coll = GetComponent<Collider>();
+        lastMonitorPosition = transform.position;
+        originalLayer = gameObject.layer;
+        // jntHelper = GetComponent<JointHelper>();
         // lastRotation = playerController.transform.rotation;
         // characterController = playerController.GetComponent<CharacterController>();
         // if (characterController)
@@ -50,124 +74,180 @@ public class Draggable : MonoBehaviour
         // }
     }
 
+    // void OnControllerColliderHit(ControllerColliderHit hit)
+    // {
+    //     Rigidbody rigidB = hit.collider.attachedRigidbody;
+    //     
+    //     if (hit.collider.CompareTag("TV"))
+    //     {
+    //         Debug.Log($"hit player info: {hit.moveDirection}");
+    //         if (rigidB != null)
+    //         {
+    //             Vector3 forceDir = hit.gameObject.transform.position - transform.position;
+    //             forceDir.y = 0f;
+    //             forceDir.Normalize();
+    //             
+    //             rigidB.AddForceAtPosition(forceDir * 1, transform.position, ForceMode.Impulse);
+    //         }
+    //     }
+    // }
+
+
+    // void Update()
+    // {
+    //     
+    //     // Vector3 playerDelta = dragGroup.LeftHand.transform.position - lastPositionLeft;
+    //     // Vector3 monitorDelta = transform.position - lastMonitorPosition;
+    //     //
+    //     // transform.position += new Vector3(playerDelta.x, 0, playerDelta.z);
+    //     //
+    //     // Debug.Log($"Player delta: {playerDelta} | Monitor delta: {monitorDelta}");
+    //     //
+    //     // lastPositionLeft = dragGroup.LeftHand.transform.position;
+    //     // lastMonitorPosition = transform.position;
+    //     
+    //     // currentPosition = dragGroup.LeftHand.transform.position;
+    //     // deltaLeft = currentPosition - lastPositionLeft;
+    //     // lastPositionLeft = currentPosition;
+    //
+    //     if (!touchingLeft && !touchingRight) return;
+    //     
+    //     currentPosition = dragGroup.LeftHand.transform.position;
+    //     deltaLeft = currentPosition - lastPositionLeft;
+    //     lastPositionLeft = currentPosition;
+    //
+    //     if (Input.GetKey(KeyCode.B))
+    //     {
+    //         rb.isKinematic = true;
+    //         Debug.Log($"delta: {deltaLeft} | magnitude: {deltaLeft.magnitude} | monitor pos: {transform.position}");
+    //         if (deltaLeft.magnitude > 0.001f)
+    //         {
+    //             transform.position += new Vector3(deltaLeft.x, 0, deltaLeft.z);
+    //         }
+    //     }
+    //
+    //     if (Input.GetKeyUp(KeyCode.B))
+    //     {
+    //         rb.isKinematic = false;
+    //     }
+    // }
+    //
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     // Tags LeftHand and RightHand are associated with the Grabber child objects
+    //     // from LeftController object and RightController object (XR Rig Full Body,
+    //     // the parent object, contains these 2 Controller objects)
+    //     
+    //     if (other.CompareTag("LeftHand"))
+    //     {
+    //         touchingLeft = true;
+    //         // rb.isKinematic = true;
+    //         // transform.SetParent(playerController.transform);
+    //     }
+    //     else if (other.CompareTag("RightHand"))
+    //     {
+    //         touchingRight = true;
+    //         // rb.isKinematic = true;
+    //         // transform.SetParent(playerController.transform);
+    //     }
+    //
+    //     // if (!touchingLeft && !touchingRight) return;
+    //
+    //     // IsDragButtonPressed();
+    //     
+    //     // touchingLeft = false;
+    //     // touchingRight = false;
+    // }
+    //
+    // void OnTriggerExit(Collider other)
+    // {
+    //     // Tags LeftHand and RightHand are associated with the Grabber child objects
+    //     // from LeftController object and RightController object (XR Rig Full Body,
+    //     // the parent object, contains these 2 controller objects)
+    //     
+    //     if (other.CompareTag("LeftHand"))
+    //     {
+    //         touchingLeft = false;
+    //         // rb.isKinematic = false;
+    //         // transform.SetParent(originalParent);
+    //     }
+    //     else if (other.CompareTag("RightHand"))
+    //     {
+    //         touchingRight = false;
+    //         // rb.isKinematic = false;
+    //         // transform.SetParent(originalParent);
+    //     }
+    // }
+
+    
     // Update is called once per frame
     void Update()
     {
-        // transform.SetParent(playerController.transform);
+        // Vector3 playerDelta = dragGroup.LeftHand.transform.position - lastPositionLeft;
+        // Vector3 monitorDelta = transform.position - lastMonitorPosition;
+        //
+        // transform.position += new Vector3(playerDelta.x, 0, playerDelta.z);
+        //
+        // Debug.Log($"Player delta: {playerDelta} | Monitor delta: {monitorDelta}");
+        //
+        // lastPositionLeft = dragGroup.LeftHand.transform.position;
+        // lastMonitorPosition = transform.position;
         
-        // currentPosition = playerController.transform.position;
-        // delta = currentPosition - lastPosition;
+        if (!touchingLeft && !touchingRight) return;
         
-        // if (delta.magnitude > 0.001f)
+        // Vector3 playerDelta = dragGroup.LeftHand.transform.position - lastPositionLeft;
+        // Vector3 monitorDelta = rb.position - lastMonitorPosition;
+        //
+        // Debug.Log($"Player delta: {playerDelta} | Monitor delta: {monitorDelta}");
+        //
+        // lastPositionLeft = dragGroup.LeftHand.transform.position;
+        // lastMonitorPosition = rb.position;
+        
+        // cachedLeftHandPosition = dragGroup.LeftHand.transform.position;
+
+        // if (touchingLeft)
         // {
-        //     Debug.Log("should be moving monitor");
-        //     // rb.MovePosition(rb.position + new Vector3(delta.x, 0, delta.z));
-        //     transform.position += new Vector3(delta.x, 0, delta.z);
+        //     currentPositionLeft = dragGroup.LeftHand.transform.position;
+        //     deltaLeft = currentPositionLeft - lastPositionLeft;
         // }
-        //
-        // lastPosition = currentPosition;
-
-        if (!touchingRight && !touchingRight) return;
-
-        if (touchingLeft)
-        {
-            currentPositionLeft = dragGroup.LeftHand.transform.position;
-            deltaLeft = currentPositionLeft - lastPositionLeft;
-        }
-        if (touchingRight)
-        {
-            currentPositionRight = dragGroup.RightHand.transform.position;
-            deltaRight = currentPositionRight - lastPositionRight;
-        }
-        
-        // currentPosition = playerController.transform.position;
-        // delta = currentPosition - lastPosition;
-        //
-        // if (delta.magnitude >= 0.001f)
+        // if (touchingRight)
         // {
-        //     Debug.Log("should be moving monitor");
-        //     rb.MovePosition(rb.position + new Vector3(delta.x, 0, delta.z));
+        //     currentPositionRight = dragGroup.RightHand.transform.position;
+        //     deltaRight = currentPositionRight - lastPositionRight;
         // }
         
-        Vector3 playerVelocity = characterController.velocity;
+        // currentPosition = playerController.transform.position;
+        // delta = currentPosition - lastPosition;
+        // Vector3 playerVelocity = characterController.velocity;
         
         // currentPosition = playerController.transform.position;
         // delta = currentPosition - lastPosition;
 
-        if (Input.GetKeyDown(KeyCode.B))
-        // if (OnlyLeftGripPressed())
+        // if (Input.GetKeyDown(KeyCode.B))
+        if (OnlyLeftGripPressed())
         {
-            // Debug.Log($"velocity: {playerVelocity}");
-            // Debug.Log($"magnitude: {playerVelocity.magnitude}");
-            // if (delta.magnitude > 0.001f)
-            // {
-            //     Debug.Log("should be moving monitor"); 
-
-            if (touchingLeft)
-            {
-                isDraggingLeft = true;
-                // transform.SetParent(dragGroup.LeftHand.transform);
-            }
-            // if (touchingRight)
-            // {
-            //     // isDraggingRight = true;
-            //     // transform.SetParent(dragGroup.RightHand.transform);
-            // }
-            //
-            // lastRotation = playerController.transform.rotation;
-            // isDragging = true;
-                // transform.position += new Vector3(delta.x, 0, delta.z);
-                // rb.MovePosition(rb.position + new Vector3(delta.x, 0, delta.z));
-            
-            // if (Quaternion.Angle(playerController.transform.rotation, lastRotation) > 0.1f) {
-            //     Debug.Log($"player rotated while grabbing");
-            //     transform.SetParent(originalParent);
-            //     lastRotation = playerController.transform.rotation;
-            // }
-            // Debug.Log(playerController.transform);
-            // if (Quaternion.Angle(playerController.transform.rotation, lastRotation) > 0.1f)
-            // if (playerController.transform.position == lastPosition)
-            // { 
-            //     // Debug.Log($"player only rotating");
-            //     Debug.Log($"player position moving");
-            //     // lastRotation = playerController.transform.rotation;
-            //     lastPosition = playerController.transform.position;
-            //     // transform.SetParent(originalParent);
-            //     transform.SetParent(originalParent);
-            // }
-            // else
-            // {
-            //     transform.SetParent(originalParent);
-            //     // transform.SetParent(playerController.transform);
-            // }
-            // Vector3 currentRotation = transform.eulerAngles;
-            // transform.eulerAngles = new Vector3(0f, 0f, 0f);
-            // transform.rotation.y = Quaternion.identity;
-
-            // isDragging = true;
-            // lastPosition = playerController.transform.position;
-            // delta = playerController.transform.position - lastPosition;
-            // rb.MovePosition(rb.position + new Vector3(delta.x, 0, delta.z));
-            // lastPosition = playerController.transform.position;
-
+            // jntHelper.enabled = true;
             // if (touchingLeft)
             // {
-            //     transform.SetParent(playerController.transform);
+                // jntHelper.enabled = true;
+            isDraggingLeft = true;
+            Physics.IgnoreCollision(coll, dragGroup.PlayerCollider, true);
+            // gameObject.layer = LayerMask.NameToLayer("Grabb");
+                // lastPositionLeft = cachedLeftHandPosition;
+                // smoothedDelta = Vector3.zero;
+                // transform.SetParent(dragGroup.LeftHand.transform);
             // }
-            // else
-            // {
-            //     transform.SetParent(originalParent);
-            // }
+            // rb.MovePosition(rb.position + new Vector3(delta.x, 0, delta.z));
         }
 
-        if (isDraggingLeft)
-        {
-            if (deltaLeft.magnitude >= 0.001f)
-            {
-                // Debug.Log("should be moving monitor");
-                transform.position += new Vector3(deltaLeft.x, 0, deltaLeft.z);
-            }
-        }
+        // if (isDraggingLeft)
+        // {
+        //     // if (deltaLeft.magnitude > 0.001f)
+        //     // {
+        //         // Debug.Log("should be moving monitor");
+        //     transform.position += new Vector3(deltaLeft.x, 0, deltaLeft.z);
+        //     // }
+        // }
         
         // if (isDragging)
         // {
@@ -179,32 +259,68 @@ public class Draggable : MonoBehaviour
         //     }
         // }
         
-        if (Input.GetKeyUp(KeyCode.B))
-        // if (input.LeftGrip < 0.1f && transform.parent != originalParent)
+        // if (Input.GetKeyUp(KeyCode.B))
+        if (input.LeftGrip < 0.1f)
         {
             // transform.SetParent(originalParent);
             isDraggingLeft = false;
+            StartCoroutine(ReleasePhysics());
+            // Physics.IgnoreCollision(coll, dragGroup.PlayerCollider, false);
+            // jntHelper.enabled = false;
             // isDragging = false;
             // rb.isKinematic = false;
         }
+        
+        if (isDraggingLeft)
+        {
+            Vector3 handPos = dragGroup.LeftHand.transform.position;
 
-        lastPosition = currentPosition;
-        // lastRotation = playerController.transform.rotation;
+            // Keep object on floor plane
+            targetPosition = new Vector3(handPos.x, transform.position.y, handPos.z);
+        }
 
-        // lastRotation = playerController.transform.rotation;
+        // lastPosition = currentPosition;
+        // lastPositionLeft = currentPositionLeft;
+    }
+    
+    void FixedUpdate()
+    {
+        if (!isDraggingLeft) return;
+        
+        Vector3 force = (targetPosition - rb.position) * springStrength;
 
-        // if (Input.GetKey(KeyCode.X))
-        // if (OnlyRightGripPressed())
+        rb.AddForce(force - rb.linearVelocity * damping, ForceMode.Acceleration);
+        
+        // currentPositionLeft = cachedLeftHandPosition;
+        // deltaLeft = currentPositionLeft - lastPositionLeft;
+
+        // if (deltaLeft.magnitude < 0.001f)
         // {
-        //     // Debug.Log("right hand touching while right button down");
-        //     transform.SetParent(playerController.transform);
+        //     deltaLeft = Vector3.zero;
         // }
         //
-        // // if (input.RightGrip < 0.1f && transform.parent != originalParent)
-        // if (Input.GetKeyUp(KeyCode.X))
-        // {
-        //     transform.SetParent(originalParent);
-        // }
+        // smoothedDelta = Vector3.Lerp(smoothedDelta, deltaLeft, 0.5f);
+        //
+        // rb.MovePosition(rb.position + new Vector3(smoothedDelta.x, 0, smoothedDelta.z));
+        //
+        // lastPositionLeft = currentPositionLeft;
+
+        // currentPositionLeft = dragGroup.LeftHand.transform.position;
+        // deltaLeft = currentPositionLeft - lastPositionLeft;
+        //
+        // rb.MovePosition(rb.position + new Vector3(deltaLeft.x, 0, deltaLeft.z));
+        // // transform.position += new Vector3(deltaLeft.x, 0, deltaLeft.z);
+        //
+        // lastPositionLeft = currentPositionLeft;
+    }
+    
+    private IEnumerator ReleasePhysics()
+    {
+        // Keep collisions ignored for one physics step
+        yield return new WaitForFixedUpdate();
+        
+        Physics.IgnoreCollision(coll, dragGroup.PlayerCollider, false);
+        gameObject.layer = originalLayer;
     }
     
     void OnTriggerEnter(Collider other)
@@ -255,7 +371,8 @@ public class Draggable : MonoBehaviour
         if (!touchingLeft) return false;
 
         // return (input.LeftGrip > 0.9f && input.RightGrip < 0.1f);
-        return input.LeftGrip > 0.9f;
+        // return input.LeftGrip > 0.9f;
+        return input.LeftGripDown;
 
         // bool isPressed = false;
         //
@@ -299,4 +416,5 @@ public class Draggable : MonoBehaviour
         }
         
     }
+    
 }
