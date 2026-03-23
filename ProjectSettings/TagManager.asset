@@ -8,6 +8,7 @@ TagManager:
   - RightHand
   - Table
   - TV
+  - ETerminal
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Grabb
   - 
   - Collidable
-  - 
+  - wheel
   - 
   - 
   - 
