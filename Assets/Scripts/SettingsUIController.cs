@@ -3,9 +3,12 @@
 
     public class SettingsUIController : MonoBehaviour
     {
-        // [SerializeField] private PlayerManager playManage;
-        /* NOTE: field variable above may come in handy later */
-        
+        [Header("Audio Sliders")]
+        public Slider masterVolume;
+        public Slider backgroundVolume;
+        public Slider narrationVolume;
+        public Slider sfxVolume;
+
         [Header("Toggles")]
         public Toggle locomotion;
         public Toggle snapTurning;
@@ -13,117 +16,89 @@
         public Toggle vignetting;
         public Toggle subtitles;
 
-        private SettingsData s;
-
-        private void HookUpControls()
-        {
-            if (locomotion != null) {
-                locomotion.onValueChanged.RemoveListener(SetLocoMotion);
-                locomotion.onValueChanged.AddListener(SetLocoMotion);
-            }
-
-            if (snapTurning != null) {
-                snapTurning.onValueChanged.RemoveListener(SetSnapTurning);
-                snapTurning.onValueChanged.AddListener(SetSnapTurning);
-            }
-
-            if (teleportation != null) {
-                teleportation.onValueChanged.RemoveListener(SetTeleportation);
-                teleportation.onValueChanged.AddListener(SetTeleportation);
-            }
-
-            if (vignetting != null) {
-                vignetting.onValueChanged.RemoveListener(SetVignetting);
-                vignetting.onValueChanged.AddListener(SetVignetting);
-            }
-            
-            if (subtitles != null) {
-                subtitles.onValueChanged.RemoveListener(SetSubtitles);
-                subtitles.onValueChanged.AddListener(SetSubtitles);
-            }
-        }
-
         void Start()
         {
-            s = SettingsManager.Instance.CurrentSettings;
+            var s = SettingsManager.Instance.CurrentSettings;
 
             // Initialize UI from saved settings
+            masterVolume.value = s.masterVolume;
+            backgroundVolume.value = s.backgroundVolume;
+            narrationVolume.value = s.narrationVolume;
+            sfxVolume.value = s.sfxVolume;
+
             locomotion.isOn = s.locomotionEnabled;
             snapTurning.isOn = s.snapTurningEnabled;
             teleportation.isOn = s.teleportationEnabled;
             vignetting.isOn = s.vignettingEnabled;
             subtitles.isOn = s.subtitlesEnabled;
-            
-            HookUpControls();
         }
-        
-        private void SetLocoMotion(bool value)
+
+        // --- AUDIO ---
+        public void OnMasterVolumeChanged(float value)
         {
-            s.locomotionEnabled = value;
-            locomotion.isOn = s.locomotionEnabled;
-            SettingsManager.Instance.Save();
-            
-            /*
-            NOTE: Comments below show a possible way to wire the settings up
-            with the Asset or GameObject when the settings can be
-            modified by the player at any point during the game.
-            */
-            
-            // if (playManage == null) return;
-            // playManage.WireLocomotion(locomotion.isOn);
-        }
-        
-        private void SetSnapTurning(bool value)
-        {
-            s.snapTurningEnabled = value;
-            snapTurning.isOn = s.snapTurningEnabled;
-            SettingsManager.Instance.Save();
-            
-            /*
-            NOTE: Comments below show a possible way to wire the settings up
-            with the Asset or GameObject when the settings can be
-            modified by the player at any point during the game.
-            */
-            
-            // if (playManage == null) return;
-            // playManage.WireSnapTurn(snapTurning.isOn);
-        }
-        
-        private void SetTeleportation(bool value)
-        {
-            s.teleportationEnabled = value;
-            teleportation.isOn = s.teleportationEnabled;
-            SettingsManager.Instance.Save();
-            
-            /*
-            NOTE: Comments below show a possible way to wire the settings up
-            with the Asset or GameObject when the settings can be
-            modified by the player at any point during the game.
-            */
-            
-            // if (playManage == null) return;
-            // playManage.WireTeleport(teleportation.isOn);
-        }
-        
-        private void SetVignetting(bool value)
-        {
-            s.vignettingEnabled = value;
-            vignetting.isOn = s.vignettingEnabled;
-            SettingsManager.Instance.Save();
-            
-            // TODO: Wire up with post-processing vignette effect to turn off/on.
-            // You can either wire it up here or in the WireVignetting method in
-            // 'PlayerManager.cs' script
-        }
-        
-        private void SetSubtitles(bool value)
-        {
-            s.subtitlesEnabled = value;
-            subtitles.isOn = s.subtitlesEnabled;
+            SettingsManager.Instance.CurrentSettings.masterVolume = value;
             SettingsManager.Instance.Save();
 
-            // TODO: Wire up with subtitle display system to show/hide subtitles.
-            // You can either wire it up here or in the WireSubtitles method in
-            // 'PlayerManager.cs' script
+        }
+
+        public void OnBackgroundVolumeChanged(float value)
+        {
+            SettingsManager.Instance.CurrentSettings.backgroundVolume = value;
+            SettingsManager.Instance.Save();
+
+        }
+
+        public void OnNarrationVolumeChanged(float value)
+        {
+            SettingsManager.Instance.CurrentSettings.narrationVolume = value;
+            SettingsManager.Instance.Save();
+
+            // TODO: Apply to narration audio
+        }
+
+        public void OnSFXVolumeChanged(float value)
+        {
+            SettingsManager.Instance.CurrentSettings.sfxVolume = value;
+            SettingsManager.Instance.Save();
+
+        }
+
+        // --- TOGGLES ---
+        public void OnLocomotionChanged(bool value)
+        {
+            SettingsManager.Instance.CurrentSettings.locomotionEnabled = value;
+            SettingsManager.Instance.Save();
+        }
+
+        public void OnSnapTurningChanged(bool value)
+        {
+            SettingsManager.Instance.CurrentSettings.snapTurningEnabled = value;
+            SettingsManager.Instance.Save();
+
+            // TODO: Apply to XR snap turn provider
+        }
+
+        public void OnTeleportationChanged(bool value)
+        {
+            SettingsManager.Instance.CurrentSettings.teleportationEnabled = value;
+            SettingsManager.Instance.Save();
+
+            // TODO: Enable/disable teleport provider
+        }
+
+        public void OnVignettingChanged(bool value)
+        {
+            SettingsManager.Instance.CurrentSettings.vignettingEnabled = value;
+            SettingsManager.Instance.Save();
+
+            // TODO: Toggle vignette post-processing
+        }
+
+        public void OnSubtitlesChanged(bool value)
+        {
+            SettingsManager.Instance.CurrentSettings.subtitlesEnabled = value;
+            SettingsManager.Instance.Save();
+
+            // TODO: Toggle subtitle UI
         }
     }
