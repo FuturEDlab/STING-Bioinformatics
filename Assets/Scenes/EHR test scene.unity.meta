@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/EHR test scene.unity.meta
 guid: 1de8993d1e5ce49cea8b4af5ae49d1cf
+========
+guid: 6b7c730d226254c80be8cb9084f22a5f
+>>>>>>>> FixSettingsPage:Assets/Scenes/Hospital Room.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
