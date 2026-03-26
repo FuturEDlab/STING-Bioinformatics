@@ -89,8 +89,8 @@ public class Interact : MonoBehaviour
         // won't work regardless.
         if (!glowAdded) return;
         
-        if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
-        // if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
+        // if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
+        if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
         {
             onInteract?.Invoke();
         }

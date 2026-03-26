@@ -83,24 +83,24 @@ public class GrabStability : MonoBehaviour
         float floorHeight = groundObj.transform.position.y;
         
         // Check if object is intersecting with player
-        if (coll.bounds.Intersects(playerColl.bounds))
-        {
-            // Calculate spawn distance based on object and player size
-            float objectRadius = Mathf.Max(coll.bounds.extents.x, coll.bounds.extents.z);
-            float playerRadius = Mathf.Max(playerColl.bounds.extents.x, playerColl.bounds.extents.z);
-            float spawnDistance = objectRadius + playerRadius + 0.5f; // Add buffer for safety
-        
-            // Spawn right side of player
-            Vector3 playerRight = playerColl.transform.right;
-            Vector3 spawnPos = playerColl.transform.position + playerRight * spawnDistance;
-            spawnPos.y = floorHeight + coll.bounds.extents.y; // Place on floor
-            transform.position = spawnPos;
-        
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
+        // if (coll.bounds.Intersects(playerColl.bounds))
+        // {
+        //     // Calculate spawn distance based on object and player size
+        //     float objectRadius = Mathf.Max(coll.bounds.extents.x, coll.bounds.extents.z);
+        //     float playerRadius = Mathf.Max(playerColl.bounds.extents.x, playerColl.bounds.extents.z);
+        //     float spawnDistance = objectRadius + playerRadius + 0.5f; // Add buffer for safety
+        //
+        //     // Spawn right side of player
+        //     Vector3 playerRight = playerColl.transform.right;
+        //     Vector3 spawnPos = playerColl.transform.position + playerRight * spawnDistance;
+        //     spawnPos.y = floorHeight + coll.bounds.extents.y; // Place on floor
+        //     transform.position = spawnPos;
+        //
+        //     rb.linearVelocity = Vector3.zero;
+        //     rb.angularVelocity = Vector3.zero;
+        // }
         // Check if object's bottom is below floor (and not in player)
-        else if (coll.bounds.min.y < floorHeight)
+        if (coll.bounds.min.y < floorHeight)
         {
             // Snap bottom of object to floor surface
             Vector3 pos = transform.position;
@@ -117,7 +117,7 @@ public class GrabStability : MonoBehaviour
         // Keep collisions ignored for one physics step
         yield return new WaitForFixedUpdate();
         
-        Physics.IgnoreCollision(coll, playerColl, false);
+        // Physics.IgnoreCollision(coll, playerColl, false);
         gameObject.layer = originalLayer;
     }
     
@@ -130,6 +130,8 @@ public class GrabStability : MonoBehaviour
         originalLayer = gameObject.layer;
         playerColl = parentObject.PlayerCollider;
         groundObj = parentObject.Ground;
+        
+        Physics.IgnoreCollision(coll, playerColl, true);
     }
 
     void Update()
@@ -137,11 +139,13 @@ public class GrabStability : MonoBehaviour
 
         if (!grabbable || !rb) return;
         if (!groundObj) return;
+
+        // Debug.Log(grabbable.RemoteGrabDistance);
         
         // started grabbing object
         if (!wasHeldLastFrame && grabbable.BeingHeld)
         {
-            Physics.IgnoreCollision(coll, playerColl, true);
+            // Physics.IgnoreCollision(coll, playerColl, true);
             gameObject.layer = LayerMask.NameToLayer("Grabb");
         }
 
