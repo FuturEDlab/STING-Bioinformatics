@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+// using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -25,29 +25,12 @@ public class SoundManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // Apply settings early
-        LoadFromSettings();
-
-        // Re-apply when any scene loads
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Start()
     {
+        ApplySavedSettings();
         HookUpSliders();
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Re-apply saved settings after scene load
-        LoadFromSettings();
-        Debug.Log($"SoundManager: Re-applied audio settings for scene {scene.name}");
     }
 
     void HookUpSliders()
@@ -73,7 +56,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void LoadFromSettings()
+    void ApplySavedSettings()
     {
         var s = SettingsManager.Instance.CurrentSettings;
 
