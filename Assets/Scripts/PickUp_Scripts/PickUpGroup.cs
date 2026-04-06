@@ -1,5 +1,6 @@
 using UnityEngine;
 using BNG;
+using System.Collections.Generic;
 
 [ExecuteAlways]
 public class PickUpGroup : MonoBehaviour
@@ -7,12 +8,28 @@ public class PickUpGroup : MonoBehaviour
     [SerializeField] private GameObject ground;
     [SerializeField] private Collider playerCollider;
     [SerializeField] private Collider[] objectsToCollideWith;
+    [SerializeField] private List<Collider> ignoreObjectsTemp;
+    // [SerializeField] private Collider[] objectsToCollideWith;
     
     
     
     public Collider PlayerCollider => playerCollider;
+    // public Collider LeftGrabberCollider => leftGrabberCollider;
+    // public Collider RightGrabberCollider => rightGrabberCollider;
     public GameObject Ground => ground;
     // public Collider ObjectsToCollideWith => objectsToCollideWith;
+    public List<Collider> IgnoreObjectsTemp => ignoreObjectsTemp;
+    
+    void Start()
+    {
+        if (!Application.isPlaying) return;
+        
+        if (ignoreObjectsTemp == null || ignoreObjectsTemp.Count == 0) return;
+        foreach (Collider c in ignoreObjectsTemp)
+        {
+            c.gameObject.layer = LayerMask.NameToLayer("Collidable");
+        }
+    }
 
     public void AddDefault_PickUpComponents(Transform Child)
     {
