@@ -12,6 +12,7 @@ public class TVBehavior : MonoBehaviour
     private Collider objectCollider;
     // private List<Material> rendMaterials;
     private Material[] rendMaterials;
+    private const string interactStr = "Interact";
     
     void Start()
     {
@@ -36,7 +37,7 @@ public class TVBehavior : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayRight, out hit, 20))
         {
-            if (hit.collider.CompareTag("TV"))
+            if (hit.collider.CompareTag(interactStr))
             {
                 Debug.Log("hit TV");
                 TurnOnTV();
@@ -48,7 +49,7 @@ public class TVBehavior : MonoBehaviour
         if (Physics.Raycast(rayLeft, out hit, 20))
         {
             // if (hit.collider.gameObject == gameObject)
-            if (hit.collider.CompareTag("TV"))
+            if (hit.collider.CompareTag(interactStr))
             {
                 Debug.Log("hit TV");
                 TurnOnTV();

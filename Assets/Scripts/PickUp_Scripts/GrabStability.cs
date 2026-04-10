@@ -218,7 +218,7 @@ public class GrabStability : MonoBehaviour
         
         wasHeldLastFrame = grabbable.BeingHeld;
         
-        Debug.Log(string.Join(", ", inTriggerDict.Values));
+        // Debug.Log(string.Join(", ", inTriggerDict.Values));
     }
     
     void OnTriggerEnter(Collider other)
