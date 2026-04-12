@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PickUpGroup : MonoBehaviour
 {
     [SerializeField] private GameObject ground;
+    [SerializeField] private TableGroup tables;
     [SerializeField] private Collider playerCollider;
     [SerializeField] private Collider[] objectsToCollideWith;
     [SerializeField] private List<Collider> ignoreObjectsTemp;
@@ -19,6 +20,7 @@ public class PickUpGroup : MonoBehaviour
     public GameObject Ground => ground;
     // public Collider ObjectsToCollideWith => objectsToCollideWith;
     public List<Collider> IgnoreObjectsTemp => ignoreObjectsTemp;
+    public TableGroup TablesGroup => tables;
     
     void Start()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -19,27 +20,33 @@ public class GrabStability : MonoBehaviour
     private float floorHeight;
     private float posY_Placement;
     Dictionary<Collider, bool> inTriggerDict = new Dictionary<Collider, bool>();
+    private List<Collider> tables;
+    private bool belowTableSurface;
+    private Collider interactedTable;
     
     private void CheckTableIntersection()
     {
         // This function determines whether an object should drop below table
         // or snap back on top of table.
 
-        bool isTable;
+        // bool isTable;
         
         // Find nearby table colliders
-        Collider[] nearbyColliders = Physics.OverlapBox(coll.bounds.center, coll.bounds.extents, transform.rotation);
-    
-        foreach (Collider nearbyCol in nearbyColliders)
-        {
-            isTable = nearbyCol.CompareTag("Table");
         
-            if (!isTable) continue;
+        // Collider[] nearbyColliders = Physics.OverlapBox(coll.bounds.center, coll.bounds.extents, transform.rotation);
+    
+        foreach (Collider tableColl in tables)
+        {
+            // isTable = tableColl.CompareTag("Table");
+            //
+            // if (!isTable) continue;
 
             // When released object isn't intersecting with any tables in scene
-            if (!coll.bounds.Intersects(nearbyCol.bounds)) continue;
+            if (!coll.bounds.Intersects(tableColl.bounds)) continue;
             
-            float tableSurfaceY = nearbyCol.bounds.max.y;
+            // tableColl.isTrigger = true;
+            
+            float tableSurfaceY = tableColl.bounds.max.y;
             float objectCenterY = coll.bounds.center.y;
         
             Vector3 pos = transform.position;
@@ -53,6 +60,10 @@ public class GrabStability : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
                 break;
             }
+
+            // tableColl.isTrigger = true;
+            belowTableSurface = true;
+            interactedTable = tableColl;
             
             // Center is below - teleport right side of player
             // float objectRadius = Mathf.Max(coll.bounds.extents.x, coll.bounds.extents.z);
@@ -131,6 +142,9 @@ public class GrabStability : MonoBehaviour
         ignoreObjsTemp = parentObject.IgnoreObjectsTemp;
         rb.solverIterations = 12;
         rb.solverVelocityIterations = 6;
+        tables = parentObject.TablesGroup.Tables;
+        
+        // Debug.Log(parentObject.TablesGroup.Tables[2].name);
         
         if (ignoreObjsTemp == null || ignoreObjsTemp.Count == 0) return;
         foreach (Collider c in ignoreObjsTemp)
@@ -146,6 +160,8 @@ public class GrabStability : MonoBehaviour
         // executes. This is for prevention of collider physics issues when releasing the object during intersection.
         
         // UPDATE: Continue testing TODO functionality from above.
+        
+        // Debug.Log($"belowTableSurf: {belowTableSurface}");
 
         if (!grabbable || !rb) return;
         if (!groundObj) return;
@@ -164,6 +180,7 @@ public class GrabStability : MonoBehaviour
             // Physics.IgnoreCollision(coll, playerColl, true);
             gameObject.layer = LayerMask.NameToLayer("Grabb");
             
+            
             // ignoreObjsTemp.RemoveAll(c => !c);
 
             if (inTriggerDict.Count > 0)
@@ -172,7 +189,7 @@ public class GrabStability : MonoBehaviour
                 foreach (Collider colli in ignoreObjsTemp)
                 {
                     if (colli == null) continue;
-                    Debug.Log($"{colli.isTrigger} is active");
+                    // Debug.Log($"{colli.isTrigger} is active");
                     colli.isTrigger = true;
                 }
             }
@@ -205,7 +222,7 @@ public class GrabStability : MonoBehaviour
                 foreach (Collider colli in ignoreObjsTemp)
                 {
                     if (colli == null) continue;
-                    Debug.Log($"{colli.isTrigger} is active");
+                    // Debug.Log($"{colli.isTrigger} is active");
                     if (inTriggerDict[colli]) continue;
                     colli.isTrigger = inTriggerDict[colli];
                 }
@@ -213,14 +230,42 @@ public class GrabStability : MonoBehaviour
             
             rb.angularVelocity = Vector3.ClampMagnitude(rb.angularVelocity, 10f); // Prevents
             // excessive spinning when object lands on floor
-            StartCoroutine(ReleasePhysics());
+
+            if (!belowTableSurface)
+            {
+                StartCoroutine(ReleasePhysics());
+            }
+        }
+
+        if (belowTableSurface)
+        {
+            if (!coll.bounds.Intersects(interactedTable.bounds))
+            {
+                StartCoroutine(ReleasePhysics());
+                belowTableSurface = false;
+            }
         }
         
         wasHeldLastFrame = grabbable.BeingHeld;
         
         // Debug.Log(string.Join(", ", inTriggerDict.Values));
     }
-    
+
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     throw new NotImplementedException();
+    // }
+
+    // private void OnCollisionExit(Collision other)
+    // {
+    //     // if (belowTableSurface)
+    //     //
+    //     // if (tables.Contains(other.collider))
+    //     // {
+    //     //     other.isTrigger = false;
+    //     // }
+    // }
+
     void OnTriggerEnter(Collider other)
     {
         
@@ -251,6 +296,11 @@ public class GrabStability : MonoBehaviour
         {
             other.isTrigger = false;
         }
+        
+        // if (tables.Contains(other))
+        // {
+        //     other.isTrigger = false;
+        // }
         
     }
 }
