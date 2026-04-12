@@ -12,15 +12,15 @@ public class KeyBoardBehavior : MonoBehaviour
     private Material[] rendMaterials;
     private const string interactStr = "Interact";
     private int screenElement = 3;
+    private Interact interactComp;
     
-    // void Start()
-    // {
-    //     Debug.Log(screenOffMaterial);
-    // }
+    void Start()
+    {
+        interactComp = GetComponent<Interact>();
+    }
     
     public void Interact()
     {
-        
         rendMaterials = ehrTerminal.materials;
         Ray rayRight = new Ray(rightHand.transform.position, rightHand.transform.forward);
         Ray rayLeft = new Ray(leftHand.transform.position, leftHand.transform.forward);
@@ -28,7 +28,7 @@ public class KeyBoardBehavior : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(rayRight, out hit, 20))
         {
-            if (hit.collider.CompareTag(interactStr))
+            if (hit.collider.CompareTag(interactStr) || interactComp.IsHandNear)
             {
                 TurnOn_EHRTerminal();
                 return;
@@ -36,7 +36,7 @@ public class KeyBoardBehavior : MonoBehaviour
         }
         if (Physics.Raycast(rayLeft, out hit, 20))
         {
-            if (hit.collider.CompareTag(interactStr))
+            if (hit.collider.CompareTag(interactStr) || interactComp.IsHandNear)
             {
                 TurnOn_EHRTerminal();
             }

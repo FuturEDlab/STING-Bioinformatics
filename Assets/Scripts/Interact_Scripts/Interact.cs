@@ -42,7 +42,7 @@ public class Interact : MonoBehaviour
     
     private bool isLeftHandNear;
     private bool isRightHandNear;
-    private bool isHandNear => isLeftHandNear || isRightHandNear;
+    public bool IsHandNear => isLeftHandNear || isRightHandNear;
     private const string interactStr = "Interact";
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -85,7 +85,7 @@ public class Interact : MonoBehaviour
         }
         else if (distance > MaxGlowDistance && glowAdded)
         {
-            glowAdded = RemoveGlow(submeshGlowNumber);;
+            glowAdded = RemoveGlow(submeshGlowNumber);
         }
 
         // At this point, we can assume that if player is outside glow radius,
@@ -93,8 +93,8 @@ public class Interact : MonoBehaviour
         // won't work regardless.
         if (!glowAdded) return;
         
-        if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
-        // if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
+        // if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
+        if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
         {
             onInteract?.Invoke();
         }

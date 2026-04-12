@@ -8,7 +8,7 @@ TagManager:
   - RightHand
   - Table
   - TV
-  - ETerminal
+  - Interact
   layers:
   - Default
   - TransparentFX
