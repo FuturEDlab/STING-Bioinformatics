@@ -25,20 +25,25 @@ public class Interact : MonoBehaviour
     [Tooltip("Event triggered when this object is interacted with")]
     [SerializeField] private UnityEvent onInteract;
     [SerializeField] private float MaxGlowDistance = 2f;
+    [SerializeField] private int submeshGlowNumber = -1;
     
     private BNGPlayerController playerController;
     private float distance;
     private Renderer renderer;
     private Collider objectCollider;
     private List<Material> rendMaterials;
+    private Material[] rendMaterialsArr;
     
     private InteractableGroup parentComponent;
+    private int glowMaterialIndex = -1;
     private bool glowAdded;
     private Vector3 closestPoint;
+    private Material preGlowMaterial;
     
     private bool isLeftHandNear;
     private bool isRightHandNear;
-    private bool isHandNear => isLeftHandNear || isRightHandNear;
+    public bool IsHandNear => isLeftHandNear || isRightHandNear;
+    private const string interactStr = "Interact";
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +51,16 @@ public class Interact : MonoBehaviour
         parentComponent = GetComponentInParent<InteractableGroup>();
         objectCollider = GetComponent<Collider>();
         renderer = GetComponent<Renderer>();
-        rendMaterials = new List<Material>(renderer.materials);
+
+        if (submeshGlowNumber >= 0)
+        {
+            preGlowMaterial = renderer.materials[submeshGlowNumber];
+        }
+
+        if (!transform.CompareTag(interactStr))
+        {
+            transform.tag = interactStr;
+        }
     }
 
     // Update is called once per frame
@@ -67,15 +81,11 @@ public class Interact : MonoBehaviour
 
         if (distance <= MaxGlowDistance && !glowAdded)
         {
-            rendMaterials.Add(parentComponent.GlowMaterial);
-            renderer.materials = rendMaterials.ToArray();
-            glowAdded = true;
+            glowAdded = AddGlow(submeshGlowNumber);
         }
         else if (distance > MaxGlowDistance && glowAdded)
         {
-            rendMaterials.Remove(parentComponent.GlowMaterial);
-            renderer.materials = rendMaterials.ToArray();
-            glowAdded = false;
+            glowAdded = RemoveGlow(submeshGlowNumber);
         }
 
         // At this point, we can assume that if player is outside glow radius,
@@ -83,8 +93,8 @@ public class Interact : MonoBehaviour
         // won't work regardless.
         if (!glowAdded) return;
         
-        // if (Input.GetKeyDown(KeyCode.L) && isHandNear) // delete/uncomment when done testing in Unity Editor!
-        if (IsInteractButtonPressed() && isHandNear) // Uncomment when done testing in Unity Editor!
+        // if (Input.GetKeyDown(KeyCode.L)) // delete/uncomment when done testing in Unity Editor!
+        if (IsInteractButtonPressed()) // Uncomment when done testing in Unity Editor!
         {
             onInteract?.Invoke();
         }
@@ -148,6 +158,45 @@ public class Interact : MonoBehaviour
         {
             isRightHandNear = false;
         }
+    }
+
+    bool AddGlow(int glowMaterialNumber)
+    {
+        if (glowMaterialNumber < 0)
+        {
+            rendMaterials = new List<Material>(renderer.materials);
+            rendMaterials.Add(parentComponent.GlowMaterial);
+            glowMaterialIndex = rendMaterials.Count - 1;
+            renderer.materials = rendMaterials.ToArray();
+        }
+        else
+        {
+            rendMaterialsArr = renderer.materials;
+            rendMaterialsArr[glowMaterialNumber] = parentComponent.GlowMaterial;
+            renderer.materials = rendMaterialsArr;
+        }
+
+        return true;
+    }
+    
+    bool RemoveGlow(int glowMaterialNumber)
+    {
+        if (glowMaterialNumber < 0)
+        {
+            rendMaterials = new List<Material>(renderer.materials);
+            rendMaterials.RemoveAt(glowMaterialIndex);
+            renderer.materials = rendMaterials.ToArray();
+        }
+        else
+        {
+            rendMaterialsArr = renderer.materials;
+            // We can safely assume preGlowMaterial won't be null because this will always get assigned at start time
+            // anytime the glowMaterialNumber is >= 0.
+            rendMaterialsArr[glowMaterialNumber] = preGlowMaterial;
+            renderer.materials = rendMaterialsArr;
+        }
+
+        return false;
     }
     
 }
