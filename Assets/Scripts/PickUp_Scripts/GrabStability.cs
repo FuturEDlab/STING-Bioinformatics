@@ -116,6 +116,7 @@ public class GrabStability : MonoBehaviour
         {
             posY_Placement = floorHeight + coll.bounds.extents.y;
             transform.position = new Vector3(playerColl.transform.position.x, posY_Placement, playerColl.transform.position.z);
+            gameObject.layer = originalLayer;
         }
         
         // started grabbing object
@@ -143,6 +144,11 @@ public class GrabStability : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.name.Contains("CabinetFloorLeft") || other.name.Contains("CabinetFloorRight"))
+        {
+            gameObject.layer = LayerMask.NameToLayer("Grabb");
+        }
+        
         if (ignoreObjsTemp.Contains(other))
         {
             inTriggerDict[other] = true;
