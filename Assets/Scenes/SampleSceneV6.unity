@@ -2929,10 +2929,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f861c077146d24381381feffa28ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questions:
+  generalQuestions:
   - {fileID: 11400000, guid: 8435f04138c35401c80d588a47ab4c6f, type: 2}
   - {fileID: 11400000, guid: 51dddd1c641234fd7b866cdb84f72dcb, type: 2}
+  nursingQuestions:
   - {fileID: 11400000, guid: 5a39cdbec38cd459faee5fe9ea5f42e0, type: 2}
+  informaticsQuestions:
   - {fileID: 11400000, guid: 99f482176321c4ea288b953cc55c8266, type: 2}
   resultsUI: {fileID: 376585264}
   feedbackPanel: {fileID: 1139006424}
