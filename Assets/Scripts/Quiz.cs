@@ -22,21 +22,25 @@ public class Quiz : MonoBehaviour
         {
             bool active = i < question.GetAnswerCount();
             answerButtons[i].SetActive(active);
+            if (!active) return;
 
-            if (active)
+            Button btn = answerButtons[i].GetComponent<Button>();
+            TextMeshProUGUI btnText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+
+            btnText.text = question.GetAnswer(i);
+            // if (btnText.text.Length < 1) return;
+            
+            btn.onClick.RemoveAllListeners();
+
+            int capturedIndex = i;
+
+            if (btnText.text.Length > 0)
             {
-                Button btn = answerButtons[i].GetComponent<Button>();
-                TextMeshProUGUI btnText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-
-                btnText.text = question.GetAnswer(i);
-                btn.onClick.RemoveAllListeners();
-
-                int capturedIndex = i;
                 btn.onClick.AddListener(() => scenario.OnAnswerSelected(capturedIndex));
-
-                // Ensure button is interactable when a new question shows
-                btn.interactable = true;
             }
+
+            // Ensure button is interactable when a new question shows
+            btn.interactable = true;
         }
     }
 

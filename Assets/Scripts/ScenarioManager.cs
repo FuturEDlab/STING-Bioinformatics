@@ -11,7 +11,8 @@ public class ScenarioManager : MonoBehaviour
     [Header("Feedback UI")]
     [SerializeField] GameObject feedbackPanel;                 // small panel that shows per-answer feedback
     [SerializeField] TextMeshProUGUI feedbackText;
-    [SerializeField] TextMeshProUGUI severityText;
+    private string severityText;
+    // [SerializeField] TextMeshProUGUI severityText;
     [SerializeField] float feedbackDisplaySeconds = 10f;
 
     // Optional: reference to the quiz so we can enable/disable buttons
@@ -65,6 +66,8 @@ public class ScenarioManager : MonoBehaviour
 
     IEnumerator ShowFeedbackThenContinue(bool correct, string feedback, Severity sev)
     {
+        severityText = "Severity: " + sev;
+        
         // Display the feedback UI
         if (feedbackPanel != null)
             feedbackPanel.SetActive(true);
@@ -72,8 +75,21 @@ public class ScenarioManager : MonoBehaviour
         if (feedbackText != null)
             feedbackText.text = feedback ?? "";
 
-        if (severityText != null)
-            severityText.text = "Severity: " + sev.ToString();
+        if (sev == Severity.None)
+        {
+            severityText = "";
+        }
+
+        if (feedbackText.text.Length > 0)
+        {
+            feedbackText.text = $"{feedbackText.text}\n\n{severityText}";
+            // Debug.Log(feedbackText.text);
+            // Debug.Log(severityText);
+        }
+        else
+        {
+            feedbackText.text = $"{severityText}";
+        }
 
         // Optional: set severity color or icon here (not implemented, but see notes below)
 

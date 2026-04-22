@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum Severity
 {
+    None,
     Safe,
     Mild,
     Moderate,
@@ -61,7 +62,7 @@ public class QuestionSO : ScriptableObject
     {
         // Default safe if data missing
         if (severities == null || index < 0 || index >= severities.Length)
-            return Severity.Safe;
+            return Severity.None;
         return severities[index];
     }
 }
