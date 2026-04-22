@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372169372d26d1442bce6dbd5f45acf9, type: 3}
+  m_Name: PostQ_Nurse
+  m_EditorClassIdentifier: 
+  question: Sarah exhibited alert fatigue. How did the false alert in Scene 1 contribute
+    to the error in Scene 3?
+  answers:
+  - "A. It increased Sarah\u2019s workload, making her rush."
+  - B. It caused Sarah to distrust alerts, leading her to override a valid safety
+    check
+  - C. It delayed medication administration.
+  - "D. It changed the patient\u2019s allergy status."
+  correctAnswerIndex: 0
+  feedback:
+  - 
+  - Correct. Repeated false alerts condition clinicians to ignore warnings reflexively.
+    When the system fails to provide relevant info, trust is lost and safety is compromised.
+  - 
+  - 
+  severities: 

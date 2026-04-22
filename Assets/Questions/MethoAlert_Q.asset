@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372169372d26d1442bce6dbd5f45acf9, type: 3}
+  m_Name: MethoAlert_Q
+  m_EditorClassIdentifier: 
+  question: What caused this faulty alert?
+  answers:
+  - A. Patient is allergic
+  - B. Logic failed to filter for patient sex
+  - C. Medication expired
+  - 
+  correctAnswerIndex: 0
+  feedback:
+  - Incorrect. There is no documented allergy; the alert was triggered by medication
+    logic, not allergy files.
+  - Correct. The CDS logic checked age but failed to account for patient sex, triggering
+    a teratogenic warning for a male patient. This poorly scoped logic creates false
+    alerts and leads to alarm fatigue.
+  - Incorrect. Expiration logic is separate from clinical guideline alerts.
+  - 
+  severities: 0200000001000000

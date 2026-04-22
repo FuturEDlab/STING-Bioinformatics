@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372169372d26d1442bce6dbd5f45acf9, type: 3}
+  m_Name: PostQ_Inftics
+  m_EditorClassIdentifier: 
+  question: The Amoxicillin error was caused by trusting unstructured free text.
+    How should the EHR be redesigned to prevent a 5000 mg overdose entry?
+  answers:
+  - A. Implement spellcheck on all nursing notes.
+  - B. Use structured data fields with dose-range validation and hard stops.
+  - C. Remove historical nurse notes to reduce clutter.
+  - D. Increase the number of manual override permissions for clinicians.
+  correctAnswerIndex: 0
+  feedback:
+  - 
+  - Correct. Structured data must take priority. By implementing validation against
+    the /MedicationRequest resource, the system can block entries that exceed safe
+    limits.
+  - 
+  - 
+  severities: 
