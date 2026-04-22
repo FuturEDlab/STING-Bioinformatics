@@ -5,7 +5,9 @@ using TMPro;
 
 public class ScenarioManager : MonoBehaviour
 {
-    [SerializeField] List<QuestionSO> questions;
+    [SerializeField] List<QuestionSO> generalQuestions;
+    [SerializeField] List<QuestionSO> nursingQuestions;
+    [SerializeField] List<QuestionSO> informaticsQuestions;
     [SerializeField] ResultsUI resultsUI;
 
     [Header("Feedback UI")]
@@ -17,9 +19,13 @@ public class ScenarioManager : MonoBehaviour
 
     // Optional: reference to the quiz so we can enable/disable buttons
     [SerializeField] Quiz quiz;
-
+    
+    private string questionType = "general";
+    private string chosenMajor;
     int currentIndex = 0;
 
+    Dictionary<string, int> questionIndices = new Dictionary<string, int>();
+    List<QuestionSO> questions;
     List<bool> answerCorrectness = new List<bool>();
     List<string> wrongFeedback = new List<string>();
     List<Severity> wrongSeverities = new List<Severity>();
@@ -32,18 +38,25 @@ public class ScenarioManager : MonoBehaviour
         if (feedbackPanel != null)
             feedbackPanel.SetActive(false);
 
+        questionIndices[questionType] = 0;
         LoadCurrentQuestion();
     }
 
     void LoadCurrentQuestion()
     {
+        if (questionType == "general")
+            questions = generalQuestions;
+        else if (questionType == "Nursing")
+            questions = nursingQuestions;
+        else if (questionType.Contains("Informatics"))
+            questions = informaticsQuestions;
+        else {ShowFinalResults(); return;}
+
+        currentIndex = questionIndices[questionType];
+        
         if (currentIndex < questions.Count)
         {
             quiz.ShowQuestion(questions[currentIndex]);
-        }
-        else
-        {
-            ShowFinalResults();
         }
     }
 
@@ -56,6 +69,12 @@ public class ScenarioManager : MonoBehaviour
 
         // Fetch data for display
         QuestionSO q = questions[currentIndex];
+
+        if (q.name.Contains("SelectMajor_Q"))
+        {
+            chosenMajor = q.GetAnswer(selectedIndex);
+        }
+
         bool correct = selectedIndex == q.GetCorrectAnswer();
         string fb = q.GetFeedback(selectedIndex);
         Severity sev = q.GetSeverity(selectedIndex);
@@ -65,6 +84,17 @@ public class ScenarioManager : MonoBehaviour
     }
 
     IEnumerator ShowFeedbackThenContinue(bool correct, string feedback, Severity sev)
+    {
+        DisplayFeedback(feedback, sev);
+        // Optional: set severity color or icon here (not implemented, but see notes below)
+
+        // Wait for configured seconds (10s by default)
+        yield return new WaitForSeconds(feedbackDisplaySeconds);
+        
+        ProgressQuiz(correct, feedback, sev);
+    }
+
+    void DisplayFeedback(string feedback, Severity sev)
     {
         severityText = "Severity: " + sev;
         
@@ -83,19 +113,15 @@ public class ScenarioManager : MonoBehaviour
         if (feedbackText.text.Length > 0)
         {
             feedbackText.text = $"{feedbackText.text}\n\n{severityText}";
-            // Debug.Log(feedbackText.text);
-            // Debug.Log(severityText);
         }
         else
         {
             feedbackText.text = $"{severityText}";
         }
-
-        // Optional: set severity color or icon here (not implemented, but see notes below)
-
-        // Wait for configured seconds (10s by default)
-        yield return new WaitForSeconds(feedbackDisplaySeconds);
-
+    }
+    
+    void ProgressQuiz(bool correct, string feedback, Severity sev)
+    {
         // Hide feedback panel
         if (feedbackPanel != null)
             feedbackPanel.SetActive(false);
@@ -109,10 +135,22 @@ public class ScenarioManager : MonoBehaviour
         }
 
         // Advance index and re-enable inputs
-        currentIndex++;
+        questionIndices[questionType]++;
+        currentIndex = questionIndices[questionType];
+        // currentIndex++;
         if (quiz != null)
             quiz.SetButtonsInteractable(true);
-
+        
+        if (currentIndex >= questions.Count && questionType == chosenMajor)
+        {
+            questionType = "";
+        }
+        else if (currentIndex >= questions.Count && questionType.Contains("general"))
+        {
+            questionType = chosenMajor;
+            questionIndices[questionType] = 0;
+        }
+        
         LoadCurrentQuestion();
     }
 
