@@ -18,14 +18,16 @@ public class QuestionSO : ScriptableObject
     [SerializeField] string[] answers = new string[4];
 
     [Header("Index of the safe/correct answer")]
-    [SerializeField] int correctAnswerIndex;
+    [Tooltip("To make all answers right instead of just one answer: insert non-integer, Ex: All")]
+    [SerializeField] string correctAnswerIndex;
 
     [Header("Feedback shown ONLY at the end (same size as Answers)")]
     [TextArea(2, 6)]
     [SerializeField] string[] feedback = new string[4];
 
-    [Header("Severity of each answer (same size as Answers)")]
-    [SerializeField] Severity[] severities = new Severity[4];
+    // TODO: Uncomment the 2 lines below to re-enable severity feature
+    // [Header("Severity of each answer (same size as Answers)")]
+    // [SerializeField] Severity[] severities = new Severity[4];
 
     // Public Getters
     
@@ -45,9 +47,14 @@ public class QuestionSO : ScriptableObject
         return answers.Length;
     }
 
-    public int GetCorrectAnswer()
+    public int? GetCorrectAnswer()
     {
-        return correctAnswerIndex;
+        if (int.TryParse(correctAnswerIndex, out int result))
+        {
+            return result;
+        }
+
+        return null;
     }
 
     public string GetFeedback(int index)
@@ -58,11 +65,12 @@ public class QuestionSO : ScriptableObject
         return feedback[index];
     }
 
-    public Severity GetSeverity(int index)
-    {
-        // Default safe if data missing
-        if (severities == null || index < 0 || index >= severities.Length)
-            return Severity.None;
-        return severities[index];
-    }
+    // TODO: Uncomment 'GetSeverity' function below to re-enable severity feature
+    // public Severity GetSeverity(int index)
+    // {
+    //     // Default safe if data missing
+    //     if (severities == null || index < 0 || index >= severities.Length)
+    //         return Severity.None;
+    //     return severities[index];
+    // }
 }

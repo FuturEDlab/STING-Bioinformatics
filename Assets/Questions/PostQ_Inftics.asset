@@ -16,15 +16,14 @@ MonoBehaviour:
     How should the EHR be redesigned to prevent a 5000 mg overdose entry?
   answers:
   - A. Implement spellcheck on all nursing notes.
-  - B. Use structured data fields with dose-range validation and hard stops.
-  - C. Remove historical nurse notes to reduce clutter.
+  - B. Remove historical nurse notes to reduce clutter.
+  - C. Use structured data fields with dose-range validation and hard stops.
   - D. Increase the number of manual override permissions for clinicians.
-  correctAnswerIndex: 0
+  correctAnswerIndex: 2
   feedback:
+  - 
   - 
   - Correct. Structured data must take priority. By implementing validation against
     the /MedicationRequest resource, the system can block entries that exceed safe
     limits.
   - 
-  - 
-  severities: 

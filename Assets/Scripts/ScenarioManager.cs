@@ -11,10 +11,8 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] ResultsUI resultsUI;
 
     [Header("Feedback UI")]
-    [SerializeField] GameObject feedbackPanel;                 // small panel that shows per-answer feedback
+    [SerializeField] GameObject feedbackPanel; // small panel that shows per-answer feedback
     [SerializeField] TextMeshProUGUI feedbackText;
-    private string severityText;
-    // [SerializeField] TextMeshProUGUI severityText;
     [SerializeField] float feedbackDisplaySeconds = 10f;
 
     // Optional: reference to the quiz so we can enable/disable buttons
@@ -23,12 +21,15 @@ public class ScenarioManager : MonoBehaviour
     private string questionType = "general";
     private string chosenMajor;
     int currentIndex = 0;
+    // TODO: Uncomment 'severityText' variable to re-enable severity feature.
+    // private string severityText;
 
     Dictionary<string, int> questionIndices = new Dictionary<string, int>();
     List<QuestionSO> questions;
     List<bool> answerCorrectness = new List<bool>();
     List<string> wrongFeedback = new List<string>();
-    List<Severity> wrongSeverities = new List<Severity>();
+    // TODO: Uncomment 'wrongSeverities' variable to re-enable severity feature.
+    // List<Severity> wrongSeverities = new List<Severity>();
 
     void Start()
     {
@@ -76,27 +77,44 @@ public class ScenarioManager : MonoBehaviour
         }
 
         bool correct = selectedIndex == q.GetCorrectAnswer();
+        if (q.GetCorrectAnswer() == null)
+        {
+            correct = true;
+        }
+        
         string fb = q.GetFeedback(selectedIndex);
-        Severity sev = q.GetSeverity(selectedIndex);
+        // TODO: Uncomment 'sev' variable to re-enable severity feature.
+        // Severity sev = q.GetSeverity(selectedIndex);
 
         // Show feedback UI and after delay, record and proceed
-        StartCoroutine(ShowFeedbackThenContinue(correct, fb, sev));
+        // TODO: add 'sev' variable as a 3rd parameter in 'ShowFeedbackThenContinue' ->
+        // to re-enable severity feature.
+        StartCoroutine(ShowFeedbackThenContinue(correct, fb));
     }
 
-    IEnumerator ShowFeedbackThenContinue(bool correct, string feedback, Severity sev)
+    // TODO: uncomment 3rd parameter ('sev') in 'ShowFeedbackThenContinue' ->
+    // IEnumerator/function to re-enable severity feature.
+    IEnumerator ShowFeedbackThenContinue(bool correct, string feedback /* ,Severity sev */)
     {
-        DisplayFeedback(feedback, sev);
+        // TODO: add 'sev' variable as a 2nd parameter in 'DisplayFeedback' call to ->
+        // re-enable severity feature.
+        DisplayFeedback(feedback);
         // Optional: set severity color or icon here (not implemented, but see notes below)
 
         // Wait for configured seconds (10s by default)
         yield return new WaitForSeconds(feedbackDisplaySeconds);
         
-        ProgressQuiz(correct, feedback, sev);
+        // TODO: add 'sev' variable as a 3rd parameter in 'ProgressQuiz' call to ->
+        // re-enable severity feature.
+        ProgressQuiz(correct, feedback);
     }
 
-    void DisplayFeedback(string feedback, Severity sev)
+    // TODO: uncomment 2nd parameter ('sev') in 'DisplayFeedback' ->
+    // function to re-enable severity feature.
+    void DisplayFeedback(string feedback /* ,Severity sev */)
     {
-        severityText = "Severity: " + sev;
+        // TODO: uncomment 'severityText' variable to re-enable severity feature.
+        // severityText = "Severity: " + sev;
         
         // Display the feedback UI
         if (feedbackPanel != null)
@@ -105,22 +123,25 @@ public class ScenarioManager : MonoBehaviour
         if (feedbackText != null)
             feedbackText.text = feedback ?? "";
 
-        if (sev == Severity.None)
-        {
-            severityText = "";
-        }
-
-        if (feedbackText.text.Length > 0)
-        {
-            feedbackText.text = $"{feedbackText.text}\n\n{severityText}";
-        }
-        else
-        {
-            feedbackText.text = $"{severityText}";
-        }
+        // TODO: uncomment the 3 conditions below to re-enable severity feature.
+        // if (sev == Severity.None)
+        // {
+        //     severityText = "";
+        // }
+        //
+        // if (feedbackText.text.Length > 0)
+        // {
+        //     feedbackText.text = $"{feedbackText.text}\n\n{severityText}";
+        // }
+        // else
+        // {
+        //     feedbackText.text = $"{severityText}";
+        // }
     }
     
-    void ProgressQuiz(bool correct, string feedback, Severity sev)
+    // TODO: uncomment 3rd parameter ('sev') in 'ProgressQuiz' ->
+    // function to re-enable severity feature.
+    void ProgressQuiz(bool correct, string feedback /* ,Severity sev */)
     {
         // Hide feedback panel
         if (feedbackPanel != null)
@@ -131,7 +152,8 @@ public class ScenarioManager : MonoBehaviour
         if (!correct)
         {
             wrongFeedback.Add(feedback);
-            wrongSeverities.Add(sev);
+            // TODO: uncomment the 1 line below to re-enable severity feature.
+            // wrongSeverities.Add(sev);
         }
 
         // Advance index and re-enable inputs
@@ -169,18 +191,21 @@ public class ScenarioManager : MonoBehaviour
         string result = "Patient safety risk detected.\n\n";
 
         // Compute the highest severity
-        Severity maxSeverity = Severity.Mild;
-        foreach (var sev in wrongSeverities)
-        {
-            if (sev > maxSeverity)
-                maxSeverity = sev;
-        }
+        // TODO: uncomment 'maxSeverity' variable and the foreach loop below to re-enable severity feature.
+        // Severity maxSeverity = Severity.Mild;
+        // foreach (var sev in wrongSeverities)
+        // {
+        //     if (sev > maxSeverity)
+        //         maxSeverity = sev;
+        // }
 
-        result += "Severity: **" + maxSeverity + "**\n\n";
-        result += "Issues detected:\n";
+        // TODO: uncomment the 1 line below to re-enable severity feature.
+        // result += "Severity: **" + maxSeverity + "**\n\n";
+        result += "Issues detected:\n\n";
 
         for (int i = 0; i < wrongFeedback.Count; i++)
         {
+            if (wrongFeedback[i].Length <= 0) continue;
             result += "• " + wrongFeedback[i] + "\n";
         }
 

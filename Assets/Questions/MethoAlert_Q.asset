@@ -17,8 +17,7 @@ MonoBehaviour:
   - A. Patient is allergic
   - B. Logic failed to filter for patient sex
   - C. Medication expired
-  - 
-  correctAnswerIndex: 0
+  correctAnswerIndex: 1
   feedback:
   - Incorrect. There is no documented allergy; the alert was triggered by medication
     logic, not allergy files.
@@ -26,5 +25,3 @@ MonoBehaviour:
     a teratogenic warning for a male patient. This poorly scoped logic creates false
     alerts and leads to alarm fatigue.
   - Incorrect. Expiration logic is separate from clinical guideline alerts.
-  - 
-  severities: 0200000001000000

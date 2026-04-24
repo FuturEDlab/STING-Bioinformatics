@@ -16,15 +16,14 @@ MonoBehaviour:
     to the error in Scene 3?
   answers:
   - "A. It increased Sarah\u2019s workload, making her rush."
-  - B. It caused Sarah to distrust alerts, leading her to override a valid safety
-    check
+  - "B. It changed the patient\u2019s allergy status."
   - C. It delayed medication administration.
-  - "D. It changed the patient\u2019s allergy status."
-  correctAnswerIndex: 0
+  - D. It caused Sarah to distrust alerts, leading her to override a valid safety
+    check.
+  correctAnswerIndex: 3
   feedback:
+  - 
+  - 
   - 
   - Correct. Repeated false alerts condition clinicians to ignore warnings reflexively.
     When the system fails to provide relevant info, trust is lost and safety is compromised.
-  - 
-  - 
-  severities: 

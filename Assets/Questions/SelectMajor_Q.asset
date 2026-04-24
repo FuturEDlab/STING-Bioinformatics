@@ -16,12 +16,5 @@ MonoBehaviour:
   answers:
   - Nursing
   - Healthcare Informatics / Computing
-  - 
-  - 
-  correctAnswerIndex: 0
-  feedback:
-  - 
-  - 
-  - 
-  - 
-  severities: 
+  correctAnswerIndex: All
+  feedback: []
