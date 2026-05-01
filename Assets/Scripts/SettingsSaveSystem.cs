@@ -3,8 +3,7 @@ using System.IO;
 
 public static class SettingsSaveSystem
 {
-    private static string path =>
-        Path.Combine(Application.persistentDataPath, "settings.json");
+    private static string path = Application.persistentDataPath + "/settings.json";
 
     public static void Save(SettingsData data)
     {
@@ -15,7 +14,7 @@ public static class SettingsSaveSystem
     public static SettingsData Load()
     {
         if (!File.Exists(path))
-            return new SettingsData(); // defaults
+            return null;
 
         string json = File.ReadAllText(path);
         return JsonUtility.FromJson<SettingsData>(json);
