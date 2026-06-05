@@ -3,12 +3,14 @@ using TMPro;
 
 public class ResultsUI : MonoBehaviour
 {
-    [SerializeField] GameObject panel;
+    [SerializeField] GameObject resultPanel;
+    [SerializeField] GameObject quizCanvas;
     [SerializeField] TextMeshProUGUI resultText;
 
     public void ShowResult(string message)
     {
-        panel.SetActive(true);
+        resultPanel.SetActive(true);
+        quizCanvas.SetActive(false);
         resultText.text = message;
     }
     
