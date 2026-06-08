@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Testing Scenes/SampleSceneV6.unity
-    guid: c05320748738843c89d833da4516837a
-  - enabled: 1
     path: Assets/Scenes/Hospital Room.unity
     guid: 6208e30f53c2047f9886e556507ce6f1
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 4f77de7f620ac4fb9923fe745d04d743
+  - enabled: 1
+    path: Assets/Scenes/Testing Scenes/SampleSceneV6.unity
+    guid: c05320748738843c89d833da4516837a
   - enabled: 0
     path: Assets/Scenes/Hospital Room V1.unity
     guid: e3ba4b44b8304469d80af67a3a120a04
@@ -21,25 +21,25 @@ EditorBuildSettings:
     path: Assets/Scenes/Testing Scenes/SampleScene.unity
     guid: d87467858aa494535b6a065e341d565e
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Weapons.unity
+    path: Assets/Scenes/Examples/Weapons.unity
     guid: 2626939ed08e1ec41bee0433a7f068d9
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/XR Demo.unity
+    path: Assets/Scenes/Examples/XR Demo.unity
     guid: a1360534006d3f845bc79b46b93cfec5
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Scene Transitioning.unity
+    path: Assets/Scenes/Examples/Scene Transitioning.unity
     guid: 9d7c9629abf9c99449e358b0938b47d0
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Physics Hands.unity
+    path: Assets/Scenes/Examples/Physics Hands.unity
     guid: 34a4579517c578e4080d0a6ef2c96294
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Rigidbody Player.unity
+    path: Assets/Scenes/Examples/Rigidbody Player.unity
     guid: 57fc97c5771a777449aa8bd02514df22
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Vehicle Example.unity
+    path: Assets/Scenes/Examples/Vehicle Example.unity
     guid: d96233ee44d985d4fb8dc23a907c06eb
   - enabled: 0
-    path: Assets/BNG Framework/Scenes/Quest Demo.unity
+    path: Assets/Scenes/Examples/Quest Demo.unity
     guid: 20abffae0ea5004438fe0e95b6627841
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6039231b9e2884b69a35a91e87f1aecc, type: 2}
