@@ -9,11 +9,12 @@ TagManager:
   - Table
   - TV
   - Interact
+  - ETerminal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Overlay UI
   - Water
   - UI
   - 
@@ -48,3 +49,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  m_MigratedRenderPipelines: []
