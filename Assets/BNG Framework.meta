@@ -1,19 +1,8 @@
-<<<<<<< HEAD
 fileFormatVersion: 2
 guid: f9aaf8bede263c545aacef4bb4600ba3
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-=======
-fileFormatVersion: 2
-guid: f9aaf8bede263c545aacef4bb4600ba3
-folderAsset: yes
-DefaultImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
->>>>>>> PlayerPickup1
+  userData:
+  assetBundleName:
+  assetBundleVariant:
