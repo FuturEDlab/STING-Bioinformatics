@@ -1,78 +1,105 @@
-using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
+public class ToggleSwitch : MonoBehaviour
 {
-    [Header("Slider setup")] 
-    [SerializeField, Range(0, 1f)]
-    protected float sliderValue;
-    public bool CurrentValue { get; private set; }
-    
-    private bool _previousValue;
-    private Slider _slider;
+    [Header("Slider Setup")]
+    [SerializeField] private Slider _slider;
 
-    [Header("Animation")] 
-    [SerializeField, Range(0, 1f)] private float animationDuration = 0.5f;
-    [SerializeField] private AnimationCurve slideEase =
-        AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField, Range(0f, 1f)]
+    private float sliderValue;
+
+    public bool CurrentValue { get; private set; }
+
+    private bool _previousValue;
+
+    [Header("Toggle Background")]
+    [SerializeField] private Image backgroundImageReference;
+    [SerializeField] private Sprite toggleOnSprite;
+    [SerializeField] private Sprite toggleOffSprite;
+
+    [Header("Animation")]
+    [SerializeField, Range(0f, 1f)]
+    private float animationDuration = 0.5f;
+
+    [SerializeField]
+    private AnimationCurve slideEase =
+        AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     private Coroutine _animateSliderCoroutine;
 
-    [Header("Events")] 
+    [Header("Events")]
     [SerializeField] private UnityEvent onToggleOn;
     [SerializeField] private UnityEvent onToggleOff;
-    
+
     protected Action transitionEffect;
-    
+
     protected virtual void OnValidate()
     {
-        SetupToggleComponents();
+        CurrentValue = sliderValue >= 0.5f;
 
-        _slider.value = sliderValue;
-    }
-
-    private void SetupToggleComponents()
-    {
         if (_slider != null)
-            return;
-
-        SetupSliderComponent();
-    }
-
-    private void SetupSliderComponent()
-    {
-        _slider = GetComponent<Slider>();
-
-        if (_slider == null)
         {
-            Debug.Log("No slider found!", this);
-            return;
+            ConfigureSlider();
+            _slider.value = sliderValue;
         }
 
-        _slider.interactable = false;
-        var sliderColors = _slider.colors;
-        sliderColors.disabledColor = Color.white;
-        _slider.colors = sliderColors;
-        _slider.transition = Selectable.Transition.None;
+        UpdateBackgroundSprite();
     }
-
 
     protected virtual void Awake()
     {
-        SetupSliderComponent();
+        if (_slider == null)
+        {
+            Debug.LogError(
+                "No Slider has been assigned to ToggleSwitch.",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
+        ConfigureSlider();
+
+        CurrentValue = sliderValue >= 0.5f;
+        sliderValue = CurrentValue ? 1f : 0f;
+        _slider.value = sliderValue;
+
+        UpdateBackgroundSprite();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void ConfigureSlider()
     {
-        Toggle();
+        _slider.minValue = 0f;
+        _slider.maxValue = 1f;
+        _slider.wholeNumbers = false;
+        _slider.interactable = false;
+        _slider.transition = Selectable.Transition.None;
+
+        ColorBlock sliderColors = _slider.colors;
+        sliderColors.disabledColor = Color.white;
+        _slider.colors = sliderColors;
     }
 
-    
-    private void Toggle()
+    private void UpdateBackgroundSprite()
+    {
+        if (backgroundImageReference == null)
+            return;
+
+        Sprite spriteToUse = CurrentValue
+            ? toggleOnSprite
+            : toggleOffSprite;
+
+        if (spriteToUse != null)
+            backgroundImageReference.sprite = spriteToUse;
+    }
+
+    public void ToggleFromHandle()
     {
         SetStateAndStartAnimation(!CurrentValue);
     }
@@ -81,20 +108,11 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
     {
         SetStateAndStartAnimation(valueToSetTo);
     }
-    
-    
+
     private void SetStateAndStartAnimation(bool state)
     {
         _previousValue = CurrentValue;
         CurrentValue = state;
-
-        if (_previousValue != CurrentValue)
-        {
-            if (CurrentValue)
-                onToggleOn?.Invoke();
-            else
-                onToggleOff?.Invoke();
-        }
 
         if (_animateSliderCoroutine != null)
             StopCoroutine(_animateSliderCoroutine);
@@ -102,28 +120,64 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
         _animateSliderCoroutine = StartCoroutine(AnimateSlider());
     }
 
-
     private IEnumerator AnimateSlider()
     {
         float startValue = _slider.value;
-        float endValue = CurrentValue ? 1 : 0;
+        float endValue = CurrentValue ? 1f : 0f;
+        float time = 0f;
 
-        float time = 0;
-        if (animationDuration > 0)
+        if (animationDuration <= 0f)
         {
-            while (time < animationDuration)
-            {
-                time += Time.deltaTime;
+            sliderValue = endValue;
+            _slider.value = endValue;
 
-                float lerpFactor = slideEase.Evaluate(time / animationDuration);
-                _slider.value = sliderValue = Mathf.Lerp(startValue, endValue, lerpFactor);
+            FinishToggleChange();
 
-                transitionEffect?.Invoke();
-                    
-                yield return null;
-            }
+            _animateSliderCoroutine = null;
+            yield break;
         }
 
+        while (time < animationDuration)
+        {
+            time += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(
+                time / animationDuration
+            );
+
+            float lerpFactor = slideEase.Evaluate(progress);
+
+            sliderValue = Mathf.Lerp(
+                startValue,
+                endValue,
+                lerpFactor
+            );
+
+            _slider.value = sliderValue;
+
+            transitionEffect?.Invoke();
+
+            yield return null;
+        }
+
+        sliderValue = endValue;
         _slider.value = endValue;
+
+        FinishToggleChange();
+
+        _animateSliderCoroutine = null;
+    }
+
+    private void FinishToggleChange()
+    {
+        UpdateBackgroundSprite();
+
+        if (_previousValue == CurrentValue)
+            return;
+
+        if (CurrentValue)
+            onToggleOn?.Invoke();
+        else
+            onToggleOff?.Invoke();
     }
 }
