@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsUIController : MonoBehaviour
@@ -64,4 +64,4 @@ public class SettingsUIController : MonoBehaviour
         RefreshUI();
         CloseSettingsPanel();
     }
-}
+}*/

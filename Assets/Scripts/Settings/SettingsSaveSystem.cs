@@ -9,6 +9,7 @@ public static class SettingsSaveSystem
     {
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
+        Debug.Log("Settings saved to " + path);
     }
 
     public static SettingsData Load()

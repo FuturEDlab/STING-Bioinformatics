@@ -1,6 +1,6 @@
-using UnityEngine;
+/*using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
+public class OldSettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance;
 
@@ -80,4 +80,4 @@ public class SettingsManager : MonoBehaviour
         target.narrationVolume = source.narrationVolume;
         target.sfxVolume = source.sfxVolume;
     }
-}
+}*/

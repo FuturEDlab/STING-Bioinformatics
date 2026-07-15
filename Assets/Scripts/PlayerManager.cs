@@ -25,9 +25,9 @@ public class PlayerManager : MonoBehaviour
         settings = SettingsManager.Instance.CurrentSettings;
         if (settings == null) return;
         
-        WireLocomotion(settings.locomotionEnabled);
-        WireSnapTurn(settings.snapTurningEnabled);
-        WireTeleport(settings.teleportationEnabled);
+        //WireLocomotion(settings.locomotionEnabled);
+        //WireSnapTurn(settings.snapTurningEnabled);
+        //WireTeleport(settings.teleportationEnabled);
     }
 
     public void WireLocomotion(bool value)
@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
     
     public void WireTeleport(bool value)
     {
-        bool smoothLocoOn = settings.locomotionEnabled;
+        //bool smoothLocoOn = settings.locomotionEnabled;
         bool isLocoManagerOn = false;
         
         if (teleportPlayer != null)
