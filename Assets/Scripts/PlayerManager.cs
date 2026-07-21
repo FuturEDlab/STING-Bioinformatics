@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
     private SettingsManager sInstance;
     private SettingsData settings;
     
-    void Start()
+    /*void Start()
     {
         sInstance = SettingsManager.Instance;
         if (sInstance == null) return;
@@ -94,5 +94,5 @@ public class PlayerManager : MonoBehaviour
     public void WireSubtitles(bool value)
     {
 
-    }
+    }*/
 }

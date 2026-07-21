@@ -14,16 +14,16 @@ public class SoundManager : MonoBehaviour
     public Slider narrationSlider;
     public Slider sfxSlider;
 
-    private static SoundManager _instance;
+    private static SettingsManager Instance;
 
-    void Awake()
+    /*void Awake()
     {
         // Singleton / persistence
-        if (_instance != null && _instance != this) {
+        if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
-        _instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -127,5 +127,5 @@ public class SoundManager : MonoBehaviour
     {
         value = Mathf.Clamp(value, 0.0001f, 1f);
         return Mathf.Log10(value) * 20f;
-    }
+    }*/
 }
