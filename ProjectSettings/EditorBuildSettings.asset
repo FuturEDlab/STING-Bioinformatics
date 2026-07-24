@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Testing Scenes/Erion's Testing Ground.unity
+    guid: f9114c6a5fd7443cc8ce22889933f65c
+  - enabled: 0
     path: Assets/Scenes/Hospital Room.unity
     guid: 6208e30f53c2047f9886e556507ce6f1
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Samples/XR Interaction Toolkit/3.4.1/Hands Interaction Demo/CopyHandsDemoScene.unity
+    guid: 9fed542e62ed4493cb1b4281975955d3
+  - enabled: 0
     path: Assets/Scenes/Testing Scenes/Main Menu.unity
     guid: 4f77de7f620ac4fb9923fe745d04d743
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing Scenes/SampleSceneV6.unity
     guid: c05320748738843c89d833da4516837a
   - enabled: 0
@@ -42,7 +48,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Examples/Quest Demo.unity
     guid: 20abffae0ea5004438fe0e95b6627841
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6039231b9e2884b69a35a91e87f1aecc, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 62fa314fb6d764246964f88c34cdcc34, type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 2ec24d39f7b5ac84aad7e5df7b4fd3ea, type: 2}
     WebXR.Settings: {fileID: 11400000, guid: fe9659bb224bb054bb1dbca065d1d318, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
