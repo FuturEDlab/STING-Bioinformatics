@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -6,6 +7,12 @@ public class Quiz : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI questionText;
     [SerializeField] GameObject[] answerButtons;
+
+    /// <summary>
+    /// Raised with the index of the answer the player clicked. Lets a scenario step subscribe
+    /// without a hard manager dependency - see UIQuestionStep.
+    /// </summary>
+    public event Action<int> AnswerSelected;
 
     ScenarioManager scenario;
 
@@ -36,12 +43,22 @@ public class Quiz : MonoBehaviour
 
             if (btnText.text.Length > 0)
             {
-                btn.onClick.AddListener(() => scenario.OnAnswerSelected(capturedIndex));
+                btn.onClick.AddListener(() => RaiseAnswerSelected(capturedIndex));
             }
 
             // Ensure button is interactable when a new question shows
             btn.interactable = true;
         }
+    }
+
+    void RaiseAnswerSelected(int index)
+    {
+        AnswerSelected?.Invoke(index);
+
+        // Legacy direct path, still used by ScenarioManager in SampleSceneV6.
+        // Null in scenes driven by ScenarioController (e.g. Hospital Room).
+        if (scenario != null)
+            scenario.OnAnswerSelected(index);
     }
 
     // New helper so other scripts can enable/disable answer buttons
