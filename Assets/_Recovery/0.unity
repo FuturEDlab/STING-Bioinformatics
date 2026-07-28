@@ -3171,6 +3171,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2279582009422942329, guid: 9ca758f7d0bcd6948b857c6ffbb4754b, type: 3}
+--- !u!114 &1217329963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4469573786573266056, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &1222895254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3729,113 +3740,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1909605936}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1909605936}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ManageSubtitles
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ManageSubtitles
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SettingsManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SettingsManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 2345329279221761579, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1909605936}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
       objectReference: {fileID: 1909605935}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCancelButtonClicked
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SettingsToMainMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SettingsManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667637627872452854, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3159067974877082684, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_Name
       value: Settings Panel
-      objectReference: {fileID: 0}
-    - target: {fileID: 4469573786573266056, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4825662474684567256, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5343,17 +5258,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 26.89, y: -68.511, z: 5.612}
---- !u!114 &1822032109 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4469573786573266056, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
-  m_PrefabInstance: {fileID: 1453606053}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!114 &1891216991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5539,7 +5443,7 @@ PrefabInstance:
     - target: {fileID: 5370534030288772880, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
       propertyPath: subtitlesToggle
       value: 
-      objectReference: {fileID: 1822032109}
+      objectReference: {fileID: 1217329963}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6069,7 +5973,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1089993350}
-  - {fileID: 1909605933}
   - {fileID: 1373063867}
   - {fileID: 2121484680}
   - {fileID: 4886891}
@@ -6086,6 +5989,7 @@ SceneRoots:
   - {fileID: 242502891}
   - {fileID: 178139590}
   - {fileID: 809976366}
+  - {fileID: 1909605933}
   - {fileID: 865112299}
   - {fileID: 1803412092}
   - {fileID: 525641462}
@@ -6103,5 +6007,5 @@ SceneRoots:
   - {fileID: 133642409}
   - {fileID: 1657723442}
   - {fileID: 1185293487}
-  - {fileID: 1321654923}
   - {fileID: 1453606053}
+  - {fileID: 1321654923}
