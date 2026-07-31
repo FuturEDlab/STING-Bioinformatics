@@ -7,6 +7,11 @@ public class Quiz : MonoBehaviour
     [SerializeField] TextMeshProUGUI questionText;
     [SerializeField] GameObject[] answerButtons;
 
+    // Raised (by answer index) whenever the player picks an answer. Lets the new
+    // Scenario Controller's UIQuestionStep subscribe/unsubscribe without a hard
+    // dependency on any particular manager.
+    public event System.Action<int> AnswerSelected;
+
     ScenarioManager scenario;
 
     void Start()
@@ -36,7 +41,12 @@ public class Quiz : MonoBehaviour
 
             if (btnText.text.Length > 0)
             {
-                btn.onClick.AddListener(() => scenario.OnAnswerSelected(capturedIndex));
+                btn.onClick.AddListener(() =>
+                {
+                    AnswerSelected?.Invoke(capturedIndex);
+                    if (scenario != null)
+                        scenario.OnAnswerSelected(capturedIndex);
+                });
             }
 
             // Ensure button is interactable when a new question shows
