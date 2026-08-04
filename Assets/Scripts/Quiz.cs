@@ -27,7 +27,9 @@ public class Quiz : MonoBehaviour
         {
             bool active = i < question.GetAnswerCount();
             answerButtons[i].SetActive(active);
-            if (!active) return;
+            // 'continue', not 'return': a 2-answer question must hide buttons 2 AND 3,
+            // otherwise the leftovers from the previous question stay on screen.
+            if (!active) continue;
 
             Button btn = answerButtons[i].GetComponent<Button>();
             TextMeshProUGUI btnText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
