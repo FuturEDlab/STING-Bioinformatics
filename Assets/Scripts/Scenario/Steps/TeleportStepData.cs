@@ -16,6 +16,16 @@ public class TeleportStepData : ScenarioStepData
     [Tooltip("Face the way the destination faces. Off keeps the player's current facing.")]
     [SerializeField] private bool matchDestinationRotation = true;
 
+    [Header("Ground")]
+    [Tooltip("Drop the player onto the floor beneath the destination instead of trusting its exact height, so the marker only has to be roughly placed.")]
+    [SerializeField] private bool snapToGround = true;
+
+    [Tooltip("What counts as floor. Left as Nothing it falls back to Unity's default raycast layers.")]
+    [SerializeField] private LayerMask groundLayers = ~0;
+
+    [Tooltip("How far below the destination to look for the floor.")]
+    [SerializeField] private float groundSearchDistance = 25f;
+
     [Header("Screen fade")]
     [Tooltip("Fade to black before moving and back in afterwards. Needs a ScreenFader on the rig.")]
     [SerializeField] private bool fadeScreen = true;
@@ -31,6 +41,9 @@ public class TeleportStepData : ScenarioStepData
     [SerializeField] private float delayAfterTeleport = 0f;
 
     public bool MatchDestinationRotation => matchDestinationRotation;
+    public bool SnapToGround => snapToGround;
+    public LayerMask GroundLayers => groundLayers;
+    public float GroundSearchDistance => groundSearchDistance;
     public bool FadeScreen => fadeScreen;
     public float FadeHoldSeconds => fadeHoldSeconds;
     public float DelayBeforeTeleport => delayBeforeTeleport;
@@ -134,15 +147,17 @@ public class TeleportStep : IScenarioStep
             disabledController = controller;
         }
 
-        target.position = destination.position;
+        Vector3 footPosition = ResolveFootPosition(destination);
 
-        // BNG offsets the character by the tracked camera height; apply the same correction
-        // so the player lands on the floor rather than floating above it.
-        if (controller != null && player != null && player.CameraRig != null)
-        {
-            float yOffset = 1f + player.CameraRig.localPosition.y - player.CharacterControllerYOffset;
-            target.localPosition -= new Vector3(0f, yOffset, 0f);
-        }
+        // A CharacterController's transform sits at the MIDDLE of its capsule, so raise it
+        // by half the capsule to stand the player on the floor instead of burying them in
+        // it. Read from the live capsule because BNG resizes it every frame to match the
+        // tracked camera height — a baked offset would be wrong the moment the player
+        // ducks, and wrong by ElevateCameraHeight whenever no HMD is connected.
+        if (controller != null)
+            footPosition += Vector3.up * ((controller.height * 0.5f) - controller.center.y);
+
+        target.position = footPosition;
 
         if (data.MatchDestinationRotation)
         {
@@ -157,6 +172,29 @@ public class TeleportStep : IScenarioStep
 
         if (player != null)
             player.LastTeleportTime = Time.time;
+    }
+
+    /// <summary>
+    /// Where the player's feet should end up. Casting down from just above the marker
+    /// means a destination left floating (or sunk slightly into the floor) still lands the
+    /// player on the surface underneath it.
+    /// </summary>
+    private Vector3 ResolveFootPosition(Transform destination)
+    {
+        if (!data.SnapToGround)
+            return destination.position;
+
+        // A mask of Nothing would never hit anything — treat it as "not configured".
+        int mask = data.GroundLayers.value == 0 ? Physics.DefaultRaycastLayers : data.GroundLayers.value;
+        const float startHeight = 1f;
+        float distance = startHeight + Mathf.Max(1f, data.GroundSearchDistance);
+        Vector3 origin = destination.position + (Vector3.up * startHeight);
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, distance, mask, QueryTriggerInteraction.Ignore))
+            return hit.point;
+
+        Debug.LogWarning($"[TeleportStep] '{data.name}': no ground found under the destination within {distance:0.#}m. Using the destination's own height — check its Ground Layers or move the marker over the floor.");
+        return destination.position;
     }
 
     public void Exit()

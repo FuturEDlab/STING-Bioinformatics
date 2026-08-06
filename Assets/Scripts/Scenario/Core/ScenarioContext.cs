@@ -62,6 +62,9 @@ public class ScenarioContext
     [Header("Voice-over (route this AudioSource's output to the Narration mixer group)")]
     [SerializeField] private AudioSource voSource;
 
+    [Tooltip("Silence inserted between the phrases of one VO line. 0 plays them back to back.")]
+    [SerializeField] private float gapBetweenPhrases = 0f;
+
     [Header("Question panels — one scene panel per question asset")]
     [Tooltip("Each row maps a question asset to the scene panel that shows it. A question with no row here falls back to the single shared Quiz / PC Ui Root below.")]
     [SerializeField] private List<QuestionPanelBinding> questionPanels = new List<QuestionPanelBinding>();
@@ -259,45 +262,71 @@ public class ScenarioContext
     }
 
     /// <summary>
-    /// The ONE audio path used by every step (NarratorStep + UIStep feedback). Plays a
-    /// clip and invokes <paramref name="onFinished"/> when it ends. A null clip (or a
-    /// missing source/runner) completes immediately.
+    /// The ONE audio path used by every step (NarratorStep + UIStep feedback). Recordings
+    /// are authored as several short phrases, so a line is a LIST of clips: they play back
+    /// to back and <paramref name="onFinished"/> fires once the last one ends. An empty
+    /// list (or a missing source/runner) completes immediately, and empty slots inside a
+    /// list are skipped rather than stalling the step.
     /// </summary>
-    public void PlayVoice(AudioClip clip, Action onFinished)
+    public void PlayVoice(IReadOnlyList<AudioClip> clips, Action onFinished)
     {
         // Cancel any pending wait so an interrupted VO never fires a stale callback.
-        if (voRoutine != null && Runner != null)
-        {
-            Runner.StopCoroutine(voRoutine);
-            voRoutine = null;
-        }
+        StopVoiceRoutine();
 
-        if (clip == null || voSource == null || Runner == null)
+        if (voSource == null || Runner == null || !HasAnyClip(clips))
         {
             onFinished?.Invoke();
             return;
         }
 
-        voSource.Stop();
-        voSource.clip = clip;
-        voSource.Play();
-        voRoutine = Runner.StartCoroutine(WaitVoice(clip.length, onFinished));
+        voRoutine = Runner.StartCoroutine(PlayPhrases(clips, onFinished));
     }
 
     public void StopVoice()
     {
-        if (voRoutine != null && Runner != null)
-        {
-            Runner.StopCoroutine(voRoutine);
-            voRoutine = null;
-        }
+        StopVoiceRoutine();
         if (voSource != null)
             voSource.Stop();
     }
 
-    private IEnumerator WaitVoice(float seconds, Action done)
+    private void StopVoiceRoutine()
     {
-        yield return new WaitForSeconds(seconds);
+        if (voRoutine != null && Runner != null)
+            Runner.StopCoroutine(voRoutine);
+        voRoutine = null;
+    }
+
+    private static bool HasAnyClip(IReadOnlyList<AudioClip> clips)
+    {
+        if (clips == null)
+            return false;
+
+        for (int i = 0; i < clips.Count; i++)
+        {
+            if (clips[i] != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private IEnumerator PlayPhrases(IReadOnlyList<AudioClip> clips, Action done)
+    {
+        for (int i = 0; i < clips.Count; i++)
+        {
+            AudioClip clip = clips[i];
+            if (clip == null)
+                continue;
+
+            voSource.Stop();
+            voSource.clip = clip;
+            voSource.Play();
+            yield return new WaitForSeconds(clip.length);
+
+            if (gapBetweenPhrases > 0f && i < clips.Count - 1)
+                yield return new WaitForSeconds(gapBetweenPhrases);
+        }
+
         voRoutine = null;
         done?.Invoke();
     }

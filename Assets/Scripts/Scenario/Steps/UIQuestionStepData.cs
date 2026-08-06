@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -12,11 +13,15 @@ public class UIQuestionStepData : ScenarioStepData
     [SerializeField] private QuestionSO question;
 
     [Header("Question prompt VO (optional; plays as the panel appears)")]
-    [SerializeField] private AudioClip questionVo;
+    [Tooltip("Phrases of the prompt, played in order.")]
+    [SerializeField] private List<AudioClip> questionVoClips = new List<AudioClip>();
 
     [Header("Narrator feedback (played through the shared VO path)")]
-    [SerializeField] private AudioClip correctFeedbackVo;
-    [SerializeField] private AudioClip wrongFeedbackVo;
+    [Tooltip("Phrases played after a correct answer, in order.")]
+    [SerializeField] private List<AudioClip> correctFeedbackVoClips = new List<AudioClip>();
+
+    [Tooltip("Phrases played after a wrong answer, in order.")]
+    [SerializeField] private List<AudioClip> wrongFeedbackVoClips = new List<AudioClip>();
 
     [Header("Retry policy")]
     [Tooltip("Attempts before the step gives up. 0 or negative = unlimited (must answer correctly to proceed).")]
@@ -25,9 +30,9 @@ public class UIQuestionStepData : ScenarioStepData
     [SerializeField] private bool advanceOnFail = false;
 
     public QuestionSO Question => question;
-    public AudioClip QuestionVo => questionVo;
-    public AudioClip CorrectFeedbackVo => correctFeedbackVo;
-    public AudioClip WrongFeedbackVo => wrongFeedbackVo;
+    public IReadOnlyList<AudioClip> QuestionVoClips => questionVoClips;
+    public IReadOnlyList<AudioClip> CorrectFeedbackVoClips => correctFeedbackVoClips;
+    public IReadOnlyList<AudioClip> WrongFeedbackVoClips => wrongFeedbackVoClips;
     public int AllowedTries => allowedTries;
     public bool AdvanceOnFail => advanceOnFail;
 
@@ -130,7 +135,7 @@ public class UIQuestionStep : IScenarioStep
         // Prompt VO runs alongside the visible panel rather than gating it. Answering
         // mid-clip is safe: PlayVoice cancels this pending wait before the feedback clip,
         // so no stale callback survives. Re-asking replays the prompt.
-        ctx.PlayVoice(data.QuestionVo, null);
+        ctx.PlayVoice(data.QuestionVoClips, null);
     }
 
     private void Subscribe()
@@ -161,9 +166,10 @@ public class UIQuestionStep : IScenarioStep
         int? correct = data.Question.GetCorrectAnswer();
         bool isCorrect = (correct == null) || (index == correct.Value);
 
-        AudioClip fb = isCorrect ? data.CorrectFeedbackVo : data.WrongFeedbackVo;
-        // Feedback finishes before we re-show or complete (callback fires when VO ends).
-        ctx.PlayVoice(fb, () => OnFeedbackDone(isCorrect));
+        IReadOnlyList<AudioClip> feedback = isCorrect ? data.CorrectFeedbackVoClips : data.WrongFeedbackVoClips;
+        // All feedback phrases finish before we re-show or complete (the callback fires
+        // when the last one ends).
+        ctx.PlayVoice(feedback, () => OnFeedbackDone(isCorrect));
     }
 
     private void OnFeedbackDone(bool isCorrect)
