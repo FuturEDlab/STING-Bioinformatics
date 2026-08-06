@@ -14,22 +14,53 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerTeleport teleportPlayer;
     [SerializeField] private SmoothLocomotion smoothLoco;
     [SerializeField] private PlayerRotation playerRotate;
+    private SettingsManager settingsManager = null;
 
-    private SettingsManager sInstance;
+    //private SettingsManager sInstance;
     private SettingsData settings;
-    
-    /*void Start()
+
+
+    void Start()
     {
-        sInstance = SettingsManager.Instance;
-        if (sInstance == null) return;
-        settings = SettingsManager.Instance.CurrentSettings;
-        if (settings == null) return;
-        
-        //WireLocomotion(settings.locomotionEnabled);
-        //WireSnapTurn(settings.snapTurningEnabled);
-        //WireTeleport(settings.teleportationEnabled);
+        // Resolve the settings manager at Start (safer for script execution order)
+        settingsManager = SettingsManager.Instance;
+
+        // Apply saved movement mode when the scene starts
+        ApplySavedMovementMode(settingsManager.settingsData.movementMode);
     }
 
+    public void ApplySavedMovementMode(string mode)
+    {
+        // If caller didn't pass a mode, read saved settings
+        if (string.IsNullOrEmpty(mode))
+        {
+            if (settingsManager == null || settingsManager.settingsData == null) return;
+            mode = settingsManager.settingsData.movementMode;
+        }
+
+        // Expect exact values: "Teleport" or "Continuous"
+        if (mode == "Teleport")
+        {
+            if (teleportPlayer != null) teleportPlayer.enabled = true;
+            if (smoothLoco != null) smoothLoco.enabled = false;
+            if (locoMotion != null) locoMotion.SetActive(false);
+            if (locoManager != null) locoManager.enabled = false;
+        }
+        else if (mode == "Continuous")
+        {
+            if (teleportPlayer != null) teleportPlayer.enabled = false;
+            if (smoothLoco != null) smoothLoco.enabled = true;
+            if (locoMotion != null) locoMotion.SetActive(true);
+            if (locoManager != null) locoManager.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning("Unknown movement mode: " + mode);
+        }
+    }
+    
+
+    /*
     public void WireLocomotion(bool value)
     {
         bool teleportOn = settings.teleportationEnabled;

@@ -1181,6 +1181,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7520918692892830120}
+  - {fileID: 6587339050510342867}
   m_Father: {fileID: 7835783573788824161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1321,6 +1322,8 @@ GameObject:
   - component: {fileID: 897282574010291186}
   - component: {fileID: 8583430394089870345}
   - component: {fileID: 8694364864350559651}
+  - component: {fileID: 4320728300781371098}
+  - component: {fileID: 7639068204169037978}
   m_Layer: 5
   m_Name: Continuous Movement Button
   m_TagString: Untagged
@@ -1405,7 +1408,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1429,7 +1432,53 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8583430394089870345}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7639068204169037978}
+        m_TargetAssemblyTypeName: ButtonSelectionGroup, Assembly-CSharp
+        m_MethodName: SelectButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4320728300781371098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625207975409750864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
+  selectable: {fileID: 8694364864350559651}
+  targetImage: {fileID: 8583430394089870345}
+  toggle: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: bbc042a667f7f44ae80ec578c1cc91e2, type: 3}
+  hoverSprite: {fileID: 21300000, guid: c143a0abec5b24892a032d816fc5fa80, type: 3}
+  selectedSprite: {fileID: 21300000, guid: 8c8e51dc9afa141c5a35e755308a3c0d, type: 3}
+  selectedHoverSprite: {fileID: 21300000, guid: e00b1b0465d7344068a67666a83e9830, type: 3}
+--- !u!114 &7639068204169037978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625207975409750864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6513302264290701652}
+  - {fileID: 4320728300781371098}
 --- !u!1 &3159067974877082684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,6 +1491,8 @@ GameObject:
   - component: {fileID: 4939701931996920197}
   - component: {fileID: 1180801672747280523}
   - component: {fileID: 5777862440611134551}
+  - component: {fileID: 4268249010599900480}
+  - component: {fileID: 4993093007082921714}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
@@ -1456,17 +1507,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3159067974877082684}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10.304}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7835783573788824161}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.929, y: 1.922}
+  m_AnchoredPosition: {x: 4.928955, y: 1.9219971}
   m_SizeDelta: {x: 2000, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4939701931996920197
@@ -1515,7 +1566,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5777862440611134551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1533,6 +1584,46 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4268249010599900480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159067974877082684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.UI.TrackedDeviceGraphicRaycaster
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
+--- !u!114 &4993093007082921714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159067974877082684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebba8e7b518464841a0e5ff36b54be0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsUIApplier
+  movementGroup: {fileID: 952116321295113786}
+  turningGroup: {fileID: 460799544949596805}
+  movementOptions:
+  - Teleport
+  - Continuous
+  turningOptions:
+  - Snap
+  - Smooth
+  subtitlesToggle: {fileID: 0}
 --- !u!1 &3311711763077192348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1987,8 @@ GameObject:
   - component: {fileID: 4959989590662573312}
   - component: {fileID: 858511110113955791}
   - component: {fileID: 3875734100560367605}
+  - component: {fileID: 6513302264290701652}
+  - component: {fileID: 3688288579254514}
   m_Layer: 5
   m_Name: Teleportation Button
   m_TagString: Untagged
@@ -1980,7 +2073,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2004,7 +2097,53 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 858511110113955791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3688288579254514}
+        m_TargetAssemblyTypeName: ButtonSelectionGroup, Assembly-CSharp
+        m_MethodName: SelectButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6513302264290701652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463299062386537128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
+  selectable: {fileID: 3875734100560367605}
+  targetImage: {fileID: 858511110113955791}
+  toggle: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: 3b90a19484c5a4a3ea2480b45b13904d, type: 3}
+  hoverSprite: {fileID: 21300000, guid: e7157b64dca1f41f3a8ac01f569210e5, type: 3}
+  selectedSprite: {fileID: 21300000, guid: e26930b361a4748c9997cd57700b6678, type: 3}
+  selectedHoverSprite: {fileID: 21300000, guid: 57fc17b773d9a4332840b2949548d34a, type: 3}
+--- !u!114 &3688288579254514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463299062386537128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6513302264290701652}
+  - {fileID: 4320728300781371098}
 --- !u!1 &3541980667249366232
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,6 +2409,8 @@ GameObject:
   - component: {fileID: 7619213457568604305}
   - component: {fileID: 572274149210975928}
   - component: {fileID: 1115654713267513178}
+  - component: {fileID: 6380270090127519045}
+  - component: {fileID: 3496185398986416474}
   m_Layer: 5
   m_Name: Snap Button
   m_TagString: Untagged
@@ -2294,8 +2435,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 428, y: 0}
-  m_SizeDelta: {x: 207, y: 105}
+  m_AnchoredPosition: {x: 360, y: 0}
+  m_SizeDelta: {x: 300, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7619213457568604305
 CanvasRenderer:
@@ -2354,7 +2495,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2366,7 +2507,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: f4559fd65cbc4481ebf78778bab7c85f, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2378,7 +2519,104 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 572274149210975928}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3496185398986416474}
+        m_TargetAssemblyTypeName: ButtonSelectionGroup, Assembly-CSharp
+        m_MethodName: SelectButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6380270090127519045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090915541634893023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
+  selectable: {fileID: 1115654713267513178}
+  targetImage: {fileID: 572274149210975928}
+  toggle: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: abace1981bf0f4701a71cb51b0ebcc06, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 06c6ca3da800648909bdc926c05b6126, type: 3}
+  selectedSprite: {fileID: 21300000, guid: f4559fd65cbc4481ebf78778bab7c85f, type: 3}
+  selectedHoverSprite: {fileID: 21300000, guid: 26d365ab86370456197068561940d085, type: 3}
+--- !u!114 &3496185398986416474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090915541634893023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6380270090127519045}
+  - {fileID: 4961440696498384628}
+--- !u!1 &4156249878675747748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7858014551275937683}
+  - component: {fileID: 460799544949596805}
+  m_Layer: 5
+  m_Name: Turning Button Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7858014551275937683
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156249878675747748}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2043692387642630720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.029975414, y: 0.0023730993}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &460799544949596805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156249878675747748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6380270090127519045}
+  - {fileID: 4961440696498384628}
 --- !u!1 &4925777912952815041
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,6 +2802,8 @@ GameObject:
   - component: {fileID: 3417185749014089889}
   - component: {fileID: 3487830621766489180}
   - component: {fileID: 5979875450691771884}
+  - component: {fileID: 4961440696498384628}
+  - component: {fileID: 6010089107225405382}
   m_Layer: 5
   m_Name: Smooth Button
   m_TagString: Untagged
@@ -2589,7 +2829,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 690, y: 0}
-  m_SizeDelta: {x: 252, y: 105}
+  m_SizeDelta: {x: 300, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3417185749014089889
 CanvasRenderer:
@@ -2648,7 +2888,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2672,7 +2912,53 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3487830621766489180}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6010089107225405382}
+        m_TargetAssemblyTypeName: ButtonSelectionGroup, Assembly-CSharp
+        m_MethodName: SelectButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4961440696498384628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5430083617326803065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
+  selectable: {fileID: 5979875450691771884}
+  targetImage: {fileID: 3487830621766489180}
+  toggle: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: 851f5e1b4b2bc452d8bc3de5a02f7a98, type: 3}
+  hoverSprite: {fileID: 21300000, guid: c77962bcbca464e43819b11424c92fe7, type: 3}
+  selectedSprite: {fileID: 21300000, guid: 0d62c87631cf54d5480c6b57aaf3a92e, type: 3}
+  selectedHoverSprite: {fileID: 21300000, guid: b6d68695c10e14b43a0d51a0899732ce, type: 3}
+--- !u!114 &6010089107225405382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5430083617326803065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6380270090127519045}
+  - {fileID: 4961440696498384628}
 --- !u!1 &5454130969727756942
 GameObject:
   m_ObjectHideFlags: 0
@@ -3556,6 +3842,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6971631599827636666}
+  - {fileID: 7858014551275937683}
   m_Father: {fileID: 7835783573788824161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3847,6 +4134,57 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &6311865400479447633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6587339050510342867}
+  - component: {fileID: 952116321295113786}
+  m_Layer: 5
+  m_Name: Movement Button Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6587339050510342867
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311865400479447633}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1806990308827499061}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.029975414, y: 0.0023730993}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &952116321295113786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311865400479447633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
+  buttons:
+  - {fileID: 6513302264290701652}
+  - {fileID: 4320728300781371098}
 --- !u!1 &6490559359183802917
 GameObject:
   m_ObjectHideFlags: 0
@@ -6056,12 +6394,68 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9198053146901342482}
     m_Modifications:
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1796827652513077289}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFromHandle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToggleSwitch, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: sliderValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5357273065577678392}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7406454586296390634, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_Name
       value: Subititles Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 7956147745553996554, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7956147745553996554, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7956147745553996554, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9036929259903955435, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
@@ -6149,6 +6543,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+--- !u!114 &1796827652513077289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+  m_PrefabInstance: {fileID: 3211585832700138962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357273065577678392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3bf439a1a674e59841fa04808a212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSwitch
+--- !u!1 &5357273065577678392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7406454586296390634, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+  m_PrefabInstance: {fileID: 3211585832700138962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5906548996740768825 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9036929259903955435, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
