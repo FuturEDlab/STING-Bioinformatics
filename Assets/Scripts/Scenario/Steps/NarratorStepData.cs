@@ -1,13 +1,18 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>Data for a step that plays a VO clip and completes when the clip finishes.</summary>
+/// <summary>
+/// Data for a step that speaks a line and completes when it finishes. The line is a list
+/// because recordings are authored as short phrases; they play back to back in order.
+/// </summary>
 [CreateAssetMenu(fileName = "NarratorStep", menuName = "Scenario/Steps/Narrator")]
 public class NarratorStepData : ScenarioStepData
 {
-    [SerializeField] private AudioClip clip;
+    [Tooltip("Phrases of this line, played in order. Leave empty to skip the step.")]
+    [SerializeField] private List<AudioClip> clips = new List<AudioClip>();
 
-    public AudioClip Clip => clip;
+    public IReadOnlyList<AudioClip> Clips => clips;
 
     public override IScenarioStep CreateRuntimeStep() => new NarratorStep(this);
 }
@@ -26,8 +31,8 @@ public class NarratorStep : IScenarioStep
     public void Enter(ScenarioContext ctx, Action onComplete)
     {
         this.ctx = ctx;
-        // Plays through the shared audio path; a null clip completes immediately.
-        ctx.PlayVoice(data.Clip, onComplete);
+        // Plays through the shared audio path; an empty list completes immediately.
+        ctx.PlayVoice(data.Clips, onComplete);
     }
 
     public void Exit()

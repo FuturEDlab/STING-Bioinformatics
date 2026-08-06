@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e539f027881a6c4eb0c68682d70f5bc, type: 3}
-  m_Name: S2b_Question
+  m_Name: S3b_Question2
   m_EditorClassIdentifier: Assembly-CSharp::UIQuestionStepData
-  question: {fileID: 11400000, guid: 4a1c905c83038cb41bfad56d845bd5f0, type: 2}
+  question: {fileID: 11400000, guid: e70b7502a2fb2354894813f42a4f9f14, type: 2}
   questionVoClips:
-  - {fileID: 8300000, guid: b47bac2f8c9ce11489c383d6f0802a43, type: 3}
+  - {fileID: 8300000, guid: d7aef00ca89522f4ab3de348747d62d0, type: 3}
   correctFeedbackVoClips:
-  - {fileID: 8300000, guid: 701775f989b88ff4ea809d9145b6cf93, type: 3}
+  - {fileID: 8300000, guid: e71c7226156faaf48a502a780882908b, type: 3}
   wrongFeedbackVoClips:
-  - {fileID: 8300000, guid: 9ecd34c11fbdf3b489b5e8a78297ab2e, type: 3}
+  - {fileID: 8300000, guid: 29164d686358d9540be161a7b3df01d0, type: 3}
   allowedTries: 3
   advanceOnFail: 0

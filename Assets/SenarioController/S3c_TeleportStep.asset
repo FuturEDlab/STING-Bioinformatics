@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c571b6d784197014a8f4e0f720ba4a21, type: 3}
+  m_Name: S3c_TeleportStep
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportStepData
+  matchDestinationRotation: 1
+  fadeScreen: 1
+  fadeHoldSeconds: 0.1
+  delayBeforeTeleport: 0
+  delayAfterTeleport: 0
