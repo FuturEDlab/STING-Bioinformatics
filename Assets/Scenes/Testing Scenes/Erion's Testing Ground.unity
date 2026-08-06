@@ -757,6 +757,17 @@ MonoBehaviour:
         m_CallState: 2
   MaxGlowDistance: 1.4
   submeshGlowNumber: 0
+--- !u!114 &161337356 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6513302264290701652, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
 --- !u!1001 &178139590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2918,6 +2929,17 @@ CapsuleCollider:
   m_Height: 0.0037
   m_Direction: 2
   m_Center: {x: 0.0153, y: -0.0137, z: 0.0632}
+--- !u!114 &950741631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 952116321295113786, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0613816fbe2448e1bd0698f93fa004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSelectionGroup
 --- !u!1 &959566632
 GameObject:
   m_ObjectHideFlags: 0
@@ -3279,6 +3301,17 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1024654422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4320728300781371098, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
 --- !u!1001 &1117865124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4463,6 +4496,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16301fd05f78f994b805ec613ffa921d, type: 3}
+--- !u!114 &1450142879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6707011857649716997, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3bf439a1a674e59841fa04808a212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSwitch
+--- !u!114 &1450142880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8934181961119271844, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &1453606053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4554,6 +4609,18 @@ PrefabInstance:
     - target: {fileID: 619838394416460392, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 952116321295113786, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: 'buttons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 161337356}
+    - target: {fileID: 952116321295113786, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: 'buttons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1024654422}
+    - target: {fileID: 1180801672747280523, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.size
@@ -4667,6 +4734,50 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: movementGroup
+      value: 
+      objectReference: {fileID: 950741631}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: toggleOnSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 310c1fd22c1994418ad43eb49d807b9c, type: 3}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: subtitlesSlider
+      value: 
+      objectReference: {fileID: 1822032109}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: toggleOffSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: df323faad9dbc4860812b0fb3f6d1773, type: 3}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: vignettingSlider
+      value: 
+      objectReference: {fileID: 1450142880}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: subtitlesToggleSwitch
+      value: 
+      objectReference: {fileID: 1822032111}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: vignettingToggleSwitch
+      value: 
+      objectReference: {fileID: 1450142879}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: subtitlesBackgroundImage
+      value: 
+      objectReference: {fileID: 1463773376}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: vignettingBackgroundImage
+      value: 
+      objectReference: {fileID: 2051064800}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: subtitlesBackgroundImageInspector
+      value: 
+      objectReference: {fileID: 1463773376}
+    - target: {fileID: 4993093007082921714, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+      propertyPath: vignettingBackgroundImageInspector
+      value: 
+      objectReference: {fileID: 2051064800}
     - target: {fileID: 5870892475982376346, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4689,6 +4800,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3159067974877082684, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
   m_PrefabInstance: {fileID: 1453606053}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1463773376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1644385898464021746, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1500260798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5282,7 +5404,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533631242}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
@@ -5343,7 +5465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533631242}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab68ce6587aab0146b8dabefbd806791, type: 3}
   m_Name: 
@@ -6531,6 +6653,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &1822032111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1796827652513077289, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3bf439a1a674e59841fa04808a212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSwitch
 --- !u!1 &1826654590
 GameObject:
   m_ObjectHideFlags: 0
@@ -6936,15 +7069,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947114535}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.148, y: 0, z: -11.49}
+  m_LocalRotation: {x: -0.073550835, y: -0, z: -0, w: 0.9972915}
+  m_LocalPosition: {x: 6.148, y: 0.11738217, z: -10.852482}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1633279599}
   - {fileID: 430178837}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.436, y: 0, z: 0}
 --- !u!143 &1947114539
 CharacterController:
   m_ObjectHideFlags: 0
@@ -7129,6 +7262,17 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -9090457421139725384, guid: 05785672854a9844fbec3c53148b549a, type: 3}
+--- !u!114 &2051064800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 732496226484983371, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
+  m_PrefabInstance: {fileID: 1453606053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &2053397042
 PrefabInstance:
   m_ObjectHideFlags: 0

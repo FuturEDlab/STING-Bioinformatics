@@ -9,6 +9,8 @@ using Unity.VisualScripting;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static event Action<SettingsData> OnSettingsLoaded;
+
     public static SettingsManager Instance {get; private set;}
     public SettingsData settingsData {get; private set;}
     private SettingsData pendingSettingsData;
@@ -37,17 +39,30 @@ public class SettingsManager : MonoBehaviour
 
         if (settingsData == null)
         {
-            settingsData = new SettingsData();
+            settingsData = new SettingsData
+            {
+                narrationVolume = 1f,
+                movementMode = "Teleport",
+                turningMode = "Snap",
+                subtitles = true,
+                textSize = "Medium",
+                comfortVignette = false
+            };
+
+            SaveSettingsData();
         }
 
         //create a copy of the settings data to hold pending changes
         pendingSettingsData = CloneSettingsData(settingsData);
+
+        //Apply loaded settings to the player when the game starts
+        //TODO: load (ex: ApplySavedMovementMode) and apply settings to the player when the game starts
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        OnSettingsLoaded?.Invoke(settingsData);
     }
 
     // Update is called once per frame
@@ -95,8 +110,12 @@ public class SettingsManager : MonoBehaviour
     {
         settingsData = CloneSettingsData(pendingSettingsData);
         Debug.Log("Pending settings data has been applied to current settings data");
+
+        //Send settings changes to PlayerManager to apply mode changes to the player
+        //
     }
 
+    // Update old settings data with new settings data and save to json file
     private SettingsData CloneSettingsData(SettingsData originalData)
     {
         if (originalData == null)
@@ -120,12 +139,12 @@ public class SettingsManager : MonoBehaviour
     private void SaveSettingsData()
     {
         //Filler data for testing
-        /*settingsData.narrationVolume = 2.0f;
-        settingsData.movementMode = "Continous";
+        settingsData.narrationVolume = 2.0f;
+        settingsData.movementMode = "Continuous";
         settingsData.turningMode = "Snap";
-        settingsData.subtitles = false;
+        settingsData.subtitles = true;
         settingsData.textSize = "Medium";
-        settingsData.comfortVignette = false;*/
+        settingsData.comfortVignette = false;
 
         string json = JsonUtility.ToJson(settingsData, true);
         File.WriteAllText(path, json);
