@@ -337,6 +337,17 @@ CapsuleCollider:
   m_Height: 0.0037
   m_Direction: 2
   m_Center: {x: 0.0153, y: 0.0118, z: 0.0632}
+--- !u!114 &95440619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7386729354806365781, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
+  m_PrefabInstance: {fileID: 5601974287527254652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626a4d6723d6ad24b9aebb811ad5a3dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement.ContinuousMoveProvider
 --- !u!1001 &104418816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2679,6 +2690,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
+--- !u!114 &1074702892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3130851936038591439, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
+  m_PrefabInstance: {fileID: 5601974287527254652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation.TeleportationProvider
 --- !u!1001 &1117865124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5642,6 +5664,22 @@ PrefabInstance:
       propertyPath: locoManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -8485387824948293711, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: snapTurnProvider
+      value: 
+      objectReference: {fileID: 1998837106}
+    - target: {fileID: -8485387824948293711, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: teleportationProvider
+      value: 
+      objectReference: {fileID: 1074702892}
+    - target: {fileID: -8485387824948293711, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: continuousMoveProvider
+      value: 
+      objectReference: {fileID: 95440619}
+    - target: {fileID: -8485387824948293711, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: continuousTurnProvider
+      value: 
+      objectReference: {fileID: 1998837107}
     - target: {fileID: 964570614159785991, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
       propertyPath: mainMenuPanel
       value: 
@@ -5829,6 +5867,28 @@ CapsuleCollider:
   m_Height: 0.0037
   m_Direction: 2
   m_Center: {x: -0.0153, y: -0.0137, z: 0.0632}
+--- !u!114 &1998837106 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3318887466458103915, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
+  m_PrefabInstance: {fileID: 5601974287527254652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f365cf844c03449bc8973eead2c3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning.SnapTurnProvider
+--- !u!114 &1998837107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 755011609842621401, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
+  m_PrefabInstance: {fileID: 5601974287527254652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b29b6c6428c984a8a73ffc2d58063b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning.ContinuousTurnProvider
 --- !u!1001 &2030375514
 PrefabInstance:
   m_ObjectHideFlags: 0

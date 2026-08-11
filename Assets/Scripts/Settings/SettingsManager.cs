@@ -77,33 +77,6 @@ public class SettingsManager : MonoBehaviour
         
     }
 
-    /*public void ManageSubtitles()
-    {
-        if (subtitlesToggle != null)
-        {
-            pendingSettingsData.subtitles = subtitlesToggle.value > 0.5f;
-        }
-        
-        Debug.Log("Pending subtitles setting: " + pendingSettingsData.subtitles);
-
-        /*if (subtitlesToggle.value < 0.5)
-        {
-            //Todo: create a copy of the settings and then update the
-            //copy with changed setting.
-            //If the save button is pressed while still in settings, save the copy
-            //otherwise if close is pressed, clear copy of settings and
-            //do not save
-            areSubtitlesActive = false;
-            Debug.Log("Subtitles Off");
-        }
-        else if (subtitlesToggle.value > 0.5)
-        {
-            //Todo: same as above
-            areSubtitlesActive = true;
-            Debug.Log("Subtitles On");
-        }
-    }*/
-
     public void OnSaveButtonClicked()
     {
         Debug.Log("SettingsManager: OnSaveButtonClicked invoked");
