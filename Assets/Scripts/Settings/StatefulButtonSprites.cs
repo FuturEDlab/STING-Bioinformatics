@@ -54,16 +54,25 @@ public class StatefulButtonSprites : MonoBehaviour,
     // Displayed when the UI element is both selected and hovered.
     [SerializeField] private Sprite selectedHoverSprite;
 
+    [Header("Optional Disabled State")]
+    [SerializeField] private Sprite disabledSprite;
+
     // Tracks whether the pointer or XR ray is currently over this element.
     private bool isHovered;
 
     // Tracks whether this element is persistently selected.
     private bool isSelected;
+    private bool isDisabled;
 
     /// <summary>
     /// Allows other scripts to check whether this element is selected.
     /// </summary>
     public bool IsSelected => isSelected;
+
+    /// <summary>
+    /// Allows other scripts to check whether this element is disabled.
+    /// </summary>
+    public bool IsDisabled => isDisabled;
 
     private void Awake()
     {
@@ -107,6 +116,7 @@ public class StatefulButtonSprites : MonoBehaviour,
             isSelected = toggle.isOn;
         }
 
+        selectable.interactable = !isDisabled;
         RefreshVisual();
     }
 
@@ -151,6 +161,9 @@ public class StatefulButtonSprites : MonoBehaviour,
     /// </summary>
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (isDisabled)
+            return;
+
         isHovered = true;
         RefreshVisual();
     }
@@ -161,6 +174,9 @@ public class StatefulButtonSprites : MonoBehaviour,
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (isDisabled)
+            return;
+
         isHovered = false;
         RefreshVisual();
     }
@@ -179,6 +195,20 @@ public class StatefulButtonSprites : MonoBehaviour,
     }
 
     /// <summary>
+    /// Sets the button's disabled state.
+    /// </summary>
+    public void SetDisabled(bool disabled)
+    {
+        isDisabled = disabled;
+        if (selectable != null)
+        {
+            selectable.interactable = !disabled;
+        }
+
+        RefreshVisual();
+    }
+
+    /// <summary>
     /// Chooses the correct sprite based on the current combination
     /// of selected and hovered states.
     /// </summary>
@@ -186,6 +216,18 @@ public class StatefulButtonSprites : MonoBehaviour,
     {
         if (targetImage == null)
         {
+            return;
+        }
+
+        if (isDisabled)
+        {
+            if (disabledSprite != null)
+            {
+                SetSprite(disabledSprite);
+                return;
+            }
+
+            SetSprite(defaultSprite);
             return;
         }
 
@@ -227,5 +269,23 @@ public class StatefulButtonSprites : MonoBehaviour,
         {
             targetImage.sprite = newSprite;
         }
+    }
+
+    /// <summary>
+    /// Updates the state sprites used by this component.
+    /// </summary>
+    public void SetStateSprites(
+        Sprite defaultSprite,
+        Sprite hoverSprite,
+        Sprite selectedSprite,
+        Sprite selectedHoverSprite,
+        Sprite disabledSprite)
+    {
+        this.defaultSprite = defaultSprite;
+        this.hoverSprite = hoverSprite;
+        this.selectedSprite = selectedSprite;
+        this.selectedHoverSprite = selectedHoverSprite;
+        this.disabledSprite = disabledSprite;
+        RefreshVisual();
     }
 }

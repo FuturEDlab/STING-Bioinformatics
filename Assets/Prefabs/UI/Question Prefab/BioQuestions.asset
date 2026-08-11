@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BioQuestions
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionBank
+  universalQuestion:
+    questionText: What caused this faulty alert?
+    questionTextFieldHeight: 73
+    ColoredAnswerSprites:
+    - {fileID: 21300000, guid: 2d8e2e68b0b3c4118965dafc32944301, type: 3}
+    - {fileID: 21300000, guid: 6cb57d9757136465ca886bd003b9fbf7, type: 3}
+    - {fileID: 21300000, guid: b92b4d27c74b54e2487a4532fae8e964, type: 3}
+    explanationImageCorrect: {fileID: 21300000, guid: ed05665dd6a324f30b547c73e945503e, type: 3}
+    explanationImageIncorrect: {fileID: 21300000, guid: ea7a5933134754071ad962bad6209f81, type: 3}
+    answers:
+    - answerText: Patient is allergic
+      answerImage: {fileID: 21300000, guid: 6209fa0fd4743437f8f5827bdc918efc, type: 3}
+      isCorrect: 0
+      buttonStateSprites:
+        defaultSprite: {fileID: 21300000, guid: 6209fa0fd4743437f8f5827bdc918efc, type: 3}
+        hoverSprite: {fileID: 21300000, guid: 5bde75f1d8f2042159692cf8b43ca174, type: 3}
+        selectedSprite: {fileID: 21300000, guid: ae4d2c68b889146cebe8f8d9b5f7c39c, type: 3}
+        selectedHoverSprite: {fileID: 21300000, guid: 20dcfdeabc57a4f4ba615819ba4673ee, type: 3}
+    - answerText: Logic failed to filter for patient sex
+      answerImage: {fileID: 21300000, guid: 2f092680e58c04f23b8022678411e1f0, type: 3}
+      isCorrect: 1
+      buttonStateSprites:
+        defaultSprite: {fileID: 21300000, guid: 2f092680e58c04f23b8022678411e1f0, type: 3}
+        hoverSprite: {fileID: 21300000, guid: db61ba431f744408f8878d58bdacb261, type: 3}
+        selectedSprite: {fileID: 21300000, guid: 7e29fdfe7b6b546b583ed9e9c9f7c708, type: 3}
+        selectedHoverSprite: {fileID: 21300000, guid: d994d0e58cb0f4d2baddb65251979476, type: 3}
+    - answerText: Medication expired
+      answerImage: {fileID: 21300000, guid: c0e85c2d54c034d1188bfc79c332dafe, type: 3}
+      isCorrect: 0
+      buttonStateSprites:
+        defaultSprite: {fileID: 21300000, guid: c0e85c2d54c034d1188bfc79c332dafe, type: 3}
+        hoverSprite: {fileID: 21300000, guid: 597f4ae9de17e46a899cfb3872c7c525, type: 3}
+        selectedSprite: {fileID: 21300000, guid: 33ff6c7eb98a94e25bb1c2aab3e6ad97, type: 3}
+        selectedHoverSprite: {fileID: 21300000, guid: 55a244314a9f34017980666919bbd345, type: 3}
+  majorQuestionSets:
+  - majorName: Nursing
+    majorQuestion:
+      questionText: Sarah exhibited alert fatigue. How did the false alert in Scene
+        1 contribute to the error in Scene 3?
+      questionTextFieldHeight: 146
+      ColoredAnswerSprites:
+      - {fileID: 21300000, guid: 3c4337548808c412bb1114d343e82d2d, type: 3}
+      - {fileID: 21300000, guid: 2a7cde702dc65496b8b87f68bbe90e59, type: 3}
+      - {fileID: 21300000, guid: d1324493c40394e54bd7fad7fd532908, type: 3}
+      - {fileID: 21300000, guid: ac35d5ee7d5ad45b6ae1d5e4ad82add2, type: 3}
+      explanationImageCorrect: {fileID: 21300000, guid: 55da10204ffc54671822d1581bc1e52c, type: 3}
+      explanationImageIncorrect: {fileID: 21300000, guid: a4a796e3c6da947b7b3e47fbe84642a9, type: 3}
+      answers:
+      - answerText: It increased Sarah's workload, making her rush
+        answerImage: {fileID: 21300000, guid: a8e1a634e3e3041109dac1694c3fc54c, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: a8e1a634e3e3041109dac1694c3fc54c, type: 3}
+          hoverSprite: {fileID: 21300000, guid: 50f7e475084b44a73a940b36c9bbbb3a, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 17da483eae36f4bc1a7e7eee4051956d, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: c14848c890bfb495daae5c0c669f13ae, type: 3}
+      - answerText: It delayed medication administration
+        answerImage: {fileID: 21300000, guid: 644ee017e0c5145a0a511a75fc01ee9a, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 644ee017e0c5145a0a511a75fc01ee9a, type: 3}
+          hoverSprite: {fileID: 21300000, guid: fb0ee90e0e882479c9b8442c58254477, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 49b7496648f6141c7810baf3924ef66a, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: d1520470240124a81a432b7f8900eaa1, type: 3}
+      - answerText: It changed the patient's allergy status
+        answerImage: {fileID: 21300000, guid: 9475360a1fedd4181bce2786a1796127, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 9475360a1fedd4181bce2786a1796127, type: 3}
+          hoverSprite: {fileID: 21300000, guid: 51590d47b72b24b7e94bc952f7556e49, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 6a464de080c724d64b9721ea92627dfe, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: a27db4d7a803244e5a9274e310301518, type: 3}
+      - answerText: It caused Sarah to distrust alerts, leading her to override a
+          valid safety check
+        answerImage: {fileID: 21300000, guid: f889345372c7a49b1b23b33537eda85f, type: 3}
+        isCorrect: 1
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: f889345372c7a49b1b23b33537eda85f, type: 3}
+          hoverSprite: {fileID: 21300000, guid: ff21f7e4e97a14653a1ef9778ff585c0, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 5b828c3edfd4544c5bd25bfd461480c5, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: 9926d40d65f2d4b489e3ebdbc8fce769, type: 3}
+  - majorName: Health Informatics / Computing
+    majorQuestion:
+      questionText: The Amoxicillin error was caused by trusting unstructured free
+        text. How should the EHR be redesigned to prevent a 5000 mg overdose entry?
+      questionTextFieldHeight: 219
+      ColoredAnswerSprites:
+      - {fileID: 21300000, guid: 917cef829ec8f419d8985b5192c93b2f, type: 3}
+      - {fileID: 21300000, guid: bb86f0878a03f4bd3a1db3d836e94e48, type: 3}
+      - {fileID: 21300000, guid: e08b6705f0e094aac8e39e984dfbc055, type: 3}
+      - {fileID: 21300000, guid: 594aa7c7fadc642b3bb986a46aa1d519, type: 3}
+      explanationImageCorrect: {fileID: 21300000, guid: dbd476513d3774f9fa83aef03c0437dd, type: 3}
+      explanationImageIncorrect: {fileID: 21300000, guid: c7a923b58555240ef93fb28ee3c34ed2, type: 3}
+      answers:
+      - answerText: Implement spellcheck on all nursing notes
+        answerImage: {fileID: 21300000, guid: 810831501d0564bea803abf37b91b888, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 810831501d0564bea803abf37b91b888, type: 3}
+          hoverSprite: {fileID: 21300000, guid: 68913a003702c4fdfaeb918e79adce32, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 60ab92180c8c84cb39cb631ccc618b3b, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: 4402acb094b0646058419c11d052bfe7, type: 3}
+      - answerText: Remove historical nurse notes to reduce clutter
+        answerImage: {fileID: 21300000, guid: 0bc6be0c6d31e4ea1ad878edae9b07d5, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 0bc6be0c6d31e4ea1ad878edae9b07d5, type: 3}
+          hoverSprite: {fileID: 21300000, guid: 28ab5f243ddc447b083c8cc2be4c2fef, type: 3}
+          selectedSprite: {fileID: 21300000, guid: fbfcb356eacbe4b17bb420a91ba12342, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: b22d36f6390274714ba3ff5d767a497b, type: 3}
+      - answerText: Increase the number of namual override permissions for clinicians
+        answerImage: {fileID: 21300000, guid: 8e823c26cebc54963a751f6b3fb66857, type: 3}
+        isCorrect: 0
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 8e823c26cebc54963a751f6b3fb66857, type: 3}
+          hoverSprite: {fileID: 21300000, guid: d672369613f8548429b1f596dc6874bb, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 8caac160e0aee41ecbf95340120db3a9, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: 47d406e284139480496282bf3a8bffe2, type: 3}
+      - answerText: Use structured data fields with dose-range validation and hard
+          stops
+        answerImage: {fileID: 21300000, guid: 663ad53f423984612a3955a8ba223d64, type: 3}
+        isCorrect: 1
+        buttonStateSprites:
+          defaultSprite: {fileID: 21300000, guid: 663ad53f423984612a3955a8ba223d64, type: 3}
+          hoverSprite: {fileID: 21300000, guid: ee98290c3ee6d4ab1bea5bfebaaf8802, type: 3}
+          selectedSprite: {fileID: 21300000, guid: ed35f7a91c4ed4a858326776cae58149, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: f96994d68b8b64216bce92a03f3936da, type: 3}
