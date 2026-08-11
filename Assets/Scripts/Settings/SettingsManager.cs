@@ -16,6 +16,7 @@ public class SettingsManager : MonoBehaviour
     private SettingsData pendingSettingsData;
     private static string path;
     public Slider subtitlesToggle;
+    public Slider comfortVignetteSlider;
     private bool areSubtitlesActive; //Probably wont need this because pendingSettingsData.subtitles 
     //will be used to check if subtitles are active or not.
 
@@ -34,7 +35,9 @@ public class SettingsManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         path = Application.persistentDataPath + "/settings.json";
-        
+
+        Debug.Log($"SettingsManager Awake. settings.json path: {path}");
+
         settingsData = LoadSettingsData();
 
         if (settingsData == null)
@@ -65,15 +68,22 @@ public class SettingsManager : MonoBehaviour
         OnSettingsLoaded?.Invoke(settingsData);
     }
 
+    // NOTE: We do NOT automatically attach listeners. Use the inspector OnValueChanged / OnClick
+    // to call the public setter methods below so pendingSettingsData is updated when controls change.
+
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void ManageSubtitles()
+    /*public void ManageSubtitles()
     {
-        pendingSettingsData.subtitles = subtitlesToggle.value > 0.5f;
+        if (subtitlesToggle != null)
+        {
+            pendingSettingsData.subtitles = subtitlesToggle.value > 0.5f;
+        }
+        
         Debug.Log("Pending subtitles setting: " + pendingSettingsData.subtitles);
 
         /*if (subtitlesToggle.value < 0.5)
@@ -91,11 +101,12 @@ public class SettingsManager : MonoBehaviour
             //Todo: same as above
             areSubtitlesActive = true;
             Debug.Log("Subtitles On");
-        }*/
-    }
+        }
+    }*/
 
     public void OnSaveButtonClicked()
     {
+        Debug.Log("SettingsManager: OnSaveButtonClicked invoked");
         ApplyPendingSettings();
         SaveSettingsData();
     }
@@ -111,8 +122,76 @@ public class SettingsManager : MonoBehaviour
         settingsData = CloneSettingsData(pendingSettingsData);
         Debug.Log("Pending settings data has been applied to current settings data");
 
-        //Send settings changes to PlayerManager to apply mode changes to the player
-        //
+        // Notify listeners (e.g., PlayerManager) that settings have been applied so runtime
+        // systems can update themselves immediately.
+        OnSettingsLoaded?.Invoke(settingsData);
+    }
+
+    // Public setter methods intended to be called from inspector OnValueChanged / OnClick
+    public void SetNarrationVolume(float value)
+    {
+        pendingSettingsData.narrationVolume = value;
+        Debug.Log("Pending narrationVolume: " + value);
+    }
+
+    public void SetMovementMode(int index)
+    {
+        var options = new[] { "Teleport", "Continuous" };
+        if (index >= 0 && index < options.Length)
+        {
+            pendingSettingsData.movementMode = options[index];
+            Debug.Log("Pending movementMode: " + pendingSettingsData.movementMode);
+        }
+    }
+
+    public void SetTurningModeIndex(int index)
+    {
+        var options = new[] { "Snap", "Smooth" };
+        if (index >= 0 && index < options.Length)
+        {
+            pendingSettingsData.turningMode = options[index];
+            Debug.Log("Pending turningMode: " + pendingSettingsData.turningMode);
+        }
+    }
+
+    // Subtitles: slider wiring in inspector
+    public void SetSubtitlesFromSlider(float value)
+    {
+        pendingSettingsData.subtitles = value > 0.5f;
+        Debug.Log("Pending subtitles (from slider): " + pendingSettingsData.subtitles);
+    }
+
+    // Subtitles: ToggleSwitch wiring in inspector using On Toggle On / On Toggle Off
+    public void SetSubtitlesOn()
+    {
+        pendingSettingsData.subtitles = true;
+        Debug.Log("Pending subtitles (toggle on): true");
+    }
+
+    public void SetSubtitlesOff()
+    {
+        pendingSettingsData.subtitles = false;
+        Debug.Log("Pending subtitles (toggle off): false");
+    }
+
+    // Comfort vignette: slider wiring in inspector
+    public void SetComfortVignetteFromSlider(float value)
+    {
+        pendingSettingsData.comfortVignette = value > 0.5f;
+        Debug.Log("Pending comfortVignette (from slider): " + pendingSettingsData.comfortVignette);
+    }
+
+    // Comfort vignette: ToggleSwitch wiring in inspector using On Toggle On / On Toggle Off
+    public void SetComfortVignetteOn()
+    {
+        pendingSettingsData.comfortVignette = true;
+        Debug.Log("Pending comfortVignette (toggle on): true");
+    }
+
+    public void SetComfortVignetteOff()
+    {
+        pendingSettingsData.comfortVignette = false;
+        Debug.Log("Pending comfortVignette (toggle off): false");
     }
 
     // Update old settings data with new settings data and save to json file
@@ -138,19 +217,21 @@ public class SettingsManager : MonoBehaviour
 
     private void SaveSettingsData()
     {
-        //Filler data for testing
-        settingsData.narrationVolume = 2.0f;
-        settingsData.movementMode = "Continuous";
-        settingsData.turningMode = "Snap";
-        settingsData.subtitles = true;
-        settingsData.textSize = "Medium";
-        settingsData.comfortVignette = false;
+        Debug.Log("Saving settings data to: " + path);
+        // Persist the current settingsData to disk (assumed already applied via ApplyPendingSettings)
+        try
+        {
+            string json = JsonUtility.ToJson(settingsData, true);
+            File.WriteAllText(path, json);
 
-        string json = JsonUtility.ToJson(settingsData, true);
-        File.WriteAllText(path, json);
-
-        Debug.Log("Settings data has been saved");
-        Debug.Log(settingsData.narrationVolume + " ," + settingsData.movementMode + " ," + settingsData.turningMode + " ," + settingsData.subtitles + " ," + settingsData.textSize + " ," + settingsData.comfortVignette);
+            Debug.Log("Settings data has been saved to: " + path);
+            Debug.Log("Saved settings JSON:\n" + json);
+            Debug.Log($"Values -> narrationVolume: {settingsData.narrationVolume}, movementMode: {settingsData.movementMode}, turningMode: {settingsData.turningMode}, subtitles: {settingsData.subtitles}, textSize: {settingsData.textSize}, comfortVignette: {settingsData.comfortVignette}");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Failed to save settings data: " + ex.Message);
+        }
 
     }
 

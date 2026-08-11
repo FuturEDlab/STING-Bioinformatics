@@ -28,7 +28,9 @@ public class ButtonSelectionGroup : MonoBehaviour
 
         SelectedIndex = selectedIndex;
 
-        var selectedName = buttons[selectedIndex]?.gameObject.name ?? "Unknown";
+        string selectedName = buttons[selectedIndex] != null
+            ? buttons[selectedIndex].gameObject.name
+            : "Unknown";
         Debug.Log($"{nameof(ButtonSelectionGroup)}: selected major index {SelectedIndex} ({selectedName})");
 
         for (int i = 0; i < buttons.Length; i++)

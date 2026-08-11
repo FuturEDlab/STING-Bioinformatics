@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3992638281455243798}
   - component: {fileID: 964570614159785991}
   - component: {fileID: 236156613478586860}
-  - component: {fileID: 5370534030288772880}
+  - component: {fileID: -8485387824948293711}
   m_Layer: 5
   m_Name: Game Manager
   m_TagString: Untagged
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4734814ec2954914ba41a8fe42ac1a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
---- !u!114 &5370534030288772880
+--- !u!114 &-8485387824948293711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,6 +73,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1426940212812518953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 353fbd13e48414750932defca82f0bac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TwoSettingsManager
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  locoManager: {fileID: 0}
+  locoMotion: {fileID: 0}
+  teleportPlayer: {fileID: 0}
+  smoothLoco: {fileID: 0}
+  playerRotate: {fileID: 0}
