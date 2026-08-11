@@ -22,6 +22,7 @@ public class UpdateAnswerListHeight : MonoBehaviour
     [Header("Layout")]
     public RectTransform layoutRootToRebuild; // typically the panel or content RectTransform
     public float extraPadding = 8f;
+    private float overrideQuestionTextFieldHeight;
 
     private void OnEnable()
     {
@@ -55,8 +56,18 @@ public class UpdateAnswerListHeight : MonoBehaviour
         if (questionLayoutElement == null)
             return;
 
-        float preferred = questionTMP.preferredHeight;
-        questionLayoutElement.preferredHeight = preferred + extraPadding;
+        float targetHeight = overrideQuestionTextFieldHeight > 0f
+            ? overrideQuestionTextFieldHeight
+            : questionTMP.preferredHeight;
+
+        float finalHeight = targetHeight + extraPadding;
+        questionLayoutElement.preferredHeight = finalHeight;
+        questionLayoutElement.minHeight = finalHeight;
+
+        if (questionTMP.rectTransform != null)
+        {
+            questionTMP.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalHeight);
+        }
     }
 
     private void UpdateExplanationHeight()
@@ -70,6 +81,15 @@ public class UpdateAnswerListHeight : MonoBehaviour
 
         float preferred = explanationImage.rectTransform.rect.height;
         explanationLayoutElement.preferredHeight = preferred + extraPadding;
+    }
+
+    public void SetQuestionTextFieldHeight(float textFieldHeight)
+    {
+        overrideQuestionTextFieldHeight = textFieldHeight;
+        if (textFieldHeight > 0f && questionLayoutElement != null)
+        {
+            UpdateQuestionHeight();
+        }
     }
 
     private void UpdateAnswersHeight()
