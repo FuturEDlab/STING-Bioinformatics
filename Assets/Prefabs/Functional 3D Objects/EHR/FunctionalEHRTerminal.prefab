@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: f7590378a16294cd2b7be95326467630, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -688,7 +688,7 @@ PrefabInstance:
       addedObject: {fileID: 3274363228288309600}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ea7b055e87b4feb4ab10a66a78564c1a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1934342579031657053}
+      addedObject: {fileID: 9191579127419675962}
     - targetCorrespondingSourceObject: {fileID: 7545985890713374126, guid: ea7b055e87b4feb4ab10a66a78564c1a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2631993646587163889}
@@ -755,7 +755,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7890046468810857102, guid: ea7b055e87b4feb4ab10a66a78564c1a, type: 3}
---- !u!114 &1934342579031657053
+--- !u!114 &9191579127419675962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -764,13 +764,132 @@ MonoBehaviour:
   m_GameObject: {fileID: 3878629248424225606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c79bfbe7d68849ceb52e467426f27c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9464702836bd34142bc8f256c5361090, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EHRManager
-  sequence: {fileID: 11400000, guid: f1ab4e1e084704ea1bc9357bdf938e5c, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::EHRSequencePlayer
   targetRenderer: {fileID: 2037576052429934867}
-  playOnStart: 1
-  loop: 0
+  steps:
+  - stepName: Locked
+    image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
+    conditionType: 0
+    duration: 5
+    actionName: 
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: User scans wristband
+    image: {fileID: 21300000, guid: 75256718a1b814364a0cb6a6780c4887, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Scan patient wristband
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Patient scan accepted
+    image: {fileID: 21300000, guid: 308ccae812a80423295e3d30279d9bd5, type: 3}
+    conditionType: 0
+    duration: 3
+    actionName: Scan patient wristband
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: User scans meds
+    image: {fileID: 21300000, guid: ef5d432c9e7f74975a22e22e150109b1, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Scan methotrexate
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Nurse talks and starts override
+    image: {fileID: 21300000, guid: 65baa3adc29ab46f385c328e1fa9d6f9, type: 3}
+    conditionType: 0
+    duration: 8
+    actionName: Scan methotrexate
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: User confirms override
+    image: {fileID: 21300000, guid: cb25bf7e1c09142a09edb856f3616bac, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Confirm override
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Knowledge Check 1
+    image: {fileID: 21300000, guid: 8d85a52de1b6f46ff95ef01d32745d50, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Take quiz
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Review and correct dose
+    image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
+    conditionType: 0
+    duration: 3
+    actionName: Fix dosage typo
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: User scans meds
+    image: {fileID: 21300000, guid: b215666e760544a2a93310876ab3d93b, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Scan Amoxicillin
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Next scene
+    image: {fileID: 21300000, guid: 244a1ec263f7d43319baf5607dc38845, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Fix dosage typo
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Review and correct dose
+    image: {fileID: 21300000, guid: fa5236b3942834ecbac70e11fce8395c, type: 3}
+    conditionType: 1
+    duration: 5
+    actionName: Confirm dosage change
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Dosage confirmed
+    image: {fileID: 21300000, guid: 6000e10143aff4e44a4595f2c0e50971, type: 3}
+    conditionType: 0
+    duration: 3
+    actionName: Fix dosage typo
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Next scene
+    image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
+    conditionType: 0
+    duration: 3
+    actionName: Fix dosage typo
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Scan meds
+    image: {fileID: 21300000, guid: 52705b154cb784a6ca0a450ad0ec246e, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Scan Allopurinol
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: High severity contraindication detected
+    image: {fileID: 21300000, guid: bec7ef10df68a4e22ac3c9ebbcceee4f, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Override contraindication
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Confirm override 2
+    image: {fileID: 21300000, guid: d646546c48b864841bbe700a5cb3c6e3, type: 3}
+    conditionType: 1
+    duration: 3
+    actionName: Override contraindication
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  - stepName: Knowledge check 2
+    image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
+    conditionType: 0
+    duration: 5
+    actionName: Override contraindication
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+  autoStartOnEnable: 1
+  loopSequence: 0
 --- !u!4 &4510487436315619836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea7b055e87b4feb4ab10a66a78564c1a, type: 3}

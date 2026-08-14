@@ -2368,17 +2368,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6579c386dff46b6b3cbd0d81faa083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatefulButtonSprites
---- !u!114 &1049618615 stripped
+--- !u!114 &1049618619 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1934342579031657053, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
+  m_CorrespondingSourceObject: {fileID: 9191579127419675962, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
   m_PrefabInstance: {fileID: 933159793842132713}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c79bfbe7d68849ceb52e467426f27c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9464702836bd34142bc8f256c5361090, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EHRManager
+  m_EditorClassIdentifier: Assembly-CSharp::EHRSequencePlayer
 --- !u!114 &1074702892 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3130851936038591439, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
@@ -5321,7 +5321,6 @@ GameObject:
   - component: {fileID: 1833271074}
   - component: {fileID: 1833271073}
   - component: {fileID: 1833271072}
-  - component: {fileID: 1833271071}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5349,24 +5348,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1833271071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833271069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02089349cba2c45ac999c135acc98ac5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EHRActionCycler
-  ehrManager: {fileID: 1049618615}
-  actions:
-  - Scan wristband
-  - Scan methotrexate
-  - Clicks keyboard to confirm override
-  - Finish quiz
 --- !u!114 &1833271072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5411,9 +5392,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1833271071}
-        m_TargetAssemblyTypeName: EHRActionCycler, Assembly-CSharp
-        m_MethodName: OnClickCycle
+      - m_Target: {fileID: 1049618619}
+        m_TargetAssemblyTypeName: EHRSequencePlayer, Assembly-CSharp
+        m_MethodName: Advance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6103,7 +6084,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 296679483203284724, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1934342579031657053, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: iconParent
@@ -6111,7 +6092,7 @@ PrefabInstance:
       objectReference: {fileID: 125797987}
     - target: {fileID: 1934342579031657053, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: sceneIconInstances.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1934342579031657053, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: 'sceneIconInstances.Array.data[0]'
@@ -6131,7 +6112,7 @@ PrefabInstance:
       objectReference: {fileID: 1127531052}
     - target: {fileID: 3410189484723278428, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3878629248424225606, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: m_Name
@@ -6179,13 +6160,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6148934020347131430, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7337405982190238773, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7338212788596171705, guid: 4f08ef0f1fa5442e0bb516602124e172, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
