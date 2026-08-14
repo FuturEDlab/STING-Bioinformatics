@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EHRManager : MonoBehaviour
@@ -15,8 +16,16 @@ public class EHRManager : MonoBehaviour
     [Tooltip("Loop the sequence when it reaches the end")]
     public bool loop = false;
 
+    [Tooltip("Optional parent transform under which spawned icons will be placed")]
+    public Transform iconParent;
+
+    [Tooltip("Optional list of scene icon instances. If provided, the entry at the same index will use this scene object instead of instantiating the prefab.")]
+    public List<GameObject> sceneIconInstances = new List<GameObject>();
+
     int currentIndex = -1;
     Coroutine runningCoroutine;
+    GameObject currentIconInstance;
+    bool currentIconIsScene = false;
 
     void Start()
     {
@@ -29,6 +38,7 @@ public class EHRManager : MonoBehaviour
         if (sequence == null || sequence.entries == null || sequence.entries.Count == 0)
             return;
         StopSequence();
+        HideAllSceneIcons();
         currentIndex = 0;
         ShowEntry(currentIndex);
     }
@@ -39,6 +49,26 @@ public class EHRManager : MonoBehaviour
         {
             StopCoroutine(runningCoroutine);
             runningCoroutine = null;
+        }
+        if (currentIconInstance != null)
+        {
+            if (currentIconIsScene)
+                currentIconInstance.SetActive(false);
+            else
+                Destroy(currentIconInstance);
+            currentIconInstance = null;
+            currentIconIsScene = false;
+        }
+    }
+
+    void HideAllSceneIcons()
+    {
+        if (sceneIconInstances == null) return;
+        for (int i = 0; i < sceneIconInstances.Count; i++)
+        {
+            var go = sceneIconInstances[i];
+            if (go != null)
+                go.SetActive(false);
         }
     }
 
@@ -56,6 +86,50 @@ public class EHRManager : MonoBehaviour
         {
             StopCoroutine(runningCoroutine);
             runningCoroutine = null;
+        }
+
+        // Handle icon display
+        if (currentIconInstance != null)
+        {
+            if (currentIconIsScene)
+                currentIconInstance.SetActive(false);
+            else
+                Destroy(currentIconInstance);
+            currentIconInstance = null;
+            currentIconIsScene = false;
+        }
+
+        if (entry.showIcon)
+        {
+            // Prefer a scene instance if provided for this index
+            if (sceneIconInstances != null && index >= 0 && index < sceneIconInstances.Count && sceneIconInstances[index] != null)
+            {
+                currentIconInstance = sceneIconInstances[index];
+                currentIconIsScene = true;
+                currentIconInstance.SetActive(true);
+            }
+            else if (entry.iconPrefab != null)
+            {
+                Transform parent = iconParent != null ? iconParent : (targetRenderer != null ? targetRenderer.transform : null);
+                if (parent != null)
+                    currentIconInstance = Instantiate(entry.iconPrefab, parent);
+                else
+                    currentIconInstance = Instantiate(entry.iconPrefab);
+
+                currentIconIsScene = false;
+            }
+
+            if (currentIconInstance != null)
+            {
+                var animator = currentIconInstance.GetComponent<Animator>();
+                if (animator != null)
+                {
+                    if (!string.IsNullOrEmpty(entry.iconAnimatorTrigger))
+                        animator.SetTrigger(entry.iconAnimatorTrigger);
+                    else
+                        animator.Play(0);
+                }
+            }
         }
 
         if (entry.trigger == TriggerType.Timer)
