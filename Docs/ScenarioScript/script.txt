@@ -1,0 +1,286 @@
+                                                Bioinformatics Script - Designing Safe CDS: Logic,
+                                                Data, and the Consequences of Error
+
+                                                The following is a script of the bioinformatics project, and
+                                                all information in this document is subject to change.
+
+Designing Safe CDS: Logic, Data, and the Consequences of
+Error
+
+Total Duration: ~10 minutes
+
+Characters:
+
+     Player - Silent, acting as a Student Nurse.
+     Nurse Sarah - Charge Nurse; professional, fatigued by technology.
+     Mr. Johnson - 68-year-old male patient, lying in bed.
+     Narrator - Disembodied voice. Also narrates relative EHR alerts.
+
+Actions: Throughout the script, gameplay elements that require the player's action have been
+underlined.
+
+EHR Terminal State Color Key:
+     EHR Locked State
+               Pink - Paused
+               Red Alert
+                         Orange - False Positive
+                         Red - High Severity
+     Yellow - Scanner State
+     Purple - Notes Review/Correct Dosage State
+     Blue - Override State
+
+SCENE 1 - INTRO & THE FLAWED ALERT (Methotrexate)
+
+Setting
+
+A realistic hospital room, morning. Sunlight through blinds.
+Visuals: Mr. Johnson resting in bed (idle animation). A Computer on Wheels (COW) with an
+EHR terminal sits bedside. A medication cart is nearby. Nurse and patient have a static name
+tag that turns toward the player.
+
+Audio: Low AC hum, distant paging, soft monitor beeping.
+
+[FADE IN]
+
+NARRATOR
+Welcome to the "Designing Safe Clinical Decision Support" VR experience. Clinical Decision
+Support, or CDS, refers to software built into the Electronic Health Record that provides
+clinicians with patient-specific alerts, reminders, and recommendations. When designed well,
+CDS helps prevent medication errors and improves patient safety. When designed poorly, it can
+introduce new risks.
+
+NARRATOR
+In this world, you are a student nurse shadowing the charge nurse, Sarah. This is your first ever
+shift. In order to interact with objects, wait for them to glow, then point and click either of your
+trigger buttons.
+
+NARRATOR
+We are about to begin. To pause at any time, click ___. Enjoy!
+
+[Diagram of button is shown during above narration. Nurse Sarah walks into the room and logs
+into the computer while talking. She turns to the Player.]
+
+NURSE SARAH
+Glad you could join me. I'm Sarah and our patient this morning is Mr. Johnson. He's stable, but
+let's get his morning meds sorted.
+
+[She gestures toward the Med Cart and EHR screen.]
+
+NURSE SARAH
+First, we scan the wristband, then scan the meds, and the system should catch any problems.
+Lately, it's been more of a headache than help... you'll see.
+
+[She looks directly at the Player.]
+
+NURSE SARAH
+Go ahead. Pick up the scanner.
+
+NARRATOR
+Click on the scanner using the trigger button.
+[Scanner glows/pulses yellow. Wait for pick up input.]
+
+NURSE SARAH
+Now, you can scan Mr. Johnson's wristband.
+
+[Wristband glows/pulses yellow. The player scans wristband.]
+
+[SFX: Beep!]
+
+[EHR: "PATIENT VERIFIED: JOHNSON, M. (Male, 68)"]
+
+NURSE SARAH
+Good. Now scan the Methotrexate.
+
+[Methotrexate bottle glows/pulses. Wait for scanning input.]
+
+[SFX: Beep! A red triangle symbol appears on the computer and pulses.]
+
+[A large RED ALERT pops up in 3D space above the computer/EHR terminal: "WARNING:
+Patient is of childbearing age. Methotrexate is teratogenic." pops up on the computer screen.]
+
+[Sarah sighs, shakes her head.]
+
+NURSE SARAH
+See? "Childbearing age"? He's a 68-year-old man.
+
+[She dismisses the alert by interacting with the keyboard]
+
+NURSE SARAH
+Makes no sense. The system doesn't even check gender. Just override it while I give the
+medication.
+
+[Nurse Sarah administers Methotrexate to the patient while the keyboard glows. Player
+overrides the alert by clicking on the keyboard. Click sound plays.]
+
+[Nurse Sarah returns to the computer.]
+
+[SIMULATION PAUSE - QUIZ]
+
+Question: What caused this faulty alert?
+A. Patient is allergic
+Narrator upon answering: Incorrect. There is no documented allergy for this patient. The alert
+was triggered before any allergy logic was applied.
+
+B. Logic failed to filter for gender
+Narrator upon answering: Correct. The CDS logic checked age but failed to account for
+patient sex, triggering a teratogenic warning for a male patient. This type of poorly scoped logic
+creates false alerts and undermines trust in the system.
+
+C. Medication expired
+Narrator upon answering: Incorrect. Medication expiration would generate a different alert.
+This warning was unrelated to the medication's age or storage.
+
+[Player selects answer, and narrator says the corresponding prompt.]
+
+[SIMULATION RESUMES]
+
+[Alert disappears.]
+
+NURSE SARAH
+The trick is knowing when to trust the system... and when to trust your judgment. Let's keep
+going.
+
+SCENE 2 - THE MANUAL ENTRY TRAP (Amoxicillin)
+
+NURSE SARAH
+Next up: Amoxicillin. Go ahead and grab the bottle.
+
+[Bottle glows/pulses yellow. The player scans it.]
+
+[SFX: Beep!]
+
+[EHR: "Prescription: Amoxicillin, Notes (free text): `Last dose: 5000mg', Input: A numeric keypad
+appears."]
+
+NURSE SARAH
+Check the history notes for his last dose, then enter the current one.
+
+[Player sees "5000mg" and enters "5000."]
+NURSE SARAH
+Whoa - stop! That's a huge dosage. That "5000mg" is a typo in free text. It should be 500mg.
+But because it isn't structured data, the system didn't flag it. A 5000mg dose would destroy his
+kidneys.
+
+NURSE SARAH
+Correct it to 500mg.
+
+[Keyboard glows]
+
+[Player corrects dose by clicking the keyboard and confirms. A click sound is played.]
+
+[SFX: Pleasant chime.]
+
+[EHR: "Dosage Confirmed."]
+
+NURSE SARAH
+Better. But the system shouldn't have let you type that in without screaming at you.
+
+SCENE 3A - CONTRAINDICATION & ALERT FATIGUE
+(Allopurinol)
+
+NURSE SARAH
+Last one. Scan the Allopurinol.
+
+[Bottle glows/pulses. Player scans.]
+
+[SFX: Big beep!]
+
+[EHR: "WARNING!! CONTRAINDICATION! Amoxicillin is contraindicated with Allopurinol. Do
+not administer."]
+
+[Sarah looks exhausted and waves it off.]
+
+NURSE SARAH
+The software's been wrong all morning. It's probably another bad flag.
+
+[Keyboard glows/pulses red. Player presses it, and Nurse Sarah goes on to administer the
+medications.]
+
+NURSE SARAH
+Okay, meds administered. Let's move on.
+[FADE TO BLACK]
+
+[Text: "30 Minutes Later..."]
+
+SCENE 3B - CONSEQUENCE
+
+[FADE IN - Emergency ambience]
+Audio: Fast alarm tones, labored breathing.
+Visuals: Room dimmer, red tint. Mr. Johnson covered in rashes.
+[Sarah stands near the monitor, panicked.]
+NURSE SARAH
+His blood pressure is dropping! This rash - could be anaphylaxis!
+[She scrolls through the EHR, horrified.]
+NURSE SARAH (whispering)
+Oh no... the alert. It wasn't wrong. It was a real contraindication!
+[She turns to the Player.]
+NURSE SARAH
+We ignored it because of the others... and we hurt him.
+[She starts crying, mumbling "I'm gonna lose my job, how could I do this?" etc.]
+NARRATOR
+Poor Mr. Johnson... :(
+[FADE OUT SLOWLY]
+
+SCENE 4 - POST-EXPERIENCE ASSESSMENT
+
+Neutral void or quiet office space.
+UI - EXPERIENCE COMPLETE
+
+Select your Major:
+     Nursing
+     Healthcare Informatics / Computing
+
+[Different questions appear depending on major.]
+
+QUESTION 1: IN-SIMULATION QUIZ (METHOTREXATE ALERT)
+
+        Question: What caused this faulty alert?
+        A. Patient is allergic (Narrator: Incorrect. There is no documented allergy; the
+
+           alert was triggered by medication logic, not allergy files.)
+        B. Logic failed to filter for patient sex (Narrator: Correct. The CDS logic
+
+           checked age but failed to account for patient sex, triggering a teratogenic
+           warning for a male patient. This poorly scoped logic creates false alerts and
+           leads to alarm fatigue.)
+        C. Medication expired (Narrator: Incorrect. Expiration logic is separate from
+           clinical guideline alerts.)
+
+QUESTION 2: NURSING MAJOR PATH (ALERT FATIGUE)
+
+        Question: Sarah exhibited alert fatigue. How did the false alert in Scene 1
+           contribute to the error in Scene 3?
+
+        A. It increased Sarah's workload, making her rush.
+        B. It caused Sarah to distrust alerts, leading her to override a valid safety
+
+           check (Narrator: Correct. Repeated false alerts condition clinicians to ignore
+           warnings reflexively. When the system fails to provide relevant info, trust is lost
+           and safety is compromised.)
+        C. It delayed medication administration.
+        D. It changed the patient's allergy status.
+
+QUESTION 3: INFORMATICS MAJOR PATH (DATA STRUCTURE)
+
+        Question: The Amoxicillin error was caused by trusting unstructured free text.
+           How should the EHR be redesigned to prevent a 5000 mg overdose entry?
+
+        A. Implement spellcheck on all nursing notes.
+        B. Use structured data fields with dose-range validation and hard stops
+
+           (Narrator: Correct. Structured data must take priority. By implementing
+           validation against the /MedicationRequest resource, the system can block
+           entries that exceed safe limits.)
+        C. Remove historical nurse notes to reduce clutter.
+        D. Increase the number of manual override permissions for clinicians.
+FINAL SUMMARY SCREEN
+
+Thanks for playing! Core concepts learned:
+
+     Faulty CDS Logic: Misapplied rules generate false alerts (Scene 1).
+     Manual Entry Risks: Free-text input introduces dangerous variation (Scene 2).
+     Alert Fatigue: Too many alerts cause clinicians to ignore real ones (Scene 3).
+     Garbage In, Garbage Out: Poor logic and poor data = unsafe care.
+
+[Exit simulation button appears. Upon clicking, it brings you to the main menu.]
+

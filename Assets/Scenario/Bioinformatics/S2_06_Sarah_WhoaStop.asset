@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S2_06_Sarah_WhoaStop
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Nurse Sarah
+  phrases:
+  - clip: {fileID: 8300000, guid: 477b806e9bfabced63d58a24a0e11131, type: 3}
+    caption: {fileID: 21300000, guid: 9a07a4ed9228febdf49bfc8d9dffed15, type: 3}
+    captionText: 'Whoa - stop! That’s a huge dosage. That "5000mg" is a'
+  - clip: {fileID: 8300000, guid: 01c3cce4d3dcf3f1627297a90d41642d, type: 3}
+    caption: {fileID: 21300000, guid: eef5d3cb47656f03a2f5e16f8ce8d7eb, type: 3}
+    captionText: 'typo in free text. It should be 500mg. But because it isn’t'
+  - clip: {fileID: 8300000, guid: b263548954f452142c923480c0cc32e5, type: 3}
+    caption: {fileID: 21300000, guid: 8eb6b03d3107e78ed95f527b56398d20, type: 3}
+    captionText: 'structured data, the system didn’t flag it. A 5000mg dose would'
+  - clip: {fileID: 8300000, guid: 4ea8725ec50b2b91b87f1ac9d22c32d0, type: 3}
+    caption: {fileID: 21300000, guid: bbf100c9a3e2fa1ef7cf0b8c258c76fa, type: 3}
+    captionText: 'destroy his kidneys.'

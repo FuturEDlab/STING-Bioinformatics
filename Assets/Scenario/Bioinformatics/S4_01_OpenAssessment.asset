@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937c6c95a814744409c8f1d914439c55, type: 3}
+  m_Name: S4_01_OpenAssessment
+  m_EditorClassIdentifier: Assembly-CSharp::InvokeSceneEventStepData
+  onInvoke:
+    m_PersistentCalls:
+      m_Calls: []
+  invokeChannel: {fileID: 11400000, guid: 5b25e922c5d3c0164ec556ae93a9d0ce, type: 2}
+  waitForExternalCompletion: 1
+  completionChannel: {fileID: 11400000, guid: 68341afc531a8503a172eae321c6c199, type: 2}

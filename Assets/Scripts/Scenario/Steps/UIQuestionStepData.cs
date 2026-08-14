@@ -13,15 +13,19 @@ public class UIQuestionStepData : ScenarioStepData
     [SerializeField] private QuestionSO question;
 
     [Header("Question prompt VO (optional; plays as the panel appears)")]
-    [Tooltip("Phrases of the prompt, played in order.")]
-    [SerializeField] private List<AudioClip> questionVoClips = new List<AudioClip>();
+    [Tooltip("Phrases of the prompt, played in order with their captions.")]
+    [SerializeField] private List<CaptionedClip> questionVo = new List<CaptionedClip>();
 
-    [Header("Narrator feedback (played through the shared VO path)")]
-    [Tooltip("Phrases played after a correct answer, in order.")]
-    [SerializeField] private List<AudioClip> correctFeedbackVoClips = new List<AudioClip>();
+    [Header("Per-answer narrator feedback (index-aligned with the question's answers)")]
+    [Tooltip("One feedback line per answer index. An empty entry falls back to the generic correct/wrong line below.")]
+    [SerializeField] private List<VoiceLine> perAnswerFeedbackVo = new List<VoiceLine>();
 
-    [Tooltip("Phrases played after a wrong answer, in order.")]
-    [SerializeField] private List<AudioClip> wrongFeedbackVoClips = new List<AudioClip>();
+    [Header("Generic feedback fallback (played through the shared VO path)")]
+    [Tooltip("Phrases played after a correct answer with no per-answer line, in order.")]
+    [SerializeField] private List<CaptionedClip> correctFeedbackVo = new List<CaptionedClip>();
+
+    [Tooltip("Phrases played after a wrong answer with no per-answer line, in order.")]
+    [SerializeField] private List<CaptionedClip> wrongFeedbackVo = new List<CaptionedClip>();
 
     [Header("Retry policy")]
     [Tooltip("Attempts before the step gives up. 0 or negative = unlimited (must answer correctly to proceed).")]
@@ -30,11 +34,28 @@ public class UIQuestionStepData : ScenarioStepData
     [SerializeField] private bool advanceOnFail = false;
 
     public QuestionSO Question => question;
-    public IReadOnlyList<AudioClip> QuestionVoClips => questionVoClips;
-    public IReadOnlyList<AudioClip> CorrectFeedbackVoClips => correctFeedbackVoClips;
-    public IReadOnlyList<AudioClip> WrongFeedbackVoClips => wrongFeedbackVoClips;
+    public IReadOnlyList<CaptionedClip> QuestionVo => questionVo;
+    public IReadOnlyList<VoiceLine> PerAnswerFeedbackVo => perAnswerFeedbackVo;
+    public IReadOnlyList<CaptionedClip> CorrectFeedbackVo => correctFeedbackVo;
+    public IReadOnlyList<CaptionedClip> WrongFeedbackVo => wrongFeedbackVo;
     public int AllowedTries => allowedTries;
     public bool AdvanceOnFail => advanceOnFail;
+
+    /// <summary>
+    /// The feedback line for <paramref name="answerIndex"/>: its per-answer line when one
+    /// is authored, otherwise the generic correct/wrong fallback.
+    /// </summary>
+    public IReadOnlyList<CaptionedClip> GetFeedbackVo(int answerIndex, bool isCorrect)
+    {
+        if (answerIndex >= 0 && answerIndex < perAnswerFeedbackVo.Count)
+        {
+            VoiceLine line = perAnswerFeedbackVo[answerIndex];
+            if (line != null && line.HasContent)
+                return line.Phrases;
+        }
+
+        return isCorrect ? correctFeedbackVo : wrongFeedbackVo;
+    }
 
     public override IScenarioStep CreateRuntimeStep() => new UIQuestionStep(this);
 }
@@ -135,7 +156,7 @@ public class UIQuestionStep : IScenarioStep
         // Prompt VO runs alongside the visible panel rather than gating it. Answering
         // mid-clip is safe: PlayVoice cancels this pending wait before the feedback clip,
         // so no stale callback survives. Re-asking replays the prompt.
-        ctx.PlayVoice(data.QuestionVoClips, null);
+        ctx.PlayVoice(data.QuestionVo, null);
     }
 
     private void Subscribe()
@@ -166,7 +187,7 @@ public class UIQuestionStep : IScenarioStep
         int? correct = data.Question.GetCorrectAnswer();
         bool isCorrect = (correct == null) || (index == correct.Value);
 
-        IReadOnlyList<AudioClip> feedback = isCorrect ? data.CorrectFeedbackVoClips : data.WrongFeedbackVoClips;
+        IReadOnlyList<CaptionedClip> feedback = data.GetFeedbackVo(index, isCorrect);
         // All feedback phrases finish before we re-show or complete (the callback fires
         // when the last one ends).
         ctx.PlayVoice(feedback, () => OnFeedbackDone(isCorrect));

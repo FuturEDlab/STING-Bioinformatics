@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S1_02_Narr_YouAreAStudentNurse
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Narrator
+  phrases:
+  - clip: {fileID: 8300000, guid: afd44261f5b0596acbb592e8983f2584, type: 3}
+    caption: {fileID: 21300000, guid: 6570a8bc21902468a3c75482dec39e64, type: 3}
+    captionText: 'In this world, you are a student nurse shadowing the'
+  - clip: {fileID: 8300000, guid: 1026bcfcb7899721179b40ce56d8f8b5, type: 3}
+    caption: {fileID: 21300000, guid: 1c9faadc4afbd7d84a3c9c0914fa81db, type: 3}
+    captionText: 'charge nurse, Sarah. This is your first ever shift. In order to'
+  - clip: {fileID: 8300000, guid: c377a799c72321bc9aa593a5f5b2a29b, type: 3}
+    caption: {fileID: 21300000, guid: 4da9aa55b8742808de59dd7c24d69b96, type: 3}
+    captionText: 'interact with objects, wait for them to glow, then point and click'
+  - clip: {fileID: 8300000, guid: d94afcba40142056ca81b078625c89ee, type: 3}
+    caption: {fileID: 21300000, guid: 0edbcb32e40f9950d263e93c08128612, type: 3}
+    captionText: 'either of your trigger buttons.'

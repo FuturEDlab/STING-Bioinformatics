@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: S2b_Question
   m_EditorClassIdentifier: Assembly-CSharp::UIQuestionStepData
   question: {fileID: 11400000, guid: 4a1c905c83038cb41bfad56d845bd5f0, type: 2}
-  questionVoClips:
-  - {fileID: 8300000, guid: b47bac2f8c9ce11489c383d6f0802a43, type: 3}
-  correctFeedbackVoClips:
-  - {fileID: 8300000, guid: 701775f989b88ff4ea809d9145b6cf93, type: 3}
-  wrongFeedbackVoClips:
-  - {fileID: 8300000, guid: 9ecd34c11fbdf3b489b5e8a78297ab2e, type: 3}
+  questionVo:
+  - clip: {fileID: 8300000, guid: b47bac2f8c9ce11489c383d6f0802a43, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
+  perAnswerFeedbackVo: []
+  correctFeedbackVo:
+  - clip: {fileID: 8300000, guid: 701775f989b88ff4ea809d9145b6cf93, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
+  wrongFeedbackVo:
+  - clip: {fileID: 8300000, guid: 9ecd34c11fbdf3b489b5e8a78297ab2e, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
   allowedTries: 3
   advanceOnFail: 0

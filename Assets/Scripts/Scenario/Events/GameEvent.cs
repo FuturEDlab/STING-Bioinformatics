@@ -15,6 +15,12 @@ public class GameEvent : ScriptableObject
 
     public void Raise() => listeners?.Invoke();
 
+    /// <summary>
+    /// How many things are listening right now. Zero means raising this channel does
+    /// nothing — usually a missing SceneEventRelay, or one sitting on a deactivated object.
+    /// </summary>
+    public int ListenerCount => listeners?.GetInvocationList().Length ?? 0;
+
     // Clear any stale subscriptions when the asset unloads (domain/play-mode reload).
     private void OnDisable() => listeners = null;
 }
