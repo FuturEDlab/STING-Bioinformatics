@@ -2177,6 +2177,7 @@ MonoBehaviour:
   majorSelectButton: {fileID: 7386740956711462450}
   majorSelectButtonSprites: {fileID: 4739246401875723175}
   questionBank: {fileID: 11400000, guid: 70c99c17e715a4e4f849faa7a5193a23, type: 2}
+  skipUniversalQuestionInAssessment: 0
   questionTMP: {fileID: 2140377500822852347}
   explanationImage: {fileID: 2533640355584383313}
   questionContinueButton: {fileID: 2402428875815102809}
@@ -2195,6 +2196,7 @@ MonoBehaviour:
   answerButtonContainer: {fileID: 984775856700134534}
   answerButtonPrefab: {fileID: 0}
   layoutUpdater: {fileID: 9019566606683167174}
+  panelClosedEvent: {fileID: 0}
   summaryAnswerImages:
   - {fileID: 936944667459578968}
   - {fileID: 2047864562855310451}
@@ -6515,7 +6517,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 2
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

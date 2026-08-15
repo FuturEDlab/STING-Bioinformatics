@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 0}
+  - clip: {fileID: 8300000, guid: c132444169c554475bbe874045fc65cc, type: 3}
     caption: {fileID: 21300000, guid: fd7fb90ed4ba81dcc7098d8d69c1a264, type: 3}
-    captionText: 'We ignored it because of the others... and we hurt him.'
+    captionText: We ignored it because of the others... and we hurt him.
