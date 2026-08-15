@@ -23,6 +23,9 @@ public class QuestionPanelManager : MonoBehaviour
     [Header("Question Bank")]
     public QuestionBank questionBank;
 
+    [Tooltip("Skip the universal question in the full assessment. The script asks it twice — once in the simulation after the Methotrexate alert, and again as Question 1 here. Tick this to ask it only during the simulation and go straight to the major-specific question.")]
+    public bool skipUniversalQuestionInAssessment = false;
+
     [Header("Question Page UI")]
     public TextMeshProUGUI questionTMP;
     public Image explanationImage;
@@ -49,6 +52,22 @@ public class QuestionPanelManager : MonoBehaviour
 
     [Tooltip("Optional helper to recalculate layout after populating content.")]
     public UpdateAnswerListHeight layoutUpdater;
+
+    [Header("Scenario Integration")]
+    [Tooltip("Optional. Raised when the player exits the panel, so a scenario step waiting on this channel can advance.")]
+    public GameEvent panelClosedEvent;
+
+    /// <summary>
+    /// Raised when the player confirms an answer, with the answer index and whether it was
+    /// correct. Lets a scenario step play its own per-answer narration without this class
+    /// needing to know the scenario exists.
+    /// </summary>
+    public event System.Action<int, bool> AnswerConfirmed;
+
+    // Set while the scenario is driving one question through this panel. In that mode the
+    // panel does not run its own 10-second countdown or fall through to the summary page —
+    // the scenario decides when to move on, once its narration has finished.
+    private bool singleQuestionMode;
 
     [Header("Summary Page")]
     [Tooltip("Optional image slots on the summary page that show the selected colored answer sprites.")]
@@ -142,6 +161,10 @@ public class QuestionPanelManager : MonoBehaviour
         Debug.Log("Exiting Question Panel...");
         QPExit.SetActive(false);
         QP.SetActive(false);
+        RestoreHierarchyActive();
+
+        if (panelClosedEvent != null)
+            panelClosedEvent.Raise();
     }
 
     public void HandleMajorSelectionChanged(int selectedIndex)
@@ -183,6 +206,10 @@ public class QuestionPanelManager : MonoBehaviour
                 Debug.LogWarning($"{nameof(QuestionPanelManager)}: major-specific question data is missing for majorIndex {majorIndex}.");
                 currentQuestionSequence = new[] { questionBank.universalQuestion };
             }
+            else if (skipUniversalQuestionInAssessment)
+            {
+                currentQuestionSequence = new[] { majorSet.majorQuestion };
+            }
             else
             {
                 currentQuestionSequence = new[] { questionBank.universalQuestion, majorSet.majorQuestion };
@@ -199,6 +226,11 @@ public class QuestionPanelManager : MonoBehaviour
 
         if (currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
             return;
+
+        // Showing a question means it is answerable. Without this the buttons stay locked
+        // from whatever disabled them last: confirming an answer switches them off, so the
+        // in-simulation quiz used to leave the panel dead for the Scene 4 assessment.
+        SetAnswerButtonsInteractable(true);
 
         DeselectAllAnswers();
         ResetQuestionContinueButtonText();
@@ -361,6 +393,8 @@ public class QuestionPanelManager : MonoBehaviour
         if (pendingAnswerIndex < 0)
             return;
 
+        int confirmedIndex = pendingAnswerIndex;
+
         StoreSelectedAnswerSprite(pendingAnswerIndex);
         RecordAnswerSelection(pendingAnswerIndex);
         ShowAnswerExplanation(pendingAnswerIndex);
@@ -370,11 +404,153 @@ public class QuestionPanelManager : MonoBehaviour
         if (answerCountdownCoroutine != null)
         {
             StopCoroutine(answerCountdownCoroutine);
+            answerCountdownCoroutine = null;
         }
 
         SetAnswerButtonsInteractable(false);
         SetQuestionContinueButtonInteractable(false);
-        answerCountdownCoroutine = StartCoroutine(RunAnswerCountdown());
+
+        AnswerConfirmed?.Invoke(confirmedIndex, IsAnswerCorrect(confirmedIndex));
+
+        // The scenario runs the pacing in single-question mode: its narrator line plays
+        // over the explanation image, and it closes the panel when the line ends.
+        if (!singleQuestionMode)
+            answerCountdownCoroutine = StartCoroutine(RunAnswerCountdown());
+    }
+
+    private bool IsAnswerCorrect(int answerIndex)
+    {
+        if (currentQuestionSequence == null || currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
+            return false;
+
+        var question = currentQuestionSequence[currentQuestionIndex];
+        if (question?.answers == null || answerIndex < 0 || answerIndex >= question.answers.Length)
+            return false;
+
+        return question.answers[answerIndex].isCorrect;
+    }
+
+    /// <summary>
+    /// Show this panel for exactly one question, skipping the title/major pages and the
+    /// summary. Used by the scenario for the in-simulation quiz, so the same panel and the
+    /// same authored question data serve both that and the post-experience assessment.
+    /// </summary>
+    public void ShowSingleQuestion(QuestionData question)
+    {
+        if (question == null)
+        {
+            Debug.LogWarning($"{nameof(QuestionPanelManager)}: ShowSingleQuestion was given no question.");
+            return;
+        }
+
+        singleQuestionMode = true;
+        selectedAnswerColoredSprites.Clear();
+        selectedAnswerCorrect.Clear();
+
+        currentQuestionSequence = new[] { question };
+        currentQuestionIndex = 0;
+
+        // Switching QP on achieves nothing if this object — or anything above it — is
+        // inactive, which it usually is, because the panel is kept hidden during the
+        // simulation. Walk up and switch the whole chain on first.
+        EnsureHierarchyActive();
+
+        if (QP != null) QP.SetActive(true);
+        if (QPTitle != null) QPTitle.SetActive(false);
+        if (QPMajor != null) QPMajor.SetActive(false);
+        if (QPSummary != null) QPSummary.SetActive(false);
+        if (QPExit != null) QPExit.SetActive(false);
+
+        if (QPQuestion != null)
+            QPQuestion.SetActive(true);
+        else
+            Debug.LogWarning($"{nameof(QuestionPanelManager)}: QPQuestion is not assigned, so the question page cannot be shown.", this);
+
+        SetAnswerButtonsInteractable(true);
+        ShowCurrentQuestion();
+    }
+
+    /// <summary>Hide the whole panel without running the exit page. Pairs with <see cref="ShowSingleQuestion"/>.</summary>
+    public void ClosePanel()
+    {
+        singleQuestionMode = false;
+
+        if (answerCountdownCoroutine != null)
+        {
+            StopCoroutine(answerCountdownCoroutine);
+            answerCountdownCoroutine = null;
+        }
+
+        if (QPQuestion != null) QPQuestion.SetActive(false);
+        if (QP != null) QP.SetActive(false);
+
+        // Hand the panel back in a usable state — confirming an answer locked the buttons,
+        // and the next thing to open it should not inherit that.
+        SetAnswerButtonsInteractable(true);
+        pendingAnswerIndex = -1;
+        UpdateQuestionContinueState();
+
+        // Put back whatever we switched on to show the panel, so the room is not left with
+        // an invisible-but-active canvas swallowing pointer input.
+        RestoreHierarchyActive();
+    }
+
+    private readonly System.Collections.Generic.List<GameObject> activatedByUs = new System.Collections.Generic.List<GameObject>();
+
+    /// <summary>
+    /// Switch this object and every inactive ancestor on, remembering what we changed.
+    /// Needed because SetActive on a child does nothing while a parent is inactive — the
+    /// panel would silently never appear.
+    /// </summary>
+    private void EnsureHierarchyActive()
+    {
+        activatedByUs.Clear();
+
+        for (Transform t = transform; t != null; t = t.parent)
+        {
+            if (!t.gameObject.activeSelf)
+            {
+                activatedByUs.Add(t.gameObject);
+                t.gameObject.SetActive(true);
+            }
+        }
+
+        // Activate outermost-first so children are enabled into an already-live parent.
+        activatedByUs.Reverse();
+    }
+
+    private void RestoreHierarchyActive()
+    {
+        for (int i = activatedByUs.Count - 1; i >= 0; i--)
+        {
+            if (activatedByUs[i] != null)
+                activatedByUs[i].SetActive(false);
+        }
+
+        activatedByUs.Clear();
+    }
+
+    /// <summary>
+    /// Open the panel on its first page. Wire a SceneEventRelay for EV_OpenAssessment to
+    /// this for Scene 4 — it handles the inactive-parent problem the same way.
+    /// </summary>
+    public void OpenPanel()
+    {
+        EnsureHierarchyActive();
+
+        if (QP != null) QP.SetActive(true);
+        if (QPTitle != null) QPTitle.SetActive(true);
+        if (QPMajor != null) QPMajor.SetActive(false);
+        if (QPQuestion != null) QPQuestion.SetActive(false);
+        if (QPSummary != null) QPSummary.SetActive(false);
+        if (QPExit != null) QPExit.SetActive(false);
+    }
+
+    /// <summary>Re-enable the buttons so the same question can be asked again after a wrong answer.</summary>
+    public void ReaskCurrentQuestion()
+    {
+        SetAnswerButtonsInteractable(true);
+        ShowCurrentQuestion();
     }
 
     private void ShowAnswerExplanation(int answerIndex)

@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: S3b_Question2
   m_EditorClassIdentifier: Assembly-CSharp::UIQuestionStepData
   question: {fileID: 11400000, guid: e70b7502a2fb2354894813f42a4f9f14, type: 2}
-  questionVoClips:
-  - {fileID: 8300000, guid: d7aef00ca89522f4ab3de348747d62d0, type: 3}
-  correctFeedbackVoClips:
-  - {fileID: 8300000, guid: e71c7226156faaf48a502a780882908b, type: 3}
-  wrongFeedbackVoClips:
-  - {fileID: 8300000, guid: 29164d686358d9540be161a7b3df01d0, type: 3}
+  questionVo:
+  - clip: {fileID: 8300000, guid: d7aef00ca89522f4ab3de348747d62d0, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
+  perAnswerFeedbackVo: []
+  correctFeedbackVo:
+  - clip: {fileID: 8300000, guid: e71c7226156faaf48a502a780882908b, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
+  wrongFeedbackVo:
+  - clip: {fileID: 8300000, guid: 29164d686358d9540be161a7b3df01d0, type: 3}
+    caption: {fileID: 0}
+    captionText: ''
   allowedTries: 3
   advanceOnFail: 0
