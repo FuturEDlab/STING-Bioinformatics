@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S1_15_Sarah_ChildbearingAge
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Nurse Sarah
+  phrases:
+  - clip: {fileID: 8300000, guid: 7be06490258da26526259ac70acf62fb, type: 3}
+    caption: {fileID: 21300000, guid: 4e1221a125874f584a46c8f013ac201d, type: 3}
+    captionText: 'See? "Childbearing age"? He’s a 68-year-old man.'
+  - clip: {fileID: 8300000, guid: 35993f8e98da45b1247d7eaeced59137, type: 3}
+    caption: {fileID: 0}
+    captionText: ''

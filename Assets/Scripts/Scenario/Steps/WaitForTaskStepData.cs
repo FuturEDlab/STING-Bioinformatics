@@ -26,6 +26,7 @@ public class WaitForTaskStepData : ScenarioStepData
 public class WaitForTaskStep : IScenarioStep
 {
     private readonly WaitForTaskStepData data;
+    private ScenarioContext ctx;
     private Action onComplete;
     private bool subscribed;
 
@@ -36,6 +37,7 @@ public class WaitForTaskStep : IScenarioStep
 
     public void Enter(ScenarioContext ctx, Action onComplete)
     {
+        this.ctx = ctx;
         this.onComplete = onComplete;
 
         if (data.TaskChannel == null)
@@ -47,6 +49,9 @@ public class WaitForTaskStep : IScenarioStep
 
         data.TaskChannel.Subscribe(OnTaskRaised);
         subscribed = true;
+
+        // Tell the world what the player has to do now, so that object starts glowing.
+        ctx.SetFocus(data.RequiredTaskId);
     }
 
     private void OnTaskRaised(string id)
@@ -69,6 +74,8 @@ public class WaitForTaskStep : IScenarioStep
         {
             data.TaskChannel.Unsubscribe(OnTaskRaised);
             subscribed = false;
+            // Stop the glow the moment the task is done (or the step is torn down).
+            ctx?.SetFocus(null);
         }
     }
 }

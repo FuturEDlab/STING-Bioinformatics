@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S2_10_Sarah_Better
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Nurse Sarah
+  phrases:
+  - clip: {fileID: 8300000, guid: 21787fd808fc00898000cb599827068c, type: 3}
+    caption: {fileID: 21300000, guid: 9fc431c3f6d27c504064d74e636d8953, type: 3}
+    captionText: 'Better. But the system shouldn’t have let you type'
+  - clip: {fileID: 8300000, guid: 1ed6dfd0ce42afb023f698e809c1cc3a, type: 3}
+    caption: {fileID: 21300000, guid: bc7cdee06a809a7f79795e7477da6079, type: 3}
+    captionText: 'that in without screaming at you.'
