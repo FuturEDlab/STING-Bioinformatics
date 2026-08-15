@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S1_05_Sarah_ScanWorkflow
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Nurse Sarah
+  phrases:
+  - clip: {fileID: 8300000, guid: a6312912b2e45c3543f17d0c491b5e77, type: 3}
+    caption: {fileID: 21300000, guid: cea2d7e2945356ba84f261c0d0c07309, type: 3}
+    captionText: 'First, we scan the wristband, then scan the meds, and'
+  - clip: {fileID: 8300000, guid: 43d696683c0c844882d92326da2b0163, type: 3}
+    caption: {fileID: 21300000, guid: a2babeea4456c95dcc7010ff0bb11de2, type: 3}
+    captionText: 'the system should catch any problems. Lately, it''s been more of a'
+  - clip: {fileID: 8300000, guid: 87a0535952d04cf97499403d27d862b4, type: 3}
+    caption: {fileID: 21300000, guid: 6d392684175724c29b72244073a20bdc, type: 3}
+    captionText: 'headache than help... you''ll see.'

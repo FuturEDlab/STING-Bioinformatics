@@ -65,7 +65,18 @@ public class ScenarioContext
     [Tooltip("Silence inserted between the phrases of one VO line. 0 plays them back to back.")]
     [SerializeField] private float gapBetweenPhrases = 0f;
 
-    [Header("Question panels — one scene panel per question asset")]
+    [Tooltip("Scene surface that shows the caption of the phrase currently playing. Optional — captions are simply skipped when empty.")]
+    [SerializeField] private CaptionDisplay captionDisplay;
+
+    [Header("Highlighting")]
+    [Tooltip("Broadcasts the task id the scenario is currently waiting on (empty string when it is not waiting). Highlightable objects listen here so only the object the player needs right now glows.")]
+    [SerializeField] private StringGameEvent focusChannel;
+
+    [Header("Question panel (the image-based Question Panels prefab)")]
+    [Tooltip("The QuestionPanelManager in the scene. Used by Panel Question steps for the in-simulation quiz, and it also runs the Scene 4 assessment.")]
+    [SerializeField] private QuestionPanelManager questionPanel;
+
+    [Header("Legacy text quiz — one scene panel per question asset")]
     [Tooltip("Each row maps a question asset to the scene panel that shows it. A question with no row here falls back to the single shared Quiz / PC Ui Root below.")]
     [SerializeField] private List<QuestionPanelBinding> questionPanels = new List<QuestionPanelBinding>();
 
@@ -85,6 +96,9 @@ public class ScenarioContext
     [SerializeField] private BNG.ScreenFader screenFader;
 
     public AudioSource VoSource => voSource;
+    public CaptionDisplay CaptionDisplay => captionDisplay;
+    public StringGameEvent FocusChannel => focusChannel;
+    public QuestionPanelManager QuestionPanel => questionPanel;
     public Quiz Quiz => quiz;
     public GameObject PcUiRoot => pcUiRoot;
     public ResultsUI ResultsUI => resultsUI;
@@ -143,6 +157,16 @@ public class ScenarioContext
             if (panel != null)
                 panel.Hide();
         }
+    }
+
+    /// <summary>
+    /// Announce which gameplay task the scenario is now waiting on, so the matching
+    /// object can glow. Pass null/empty to clear. Safe to call when no channel is wired.
+    /// </summary>
+    public void SetFocus(string taskId)
+    {
+        if (focusChannel != null)
+            focusChannel.Raise(taskId ?? string.Empty);
     }
 
     /// <summary>Drops the cached lookups so the next access re-reads the Inspector lists.</summary>
@@ -263,23 +287,25 @@ public class ScenarioContext
 
     /// <summary>
     /// The ONE audio path used by every step (NarratorStep + UIStep feedback). Recordings
-    /// are authored as several short phrases, so a line is a LIST of clips: they play back
-    /// to back and <paramref name="onFinished"/> fires once the last one ends. An empty
-    /// list (or a missing source/runner) completes immediately, and empty slots inside a
-    /// list are skipped rather than stalling the step.
+    /// are authored as several short phrases, so a line is a LIST of phrases: they play
+    /// back to back, each showing its caption, and <paramref name="onFinished"/> fires
+    /// once the last one ends. An empty list (or a missing runner) completes immediately,
+    /// and empty slots inside a list are skipped rather than stalling the step. A phrase
+    /// whose recording is missing but that has a caption holds the caption for a
+    /// reading-speed duration instead, so unrecorded lines still carry the scenario.
     /// </summary>
-    public void PlayVoice(IReadOnlyList<AudioClip> clips, Action onFinished)
+    public void PlayVoice(IReadOnlyList<CaptionedClip> phrases, Action onFinished)
     {
         // Cancel any pending wait so an interrupted VO never fires a stale callback.
         StopVoiceRoutine();
 
-        if (voSource == null || Runner == null || !HasAnyClip(clips))
+        if (Runner == null || !HasAnyContent(phrases))
         {
             onFinished?.Invoke();
             return;
         }
 
-        voRoutine = Runner.StartCoroutine(PlayPhrases(clips, onFinished));
+        voRoutine = Runner.StartCoroutine(PlayPhrases(phrases, onFinished));
     }
 
     public void StopVoice()
@@ -287,6 +313,8 @@ public class ScenarioContext
         StopVoiceRoutine();
         if (voSource != null)
             voSource.Stop();
+        if (captionDisplay != null)
+            captionDisplay.Hide();
     }
 
     private void StopVoiceRoutine()
@@ -296,36 +324,52 @@ public class ScenarioContext
         voRoutine = null;
     }
 
-    private static bool HasAnyClip(IReadOnlyList<AudioClip> clips)
+    private static bool HasAnyContent(IReadOnlyList<CaptionedClip> phrases)
     {
-        if (clips == null)
+        if (phrases == null)
             return false;
 
-        for (int i = 0; i < clips.Count; i++)
+        for (int i = 0; i < phrases.Count; i++)
         {
-            if (clips[i] != null)
+            if (phrases[i] != null && phrases[i].HasContent)
                 return true;
         }
 
         return false;
     }
 
-    private IEnumerator PlayPhrases(IReadOnlyList<AudioClip> clips, Action done)
+    private IEnumerator PlayPhrases(IReadOnlyList<CaptionedClip> phrases, Action done)
     {
-        for (int i = 0; i < clips.Count; i++)
+        for (int i = 0; i < phrases.Count; i++)
         {
-            AudioClip clip = clips[i];
-            if (clip == null)
+            CaptionedClip phrase = phrases[i];
+            if (phrase == null || !phrase.HasContent)
                 continue;
 
-            voSource.Stop();
-            voSource.clip = clip;
-            voSource.Play();
-            yield return new WaitForSeconds(clip.length);
+            // A phrase without its own caption leaves the previous blob on screen rather
+            // than blanking it, so a caption that spans two clips stays readable.
+            if (captionDisplay != null && phrase.HasCaption)
+                captionDisplay.Show(phrase);
 
-            if (gapBetweenPhrases > 0f && i < clips.Count - 1)
+            if (phrase.Clip != null && voSource != null)
+            {
+                voSource.Stop();
+                voSource.clip = phrase.Clip;
+                voSource.Play();
+                yield return new WaitForSeconds(phrase.Clip.length);
+            }
+            else
+            {
+                // Recording missing (or no source): hold the caption long enough to read.
+                yield return new WaitForSeconds(phrase.FallbackSeconds);
+            }
+
+            if (gapBetweenPhrases > 0f && i < phrases.Count - 1)
                 yield return new WaitForSeconds(gapBetweenPhrases);
         }
+
+        if (captionDisplay != null)
+            captionDisplay.Hide();
 
         voRoutine = null;
         done?.Invoke();

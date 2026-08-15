@@ -15,5 +15,8 @@ public abstract class GameEvent<T> : ScriptableObject
 
     public void Raise(T payload) => listeners?.Invoke(payload);
 
+    /// <summary>How many things are listening right now. Zero means raising does nothing.</summary>
+    public int ListenerCount => listeners?.GetInvocationList().Length ?? 0;
+
     private void OnDisable() => listeners = null;
 }

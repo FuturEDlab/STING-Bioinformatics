@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5cf676fdee57a341b2938e596ad8bec, type: 3}
+  m_Name: S1_16_Sarah_JustOverrideIt
+  m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
+  speaker: Nurse Sarah
+  phrases:
+  - clip: {fileID: 0}
+    caption: {fileID: 21300000, guid: 7648a3ba317cc3af6aad9dc3ebcc5e2d, type: 3}
+    captionText: 'Makes no sense. The system doesn''t even check gender.'
+  - clip: {fileID: 0}
+    caption: {fileID: 21300000, guid: 748ff7edff90da4c2c0a7f51617ea665, type: 3}
+    captionText: 'Just override it while I give the medication.'

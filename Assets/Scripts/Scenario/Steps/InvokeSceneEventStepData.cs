@@ -47,8 +47,25 @@ public class InvokeSceneEventStep : IScenarioStep
         this.onComplete = onComplete;
 
         data.OnInvoke?.Invoke();
+
         if (data.InvokeChannel != null)
+        {
+            // Count listeners BEFORE raising: a channel with none is the single most common
+            // reason "nothing happened", and it is otherwise completely silent.
+            int listeners = data.InvokeChannel.ListenerCount;
+
+            if (listeners == 0 && data.WaitForExternalCompletion)
+            {
+                Debug.LogError($"[InvokeSceneEventStep] '{data.name}' raised '{data.InvokeChannel.name}' but NOTHING IS LISTENING, and this step waits for '{(data.CompletionChannel != null ? data.CompletionChannel.name : "<none>")}' before it will continue — so the scenario will stall here.\n" +
+                               $"Add a SceneEventRelay on an ALWAYS-ACTIVE object with Channel = {data.InvokeChannel.name}. A relay placed on the object it is meant to switch on cannot hear anything, because it only subscribes while enabled.");
+            }
+            else if (listeners == 0)
+            {
+                Debug.Log($"[InvokeSceneEventStep] '{data.name}' raised '{data.InvokeChannel.name}' with no listeners (fine if that part of the scene is not built yet).");
+            }
+
             data.InvokeChannel.Raise();
+        }
 
         if (!data.WaitForExternalCompletion)
         {
