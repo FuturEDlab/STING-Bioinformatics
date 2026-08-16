@@ -27,6 +27,8 @@ public class EHRSequencePlayer : MonoBehaviour
         [Header("Scene Object During This Step")]
         public GameObject sceneObject;
         public bool showSceneObject;
+        public Animator animator;
+        public string iconAnimatorTrigger = "";
     }
 
     [Header("Target Sprite Renderer")]
@@ -37,9 +39,13 @@ public class EHRSequencePlayer : MonoBehaviour
     public bool autoStartOnEnable = false;
     public bool loopSequence = false;
 
+    [Header("Default Animation")]
+    public string defaultAnimatorTrigger = "";
+
     private int currentIndex = -1;
     private Coroutine timerRoutine;
     private GameObject currentDisplayedObject;
+    private Animator lastTriggeredAnimator;
 
     private void OnEnable()
     {
@@ -53,11 +59,13 @@ public class EHRSequencePlayer : MonoBehaviour
     {
         StopTimer();
         HideCurrentSceneObject();
+        lastTriggeredAnimator = null;
     }
 
     public void StartSequence()
     {
         currentIndex = -1;
+        lastTriggeredAnimator = null;
         StopTimer();
         HideCurrentSceneObject();
         Advance();
@@ -137,22 +145,36 @@ public class EHRSequencePlayer : MonoBehaviour
             targetRenderer.sprite = null;
         }
 
-        if (currentStep.sceneObject != null)
+        if (currentStep.showSceneObject && currentStep.sceneObject != null)
         {
-            if (currentStep.showSceneObject)
+            currentStep.sceneObject.SetActive(true);
+            currentDisplayedObject = currentStep.sceneObject;
+
+            string triggerToFire = currentStep.iconAnimatorTrigger;
+            if (string.IsNullOrWhiteSpace(triggerToFire))
             {
-                currentStep.sceneObject.SetActive(true);
-                currentDisplayedObject = currentStep.sceneObject;
+                triggerToFire = defaultAnimatorTrigger;
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(triggerToFire))
             {
-                currentStep.sceneObject.SetActive(false);
-                currentDisplayedObject = null;
+                Animator animator = currentStep.animator;
+                if (animator == null)
+                {
+                    animator = currentStep.sceneObject.GetComponent<Animator>();
+                }
+
+                if (animator != null && animator != lastTriggeredAnimator)
+                {
+                    animator.SetTrigger(triggerToFire);
+                    lastTriggeredAnimator = animator;
+                }
             }
         }
         else
         {
             currentDisplayedObject = null;
+            lastTriggeredAnimator = null;
         }
 
         if (currentStep.conditionType == StepConditionType.Time)

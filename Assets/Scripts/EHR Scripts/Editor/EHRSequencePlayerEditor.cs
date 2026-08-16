@@ -8,6 +8,7 @@ public class EHRSequencePlayerEditor : Editor
     private SerializedProperty stepsProp;
     private SerializedProperty autoStartOnEnableProp;
     private SerializedProperty loopSequenceProp;
+    private SerializedProperty defaultAnimatorTriggerProp;
 
     private void OnEnable()
     {
@@ -15,6 +16,7 @@ public class EHRSequencePlayerEditor : Editor
         stepsProp = serializedObject.FindProperty("steps");
         autoStartOnEnableProp = serializedObject.FindProperty("autoStartOnEnable");
         loopSequenceProp = serializedObject.FindProperty("loopSequence");
+        defaultAnimatorTriggerProp = serializedObject.FindProperty("defaultAnimatorTrigger");
     }
 
     public override void OnInspectorGUI()
@@ -26,7 +28,8 @@ public class EHRSequencePlayerEditor : Editor
         EditorGUILayout.Space(6f);
         EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("Auto Start On Enable"));
         EditorGUILayout.PropertyField(loopSequenceProp, new GUIContent("Loop Sequence"));
-
+        EditorGUILayout.Space(6f);
+        EditorGUILayout.PropertyField(defaultAnimatorTriggerProp, new GUIContent("Default Animator Trigger"));
         EditorGUILayout.Space(10f);
         EditorGUILayout.LabelField("Sequence Steps", EditorStyles.boldLabel);
 
@@ -87,6 +90,8 @@ public class EHRSequencePlayerEditor : Editor
             if (showSceneObjectProp.boolValue)
             {
                 EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("sceneObject"), new GUIContent("Scene Object"));
+                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("animator"), new GUIContent("Animator"));
+                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("iconAnimatorTrigger"), new GUIContent("Animator Trigger"));
             }
 
             EditorGUILayout.EndVertical();
