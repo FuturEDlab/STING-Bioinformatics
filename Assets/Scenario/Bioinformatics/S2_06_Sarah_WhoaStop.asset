@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 477b806e9bfabced63d58a24a0e11131, type: 3}
+  - clip: {fileID: 8300000, guid: 12d0cdc4d9a534c9f9c6b2afb12f8e56, type: 3}
     caption: {fileID: 21300000, guid: 9a07a4ed9228febdf49bfc8d9dffed15, type: 3}
-    captionText: 'Whoa - stop! That’s a huge dosage. That "5000mg" is a'
-  - clip: {fileID: 8300000, guid: 01c3cce4d3dcf3f1627297a90d41642d, type: 3}
+    captionText: "Whoa - stop! That\u2019s a huge dosage. That \"5000mg\" is a"
+  - clip: {fileID: 8300000, guid: 64ec2458167c74d74876cf42e0c1b44a, type: 3}
     caption: {fileID: 21300000, guid: eef5d3cb47656f03a2f5e16f8ce8d7eb, type: 3}
-    captionText: 'typo in free text. It should be 500mg. But because it isn’t'
-  - clip: {fileID: 8300000, guid: b263548954f452142c923480c0cc32e5, type: 3}
+    captionText: "typo in free text. It should be 500mg. But because it isn\u2019t"
+  - clip: {fileID: 8300000, guid: 2095da84a6a334ba2b76e8a88405738a, type: 3}
     caption: {fileID: 21300000, guid: 8eb6b03d3107e78ed95f527b56398d20, type: 3}
-    captionText: 'structured data, the system didn’t flag it. A 5000mg dose would'
-  - clip: {fileID: 8300000, guid: 4ea8725ec50b2b91b87f1ac9d22c32d0, type: 3}
+    captionText: "structured data, the system didn\u2019t flag it. A 5000mg dose
+      would"
+  - clip: {fileID: 8300000, guid: d12df6465f496497eaf81aecd12be04b, type: 3}
     caption: {fileID: 21300000, guid: bbf100c9a3e2fa1ef7cf0b8c258c76fa, type: 3}
-    captionText: 'destroy his kidneys.'
+    captionText: destroy his kidneys.

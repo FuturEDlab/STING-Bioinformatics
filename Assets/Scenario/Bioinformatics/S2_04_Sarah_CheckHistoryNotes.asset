@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 40759ae62548f81b59adb431eadd13a2, type: 3}
+  - clip: {fileID: 8300000, guid: 456008eb1a477455f8c2c5cb0a220e4f, type: 3}
     caption: {fileID: 21300000, guid: fbfb4e70a665aac781802997365c135c, type: 3}
-    captionText: 'Check the history notes for his last dose, then enter'
-  - clip: {fileID: 8300000, guid: 633a4bc40c7ac8b47b672e4f497a3c31, type: 3}
+    captionText: Check the history notes for his last dose, then enter
+  - clip: {fileID: 8300000, guid: a4b062260a1bc434f8d7069520ac044f, type: 3}
     caption: {fileID: 21300000, guid: 8f2282707f032c5c89ff5cafd3beb749, type: 3}
-    captionText: 'the current one.'
+    captionText: the current one.

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 6391178d1edbaa1f6df1ad8cf5935580, type: 3}
+  - clip: {fileID: 8300000, guid: ba55fd7e6b76c46609b9fee77e11150e, type: 3}
     caption: {fileID: 21300000, guid: f3eef6de0a0c8393a180e42b49b651f9, type: 3}
-    captionText: 'Last one. Scan the Allopurinol.'
+    captionText: Last one. Scan the Allopurinol.

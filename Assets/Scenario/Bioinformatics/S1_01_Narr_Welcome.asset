@@ -14,24 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Narrator
   phrases:
-  - clip: {fileID: 8300000, guid: 0ceb3ef210494d37b2ca59f080151bcb, type: 3}
+  - clip: {fileID: 8300000, guid: 5fc4b0e3e3f574f2aace36791dd3b475, type: 3}
     caption: {fileID: 21300000, guid: f97ff11d26b9abb17d7b820dc8c596bf, type: 3}
-    captionText: 'Welcome to the "Designing Safe Clinical Decision'
-  - clip: {fileID: 8300000, guid: 45d709403bfaeef73ebe5097b1fef098, type: 3}
+    captionText: Welcome to the "Designing Safe Clinical Decision
+  - clip: {fileID: 8300000, guid: 5cc65cdd4f1214ee8b9fcda028fcf6ba, type: 3}
     caption: {fileID: 21300000, guid: 16389b103eed8a5c3f7051c530d5a79b, type: 3}
-    captionText: 'Support" VR experience. Clinical Decision Support, or CDS, refers'
-  - clip: {fileID: 8300000, guid: e95b1f396b07aa64e09b0ac72bd4fdcd, type: 3}
+    captionText: Support" VR experience. Clinical Decision Support, or CDS, refers
+  - clip: {fileID: 8300000, guid: 2be6ee5a5059a42cf9557d6ec4c96a23, type: 3}
     caption: {fileID: 21300000, guid: d63f48ba9b69a8cfed1b0205cbeefc09, type: 3}
-    captionText: 'to software built into the Electronic Health Record that provides'
-  - clip: {fileID: 8300000, guid: 4105cacce49ae9003067410b85df06ec, type: 3}
+    captionText: to software built into the Electronic Health Record that provides
+  - clip: {fileID: 8300000, guid: 2294414934bea47dc9a11d24d3653818, type: 3}
     caption: {fileID: 21300000, guid: 62a768e663abe0dd1a916769cc03ddff, type: 3}
-    captionText: 'clinicians with patient-specific alerts, reminders, and'
-  - clip: {fileID: 8300000, guid: 5beff9abb5db7855adc0cd780cbc0dc2, type: 3}
+    captionText: clinicians with patient-specific alerts, reminders, and
+  - clip: {fileID: 8300000, guid: 140a7b709c8354611a26b80217a70bf7, type: 3}
     caption: {fileID: 21300000, guid: 73472d15dc3a6c8114d6ec7bba0f9b13, type: 3}
-    captionText: 'recommendations. When designed well, CDS helps prevent medication'
-  - clip: {fileID: 8300000, guid: a636d1de0b59a2c41e1d18003f31d851, type: 3}
+    captionText: recommendations. When designed well, CDS helps prevent medication
+  - clip: {fileID: 8300000, guid: 7fbb452c196ab496fa8535415dcacb19, type: 3}
     caption: {fileID: 21300000, guid: 50d6aee682e0222886bc218b15e007c3, type: 3}
-    captionText: 'errors and improves patient safety. When designed poorly, it can'
-  - clip: {fileID: 8300000, guid: 87c945cc534bcb07869481381ade5979, type: 3}
+    captionText: errors and improves patient safety. When designed poorly, it can
+  - clip: {fileID: 8300000, guid: 98feaebb567544062b2ddb02ecb93576, type: 3}
     caption: {fileID: 0}
-    captionText: ''
+    captionText: 

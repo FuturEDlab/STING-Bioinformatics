@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: b0683971a521a701d4ab4ab88e9d870e, type: 3}
+  - clip: {fileID: 8300000, guid: 27a6d1305486948a094239ef819a8b53, type: 3}
     caption: {fileID: 21300000, guid: 3462f0cd015e1a70af882fad71d8fb31, type: 3}
-    captionText: 'Go ahead. Pick up the scanner.'
+    captionText: Go ahead. Pick up the scanner.

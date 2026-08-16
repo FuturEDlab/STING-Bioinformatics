@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: b37342b03a3ba5261d5591d077cf1c28, type: 3}
+  - clip: {fileID: 8300000, guid: aee2326b862c94d2c85eaeaf15618c74, type: 3}
     caption: {fileID: 21300000, guid: f14b5caf054c9e78e8d61b77d80c0b59, type: 3}
-    captionText: 'The trick is knowing when to trust the system... and'
-  - clip: {fileID: 8300000, guid: 1911e222060bf914417de12dfe6aff5d, type: 3}
+    captionText: The trick is knowing when to trust the system... and
+  - clip: {fileID: 8300000, guid: 6715593c4805f4feda9943331f425509, type: 3}
     caption: {fileID: 21300000, guid: 9ddb2168fb5cf0764e6760b5545fab95, type: 3}
-    captionText: 'when to trust your judgment. Let’s keep going.'
+    captionText: "when to trust your judgment. Let\u2019s keep going."
