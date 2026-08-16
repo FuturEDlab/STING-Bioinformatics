@@ -1445,6 +1445,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetMovementModeIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4320728300781371098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,6 +1476,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: c143a0abec5b24892a032d816fc5fa80, type: 3}
   selectedSprite: {fileID: 21300000, guid: 8c8e51dc9afa141c5a35e755308a3c0d, type: 3}
   selectedHoverSprite: {fileID: 21300000, guid: e00b1b0465d7344068a67666a83e9830, type: 3}
+  disabledSprite: {fileID: 0}
 --- !u!114 &7639068204169037978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1493,6 +1506,7 @@ GameObject:
   - component: {fileID: 5777862440611134551}
   - component: {fileID: 4268249010599900480}
   - component: {fileID: 4993093007082921714}
+  - component: {fileID: 2038491421768816657}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
@@ -1623,7 +1637,28 @@ MonoBehaviour:
   turningOptions:
   - Snap
   - Smooth
-  subtitlesToggle: {fileID: 0}
+  subtitlesSlider: {fileID: 0}
+  subtitlesToggleSwitch: {fileID: 0}
+  subtitlesBackgroundImageInspector: {fileID: 0}
+  vignettingSlider: {fileID: 0}
+  vignettingToggleSwitch: {fileID: 0}
+  vignettingBackgroundImageInspector: {fileID: 0}
+  toggleOnSprite: {fileID: 0}
+  toggleOffSprite: {fileID: 0}
+--- !u!114 &2038491421768816657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159067974877082684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+  subtitlesToggle: {fileID: 4469573786573266056}
+  comfortVignetteSlider: {fileID: 8934181961119271844}
 --- !u!1 &3311711763077192348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,6 +2145,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetMovementModeIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6513302264290701652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2129,6 +2176,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: e7157b64dca1f41f3a8ac01f569210e5, type: 3}
   selectedSprite: {fileID: 21300000, guid: e26930b361a4748c9997cd57700b6678, type: 3}
   selectedHoverSprite: {fileID: 21300000, guid: 57fc17b773d9a4332840b2949548d34a, type: 3}
+  disabledSprite: {fileID: 0}
 --- !u!114 &3688288579254514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2532,6 +2580,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetTurningModeIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6380270090127519045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2551,6 +2611,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 06c6ca3da800648909bdc926c05b6126, type: 3}
   selectedSprite: {fileID: 21300000, guid: f4559fd65cbc4481ebf78778bab7c85f, type: 3}
   selectedHoverSprite: {fileID: 21300000, guid: 26d365ab86370456197068561940d085, type: 3}
+  disabledSprite: {fileID: 0}
 --- !u!114 &3496185398986416474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,6 +2986,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetTurningModeIndex
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4961440696498384628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2944,6 +3017,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: c77962bcbca464e43819b11424c92fe7, type: 3}
   selectedSprite: {fileID: 21300000, guid: 0d62c87631cf54d5480c6b57aaf3a92e, type: 3}
   selectedHoverSprite: {fileID: 21300000, guid: b6d68695c10e14b43a0d51a0899732ce, type: 3}
+  disabledSprite: {fileID: 0}
 --- !u!114 &6010089107225405382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3802,8 +3876,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SettingsToMainMenu
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: OnCancelButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6400,30 +6474,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1796827652513077289}
+      objectReference: {fileID: 2038491421768816657}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2038491421768816657}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleFromHandle
+      value: SetSubtitlesOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetSubtitlesOn
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ToggleSwitch, Assembly-CSharp
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
@@ -6435,12 +6533,60 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5357273065577678392}
+      objectReference: {fileID: 2038491421768816657}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2038491421768816657}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSubtitlesOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSubtitlesOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7406454586296390634, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_Name
@@ -6543,22 +6689,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
---- !u!114 &1796827652513077289 stripped
+--- !u!114 &4469573786573266056 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
   m_PrefabInstance: {fileID: 3211585832700138962}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5357273065577678392}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3bf439a1a674e59841fa04808a212e, type: 3}
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleSwitch
---- !u!1 &5357273065577678392 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7406454586296390634, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
-  m_PrefabInstance: {fileID: 3211585832700138962}
-  m_PrefabAsset: {fileID: 0}
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!224 &5906548996740768825 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9036929259903955435, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
@@ -6581,12 +6722,32 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6707011857649716997}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFromHandle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToggleSwitch, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -6597,6 +6758,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2038491421768816657}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2038491421768816657}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -6605,20 +6778,40 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitApplication
+      value: SetComfortVignetteOn
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ExitApplication
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetComfortVignetteOff
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenuManager, Assembly-CSharp
+      value: SettingsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: MainMenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -6626,6 +6819,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
       propertyPath: onToggleOn.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+      propertyPath: onToggleOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7406454586296390634, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
@@ -6726,3 +6923,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9036929259903955435, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
   m_PrefabInstance: {fileID: 7595974746952139518}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6707011857649716997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3782537111444442619, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+  m_PrefabInstance: {fileID: 7595974746952139518}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3bf439a1a674e59841fa04808a212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSwitch
+--- !u!114 &8934181961119271844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1339475509445921114, guid: 9a6369c37ea234962b7cf7d0e91f882a, type: 3}
+  m_PrefabInstance: {fileID: 7595974746952139518}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider

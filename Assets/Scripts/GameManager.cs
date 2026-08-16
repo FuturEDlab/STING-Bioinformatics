@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        /*settingsPanel.transform.position = panelPosition;
+        settingsPanel.transform.position = panelPosition;
         settingsPanel.transform.rotation = panelRotation;
         settingsPanel.SetActive(false);
         mainMenuPanel.transform.position = panelPosition;
         mainMenuPanel.transform.rotation = panelRotation;
-        mainMenuPanel.SetActive(true);*/
+        mainMenuPanel.SetActive(true);
     }
 
     // Update is called once per frame
