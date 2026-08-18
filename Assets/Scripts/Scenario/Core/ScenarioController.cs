@@ -344,7 +344,12 @@ public class ScenarioController : MonoBehaviour
 
             SkipCurrentStep();
 
-            if (CurrentStep is WaitForTaskStepData || CurrentStep is UIQuestionStepData)
+            // PanelQuestionStepData belongs here as much as the other two: it is the
+            // in-simulation quiz, and leaving it out meant skip-to-gate ran straight past
+            // the question instead of stopping at it.
+            if (CurrentStep is WaitForTaskStepData ||
+                CurrentStep is UIQuestionStepData ||
+                CurrentStep is PanelQuestionStepData)
                 return;
         }
     }

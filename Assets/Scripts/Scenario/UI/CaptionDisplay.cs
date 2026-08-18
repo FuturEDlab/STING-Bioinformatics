@@ -22,6 +22,9 @@ public class CaptionDisplay : MonoBehaviour
     [Tooltip("Fallback caption text, shown only when the current phrase has no blob sprite.")]
     [SerializeField] private TMP_Text captionText;
 
+    [Tooltip("Optional plate shown behind the fallback text so it stays readable against a bright wall. Hidden for blob captions, which carry their own background.")]
+    [SerializeField] private GameObject textBackdrop;
+
     /// <summary>
     /// Player-facing captions toggle, persisted in PlayerPrefs (on by default). Wire a
     /// settings toggle to <see cref="SetCaptionsEnabled"/>.
@@ -44,7 +47,26 @@ public class CaptionDisplay : MonoBehaviour
 
     private void Awake()
     {
+        ValidateRoot();
         Hide();
+    }
+
+    /// <summary>
+    /// Root is switched on and off every time somebody speaks, so pointing it at something
+    /// outside the caption hierarchy does not fail quietly — it makes an unrelated panel
+    /// flash in and out with the dialogue. Caught here rather than left to be found in a
+    /// headset.
+    /// </summary>
+    private void ValidateRoot()
+    {
+        if (root == null)
+            return;
+
+        if (root.transform.IsChildOf(transform) || transform.IsChildOf(root.transform))
+            return;
+
+        Debug.LogWarning($"[CaptionDisplay] Root is set to '{root.name}', which is not part of the caption hierarchy — every caption would switch that object on instead. Ignoring it and using '{name}'. Clear the field, or point it at the caption canvas.", this);
+        root = null;
     }
 
     /// <summary>Show the caption for one phrase: blob when available, text otherwise.</summary>
@@ -71,12 +93,19 @@ public class CaptionDisplay : MonoBehaviour
             blobImage.gameObject.SetActive(hasBlob);
         }
 
+        bool showingText = !hasBlob && hasText;
+
         if (captionText != null)
         {
             captionText.text = hasText ? phrase.CaptionText : string.Empty;
             // The blob already contains the words — never show both at once.
-            captionText.gameObject.SetActive(!hasBlob && hasText);
+            captionText.gameObject.SetActive(showingText);
         }
+
+        // The blobs are drawn on their own dark plate, so a second one behind them would
+        // only fatten the outline. It is the bare fallback text that needs the backing.
+        if (textBackdrop != null)
+            textBackdrop.SetActive(showingText);
 
         Root.SetActive(true);
     }

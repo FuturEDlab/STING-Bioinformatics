@@ -37,9 +37,7 @@ public class MajorQuestionSet
     public QuestionData majorQuestion;
 }
 
-[CreateAssetMenu(menuName = "Quiz/Question Bank")]
-public class QuestionBank : ScriptableObject
-{
-    public QuestionData universalQuestion;
-    public MajorQuestionSet[] majorQuestionSets;
-}
+// QuestionBank used to live here. It is a ScriptableObject, and Unity only builds the
+// MonoScript such an asset needs for the type whose name matches its file - so it now has
+// a file of its own, QuestionBank.cs. The plain [Serializable] classes above have no such
+// requirement and are fine sharing this one.

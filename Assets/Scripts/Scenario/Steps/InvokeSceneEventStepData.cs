@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,10 +23,16 @@ public class InvokeSceneEventStepData : ScenarioStepData
     [SerializeField] private bool waitForExternalCompletion;
     [SerializeField] private GameEvent completionChannel; // required only when waitForExternalCompletion
 
+    [Space]
+    [Tooltip("Seconds to hold before the scenario moves on. The beat has already been raised, so this is the pause between the world reacting - the EHR screen flipping, the ambience changing - and whoever speaks next. Without it the next line starts on the same frame as the screen change and the player never gets to see the thing being talked about. 0 continues immediately.")]
+    [Min(0f)]
+    [SerializeField] private float pauseBeforeNextStep = 0.8f;
+
     public UnityEvent OnInvoke => onInvoke;
     public GameEvent InvokeChannel => invokeChannel;
     public bool WaitForExternalCompletion => waitForExternalCompletion;
     public GameEvent CompletionChannel => completionChannel;
+    public float PauseBeforeNextStep => pauseBeforeNextStep;
 
     public override IScenarioStep CreateRuntimeStep() => new InvokeSceneEventStep(this);
 }
@@ -34,8 +41,10 @@ public class InvokeSceneEventStepData : ScenarioStepData
 public class InvokeSceneEventStep : IScenarioStep
 {
     private readonly InvokeSceneEventStepData data;
+    private ScenarioContext ctx;
     private Action onComplete;
     private bool subscribed;
+    private Coroutine pauseRoutine;
 
     public InvokeSceneEventStep(InvokeSceneEventStepData data)
     {
@@ -44,6 +53,7 @@ public class InvokeSceneEventStep : IScenarioStep
 
     public void Enter(ScenarioContext ctx, Action onComplete)
     {
+        this.ctx = ctx;
         this.onComplete = onComplete;
 
         data.OnInvoke?.Invoke();
@@ -69,14 +79,14 @@ public class InvokeSceneEventStep : IScenarioStep
 
         if (!data.WaitForExternalCompletion)
         {
-            onComplete?.Invoke();
+            CompleteAfterPause();
             return;
         }
 
         if (data.CompletionChannel == null)
         {
             Debug.LogWarning("[InvokeSceneEventStep] waitForExternalCompletion is true but no completionChannel is set; completing immediately.");
-            onComplete?.Invoke();
+            CompleteAfterPause();
             return;
         }
 
@@ -87,12 +97,51 @@ public class InvokeSceneEventStep : IScenarioStep
     private void OnExternalComplete()
     {
         Unsubscribe();
+        CompleteAfterPause();
+    }
+
+    /// <summary>
+    /// Hold for Pause Before Next Step, then hand control back to the controller. The pause
+    /// sits on THIS side of the handover rather than as a lead-in on whatever follows,
+    /// because the next step is not always a line of dialogue - the step that changed the
+    /// world is the one that should pay for letting the player see it.
+    /// </summary>
+    private void CompleteAfterPause()
+    {
+        float pause = data.PauseBeforeNextStep;
+
+        // No runner means nothing can wait, so complete now rather than stall the scenario.
+        if (pause <= 0f || ctx == null || ctx.Runner == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        pauseRoutine = ctx.Runner.StartCoroutine(PauseThenComplete(pause));
+    }
+
+    private IEnumerator PauseThenComplete(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        pauseRoutine = null;
         onComplete?.Invoke();
     }
 
     public void Exit()
     {
         Unsubscribe();
+        StopPause();
+    }
+
+    private void StopPause()
+    {
+        // Skipping the step mid-pause (debug HUD, restart) must not leave a coroutine alive
+        // that later fires onComplete into a step the controller has already moved past.
+        if (pauseRoutine != null && ctx != null && ctx.Runner != null)
+            ctx.Runner.StopCoroutine(pauseRoutine);
+
+        pauseRoutine = null;
     }
 
     private void Unsubscribe()

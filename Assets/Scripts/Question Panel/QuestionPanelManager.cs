@@ -53,6 +53,14 @@ public class QuestionPanelManager : MonoBehaviour
     [Tooltip("Optional helper to recalculate layout after populating content.")]
     public UpdateAnswerListHeight layoutUpdater;
 
+    [Header("Testing")]
+    [Tooltip("Open the panel on its question page the moment the scene starts, using the universal question. Answers 'can I see this thing in the headset at all?' without playing through to the quiz. The scenario reopens it normally when it gets there, so leaving this on only costs you a panel in your face at the start — but turn it off before shipping.")]
+    public bool openQuestionOnStartForTesting;
+
+    [Header("VR")]
+    [Tooltip("Optional. Places the panel in front of the player when it opens, instead of leaving it at the world position it was authored at - which in a headset is usually several metres away and behind a wall. Left empty, one on this same object is used.")]
+    public VRPanelAnchor vrAnchor;
+
     [Header("Scenario Integration")]
     [Tooltip("Optional. Raised when the player exits the panel, so a scenario step waiting on this channel can advance.")]
     public GameEvent panelClosedEvent;
@@ -85,6 +93,53 @@ public class QuestionPanelManager : MonoBehaviour
     private readonly System.Collections.Generic.List<Sprite> selectedAnswerColoredSprites = new System.Collections.Generic.List<Sprite>();
     private readonly System.Collections.Generic.List<bool> selectedAnswerCorrect = new System.Collections.Generic.List<bool>();
 
+    private void Awake()
+    {
+        ResolveAnchor();
+        ValidateContainer();
+    }
+
+    /// <summary>
+    /// QP is the container switched on and off to show and hide the panel, so it has to be
+    /// the object the PAGES hang off — never the object this component is on.
+    ///
+    /// Pointed at our own GameObject it is doubly wrong: ClosePanel would switch this very
+    /// component off, and the pages' real parent is never switched on at all, so activating
+    /// a page just activates it inside a dead parent and nothing renders. Both failures are
+    /// invisible — no exception, no missing reference, just an empty panel — so it is worth
+    /// correcting outright rather than leaving to be discovered in a headset.
+    /// </summary>
+    private void ValidateContainer()
+    {
+        if (QP == null || QP != gameObject)
+            return;
+
+        GameObject page = QPQuestion != null ? QPQuestion : QPTitle;
+
+        if (page == null || page.transform.parent == null)
+        {
+            Debug.LogError($"{nameof(QuestionPanelManager)}: QP points at this same object, which cannot work — hiding the panel would switch this component off. Point it at the object holding the pages.", this);
+            return;
+        }
+
+        QP = page.transform.parent.gameObject;
+        Debug.LogWarning($"{nameof(QuestionPanelManager)}: QP pointed at '{name}', the object this component is on, so the pages' real parent was never switched on and the panel came up empty. Using '{QP.name}' instead. Fix the reference in the Inspector to silence this.", this);
+    }
+
+    /// <summary>
+    /// Resolved in code rather than left to the Inspector: the anchor belongs on the same
+    /// canvas root this lives on, so requiring somebody to remember to drag it in is a step
+    /// that can only be got wrong. Called again from every entry point because Awake is not
+    /// guaranteed to have run - anything that switches this object off during its own Awake
+    /// defers ours indefinitely, and then the panel opens wherever it was left in the scene
+    /// instead of in front of the player.
+    /// </summary>
+    private void ResolveAnchor()
+    {
+        if (vrAnchor == null)
+            vrAnchor = GetComponent<VRPanelAnchor>();
+    }
+
     void Start()
     {
         if (majorSelectionGroup != null)
@@ -102,6 +157,26 @@ public class QuestionPanelManager : MonoBehaviour
         }
 
         UpdateMajorContinueState();
+
+        if (openQuestionOnStartForTesting)
+            ShowUniversalQuestionForTesting();
+    }
+
+    /// <summary>
+    /// Opens the panel straight away with the shared universal question. Exists for headset
+    /// testing, where the console is not readable and the only way to tell a panel that is
+    /// mispositioned from one that is never shown at all is to put it up unconditionally.
+    /// </summary>
+    [ContextMenu("Show Universal Question (testing)")]
+    public void ShowUniversalQuestionForTesting()
+    {
+        if (questionBank == null)
+        {
+            Debug.LogError($"{nameof(QuestionPanelManager)}: no Question Bank assigned, so there is nothing to show. If BioQuestions IS assigned in the Inspector, then its script reference is broken — check the asset reads 'Script: QuestionBank'.", this);
+            return;
+        }
+
+        ShowSingleQuestion(questionBank.universalQuestion);
     }
 
     private void OnDestroy()
@@ -454,6 +529,12 @@ public class QuestionPanelManager : MonoBehaviour
         // inactive, which it usually is, because the panel is kept hidden during the
         // simulation. Walk up and switch the whole chain on first.
         EnsureHierarchyActive();
+        ResolveAnchor();
+        ValidateContainer();
+
+        // Placed before the pages are switched on, so the panel never appears for a frame at
+        // wherever it was left last time.
+        if (vrAnchor != null) vrAnchor.Place();
 
         if (QP != null) QP.SetActive(true);
         if (QPTitle != null) QPTitle.SetActive(false);
@@ -468,6 +549,51 @@ public class QuestionPanelManager : MonoBehaviour
 
         SetAnswerButtonsInteractable(true);
         ShowCurrentQuestion();
+
+        ReportVisibility("ShowSingleQuestion");
+    }
+
+    /// <summary>
+    /// Says in one console line why the panel is or is not on screen. "The question never
+    /// appeared" has too many possible causes to guess at from inside a headset — an
+    /// unassigned page reference, a parent left switched off, a canvas sitting behind the
+    /// player — and every one of them looks identical while you are wearing it.
+    /// </summary>
+    private void ReportVisibility(string calledFrom)
+    {
+        var report = new System.Text.StringBuilder();
+        report.Append($"[QuestionPanelManager] {calledFrom} on '{name}': ");
+
+        if (QP == null)
+            report.Append("PROBLEM the QP field is empty, so the panel container is never switched on or off — showing and hiding the panel does nothing. Assign the object holding the pages. ");
+        else
+            report.Append($"container '{QP.name}' {(QP.activeInHierarchy ? "active" : "INACTIVE, so nothing on it can be seen")}. ");
+
+        if (QPQuestion != null)
+            report.Append($"question page {(QPQuestion.activeInHierarchy ? "active" : "INACTIVE")}. ");
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+
+        if (canvas != null)
+        {
+            report.Append($"canvas {canvas.renderMode} at {canvas.transform.position}, world scale {canvas.transform.lossyScale.x:0.0000}. ");
+
+            Camera head = Camera.main;
+
+            if (head == null)
+            {
+                report.Append("NO enabled camera tagged MainCamera, so nothing could have placed it in front of the player.");
+            }
+            else
+            {
+                Vector3 toPanel = canvas.transform.position - head.transform.position;
+                float ahead = Vector3.Dot(head.transform.forward, toPanel.normalized);
+
+                report.Append($"{toPanel.magnitude:0.0} m from the camera, {(ahead > 0.5f ? "in front of" : ahead > 0f ? "off to the side of" : "BEHIND")} it.");
+            }
+        }
+
+        Debug.Log(report.ToString(), this);
     }
 
     /// <summary>Hide the whole panel without running the exit page. Pairs with <see cref="ShowSingleQuestion"/>.</summary>
@@ -483,6 +609,8 @@ public class QuestionPanelManager : MonoBehaviour
 
         if (QPQuestion != null) QPQuestion.SetActive(false);
         if (QP != null) QP.SetActive(false);
+
+        if (vrAnchor != null) vrAnchor.Release();
 
         // Hand the panel back in a usable state — confirming an answer locked the buttons,
         // and the next thing to open it should not inherit that.
@@ -537,6 +665,10 @@ public class QuestionPanelManager : MonoBehaviour
     public void OpenPanel()
     {
         EnsureHierarchyActive();
+        ResolveAnchor();
+        ValidateContainer();
+
+        if (vrAnchor != null) vrAnchor.Place();
 
         if (QP != null) QP.SetActive(true);
         if (QPTitle != null) QPTitle.SetActive(true);
