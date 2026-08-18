@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using BNG;
 
 public enum InteractInput
 {
@@ -26,7 +27,7 @@ public class Interact : MonoBehaviour
     [SerializeField] private float MaxGlowDistance = 2f;
     [SerializeField] private int submeshGlowNumber = -1;
     
-    private PlayerRig playerRig;
+    private BNGPlayerController playerController;
     private float distance;
     private Renderer renderer;
     private Collider objectCollider;
@@ -66,21 +67,17 @@ public class Interact : MonoBehaviour
     void Update()
     {
         
-        if (!playerRig)
+        if (!playerController && InputBridge.Instance)
         {
-            playerRig = PlayerRig.Instance;
+            playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
         }
         
-        if (!playerRig) return;
-
-        // Measure against the character capsule rather than the head, so ducking or leaning
-        // does not pull objects in and out of glow range.
-        Vector3 playerPosition = playerRig.Body.position;
+        if (!playerController) return;
 
         // Calculates distance to nearest point on collider surface. -->
         // This helps prevent checking only the object's center
-        closestPoint = objectCollider.ClosestPoint(playerPosition);
-        distance = Vector3.Distance(closestPoint, playerPosition); 
+        closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
+        distance = Vector3.Distance(closestPoint, playerController.transform.position); 
 
         if (distance <= MaxGlowDistance && !glowAdded)
         {
@@ -106,23 +103,25 @@ public class Interact : MonoBehaviour
     
     private bool IsInteractButtonPressed()
     {
+        InputBridge input = InputBridge.Instance;
         switch (parentComponent.InteractButton)
         {
             case InteractInput.X_AButton:
-                return (XRInputRouter.XButtonDown && !XRInputRouter.AButton) ||
-                       (XRInputRouter.AButtonDown && !XRInputRouter.XButton);
+                return (input.XButtonDown && !input.AButton) ||
+                       (input.AButtonDown && !input.XButton);
             
             case InteractInput.B_YButton:
-                return (XRInputRouter.YButtonDown && !XRInputRouter.BButton) ||
-                       (XRInputRouter.BButtonDown && !XRInputRouter.YButton);
+                return (input.YButtonDown && !input.BButton) ||
+                       (input.BButtonDown && !input.YButton);
             
             case InteractInput.Left_RightTrigger:
-                return (XRInputRouter.LeftTriggerDown && XRInputRouter.RightTrigger < 0.1f) ||
-                       (XRInputRouter.RightTriggerDown && XRInputRouter.LeftTrigger < 0.1f);
+                // return input.LeftTriggerDown ^ input.RightTriggerDown;
+                return (input.LeftTriggerDown && input.RightTrigger < 0.1f) ||
+                       (input.RightTriggerDown && input.LeftTrigger < 0.1f);
             
             case InteractInput.Left_RightGrip:
-                return (XRInputRouter.LeftGripDown && XRInputRouter.RightGrip < 0.1f) ||
-                       (XRInputRouter.RightGripDown && XRInputRouter.LeftGrip < 0.1f);
+                return (input.LeftGripDown && input.RightGrip < 0.1f) ||
+                       (input.RightGripDown && input.LeftGrip < 0.1f);
             
             default:
                 return false;
@@ -131,8 +130,9 @@ public class Interact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Tags LeftHand and RightHand are on the direct interactor colliders under the
-        // VR Player rig's Left Hand / Right Hand objects.
+        // Tags LeftHand and RightHand are associated with the Grabber child objects
+        // from LeftController object and RightController object (XR Rig Full Body,
+        // the parent object, contains these 2 Controller objects)
         
         if (other.CompareTag("LeftHand"))
         {
@@ -146,8 +146,9 @@ public class Interact : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        // Tags LeftHand and RightHand are on the direct interactor colliders under the
-        // VR Player rig's Left Hand / Right Hand objects.
+        // Tags LeftHand and RightHand are associated with the Grabber child objects
+        // from LeftController object and RightController object (XR Rig Full Body,
+        // the parent object, contains these 2 controller objects)
         
         if (other.CompareTag("LeftHand"))
         {

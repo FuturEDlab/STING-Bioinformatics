@@ -1,7 +1,7 @@
 # The Scenario Controller — Architecture & Design Report
 
 **Project:** STING Bioinformatics (VR Nursing / Informatics Training)
-**Engine:** Unity 6000.4.9f1 (URP · OpenXR · Meta XR) · Interaction via **XR Interaction Toolkit 3.4.1**
+**Engine:** Unity 6000.4.9f1 (URP · OpenXR · Meta XR) · Interaction via **BNG VRIF**
 **Assembly:** `Assembly-CSharp` · global namespace · `Assets/Scripts/Scenario/`
 **Date:** 2026-07-22
 
@@ -56,7 +56,7 @@ within its own lifecycle.
                  ▼                                        ▼
    AudioSource · Quiz · Panel prefabs          ┌──────────────────────┐
                                                │     GameEvent<T>     │ ◀─ Raise() ── Gameplay
-                                               │   (SO event channel) │    (XR Grab Interactable /
+                                               │   (SO event channel) │    (BNG Grabbable /
                                                └──────────────────────┘     Interact)
 ```
 
@@ -162,7 +162,7 @@ A four-step scenario: **Narrate intro → Ask a question → Wait for the player
    The player answers → the step unsubscribes immediately (re-entrancy guard), validates the
    index against `QuestionSO.GetCorrectAnswer()`, plays the matching feedback VO through the same
    audio path, then completes (correct) or re-asks (wrong, tries remaining) per the retry policy.
-3. **WaitForTaskStep** — `Enter` subscribes to a `StringGameEvent` channel. The `XRGrabInteractable`
+3. **WaitForTaskStep** — `Enter` subscribes to a `StringGameEvent` channel. The BNG `Grabbable`
    on the scanner has its grab `UnityEvent` wired to `StringGameEvent.RaiseString("scanner")`
    (or a `TaskEventRaiser`). When raised with the matching id, the step unsubscribes and
    completes. **The scanner knows nothing about the scenario.**

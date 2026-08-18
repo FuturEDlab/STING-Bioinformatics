@@ -1,4 +1,4 @@
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using BNG;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -56,7 +56,7 @@ public class ScannerTool : MonoBehaviour
     [SerializeField] private LayerMask hitLayers = ~0;
 
     [Header("Trigger")]
-    [Tooltip("Require the scanner to be held before it will fire. Ignored when the object has no XR Grab Interactable, so a non-grabbable scanner still works.")]
+    [Tooltip("Require the scanner to be held before it will fire. Ignored when the object has no Grabbable, so a non-grabbable scanner still works.")]
     [SerializeField] private bool mustBeHeld = true;
 
     [Tooltip("Fire as soon as the beam finds a valid target, with no trigger pull. The easiest way to test without a headset.")]
@@ -97,7 +97,7 @@ public class ScannerTool : MonoBehaviour
     [Tooltip("Draw the beam and cone in the Scene view even when this object is not selected.")]
     [SerializeField] private bool alwaysDrawGizmos = true;
 
-    private XRGrabInteractable grabbable;
+    private Grabbable grabbable;
     private float nextScanTime;
     private float dwellTimer;
     private ScenarioTarget lastLogged;
@@ -116,11 +116,11 @@ public class ScannerTool : MonoBehaviour
 
     private void Awake()
     {
-        grabbable = GetComponent<XRGrabInteractable>();
+        grabbable = GetComponent<Grabbable>();
     }
 
     /// <summary>
-    /// Whether the scanner is live. A scanner with no grab interactable can never report "being
+    /// Whether the scanner is live. A scanner with no Grabbable can never report "being
     /// held", so requiring that would make it permanently inert — treat it as held instead
     /// and say so once.
     /// </summary>
@@ -134,12 +134,12 @@ public class ScannerTool : MonoBehaviour
             if (!warnedNoGrabbable)
             {
                 warnedNoGrabbable = true;
-                Debug.LogWarning($"[ScannerTool] '{name}' has 'Must Be Held' ticked but no XR Grab Interactable component, so there is nothing to hold. Treating it as always held. Add one, or untick Must Be Held to silence this.", this);
+                Debug.LogWarning($"[ScannerTool] '{name}' has 'Must Be Held' ticked but no BNG Grabbable component, so there is nothing to hold. Treating it as always held. Add a Grabbable, or untick Must Be Held to silence this.", this);
             }
             return true;
         }
 
-        return grabbable.isSelected;
+        return grabbable.BeingHeld;
     }
 
     private void Update()
@@ -342,15 +342,19 @@ public class ScannerTool : MonoBehaviour
 
     private bool TriggerPressed()
     {
-        // Desktop fallbacks first. The XR Interaction Simulator covers the controller path
-        // in the editor, but these keep the scanner testable without even that running.
+        // Desktop fallbacks first: without a headset InputBridge.Instance is null, so the
+        // controller path alone would make the scanner untestable in the editor.
         if (keyboardScanKey != KeyCode.None && Input.GetKeyDown(keyboardScanKey))
             return true;
 
         if (mouseButtonScans && Input.GetMouseButtonDown(0))
             return true;
 
-        return XRInputRouter.LeftTriggerDown || XRInputRouter.RightTriggerDown;
+        InputBridge input = InputBridge.Instance;
+        if (input == null)
+            return false;
+
+        return input.LeftTriggerDown || input.RightTriggerDown;
     }
 
     // ---------------------------------------------------------------- editor helpers

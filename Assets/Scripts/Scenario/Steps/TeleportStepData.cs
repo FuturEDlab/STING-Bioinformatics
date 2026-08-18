@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using BNG;
 using UnityEngine;
 
 /// <summary>
@@ -26,7 +27,7 @@ public class TeleportStepData : ScenarioStepData
     [SerializeField] private float groundSearchDistance = 25f;
 
     [Header("Screen fade")]
-    [Tooltip("Fade to black before moving and back in afterwards. The rig adds a fader on demand, so this needs no setup.")]
+    [Tooltip("Fade to black before moving and back in afterwards. Needs a ScreenFader on the rig.")]
     [SerializeField] private bool fadeScreen = true;
 
     [Tooltip("Extra seconds to hold full black after the fade finishes, before the player is moved.")]
@@ -52,16 +53,17 @@ public class TeleportStepData : ScenarioStepData
 }
 
 /// <summary>
-/// Runtime executor for <see cref="TeleportStepData"/>. Moves the rig directly rather than
-/// going through XRI's <c>TeleportationProvider</c>, which expects a player-driven teleport
-/// request from an interactor. The actual move is <see cref="PlayerRig.TeleportTo"/>, so a
-/// scripted teleport lands the player exactly where walking there would.
+/// Runtime executor for <see cref="TeleportStepData"/>. Moves the rig directly rather
+/// than going through BNG's <c>PlayerTeleport</c> (which is driven by player input), but
+/// mirrors that component's CharacterController handling and height offset so the player
+/// lands exactly where a normal BNG teleport would put them.
 /// </summary>
 public class TeleportStep : IScenarioStep
 {
     private readonly TeleportStepData data;
     private ScenarioContext ctx;
     private Coroutine routine;
+    private CharacterController disabledController;
 
     public TeleportStep(TeleportStepData data)
     {
@@ -84,6 +86,7 @@ public class TeleportStep : IScenarioStep
         if (ctx.Runner == null)
         {
             Move(destination);
+            RestoreController();
             onComplete?.Invoke();
             return;
         }
@@ -93,12 +96,12 @@ public class TeleportStep : IScenarioStep
 
     private IEnumerator Run(Transform destination, Action onComplete)
     {
-        ScreenFade fader = data.FadeScreen ? ctx.Fade : null;
+        ScreenFader fader = data.FadeScreen ? ctx.ScreenFader : null;
 
         if (fader != null)
         {
             fader.DoFadeIn();
-            // ScreenFade has no completion callback; its alpha ramps at FadeInSpeed per second.
+            // ScreenFader has no completion callback; its alpha ramps at FadeInSpeed per second.
             yield return new WaitForSeconds(FadeSeconds(fader.FadeInSpeed) + Mathf.Max(0f, data.FadeHoldSeconds));
         }
 
@@ -107,9 +110,10 @@ public class TeleportStep : IScenarioStep
 
         Move(destination);
 
-        // Let the frame finish before anything else runs, so physics settles at the new
-        // position before the screen comes back.
+        // Let the frame finish before the CharacterController is switched back on, so it
+        // doesn't resolve collisions against the position it was moved out of.
         yield return new WaitForEndOfFrame();
+        RestoreController();
 
         if (fader != null)
             fader.DoFadeOut();
@@ -123,19 +127,51 @@ public class TeleportStep : IScenarioStep
 
     private void Move(Transform destination)
     {
-        PlayerRig rig = ctx.Player;
+        BNGPlayerController player = ctx.Player;
+        Transform rig = ctx.PlayerRig;
+        Transform root = player != null ? player.transform : rig;
 
-        if (rig == null)
+        if (root == null)
         {
-            Debug.LogWarning("[TeleportStep] There is no PlayerRig in the scene and none assigned on the ScenarioController; nothing to move.");
+            Debug.LogWarning("[TeleportStep] Context has no player or playerRig assigned; nothing to move.");
             return;
         }
 
-        // The rig puts the player's CAMERA on the spot rather than its origin, and handles
-        // switching the character capsule off across the move. Room-scale players are metres
-        // from their origin once they have walked around, so moving the origin would drop
-        // them somewhere the marker never pointed at.
-        rig.TeleportTo(ResolveFootPosition(destination), data.MatchDestinationRotation ? destination.forward : (Vector3?)null);
+        CharacterController controller = root.GetComponentInChildren<CharacterController>();
+        Transform target = controller != null ? controller.transform : (rig != null ? rig : root);
+
+        // A CharacterController overrides direct transform writes, so switch it off first.
+        if (controller != null)
+        {
+            controller.enabled = false;
+            disabledController = controller;
+        }
+
+        Vector3 footPosition = ResolveFootPosition(destination);
+
+        // A CharacterController's transform sits at the MIDDLE of its capsule, so raise it
+        // by half the capsule to stand the player on the floor instead of burying them in
+        // it. Read from the live capsule because BNG resizes it every frame to match the
+        // tracked camera height — a baked offset would be wrong the moment the player
+        // ducks, and wrong by ElevateCameraHeight whenever no HMD is connected.
+        if (controller != null)
+            footPosition += Vector3.up * ((controller.height * 0.5f) - controller.center.y);
+
+        target.position = footPosition;
+
+        if (data.MatchDestinationRotation)
+        {
+            target.rotation = destination.rotation;
+            // Keep the player upright however the destination marker is tilted.
+            target.eulerAngles = new Vector3(0f, target.eulerAngles.y, 0f);
+        }
+
+        Rigidbody body = target.GetComponent<Rigidbody>();
+        if (body != null)
+            body.linearVelocity = Vector3.zero;
+
+        if (player != null)
+            player.LastTeleportTime = Time.time;
     }
 
     /// <summary>
@@ -167,10 +203,20 @@ public class TeleportStep : IScenarioStep
             ctx.Runner.StopCoroutine(routine);
         routine = null;
 
-        // Never leave the screen black because the step was torn down mid-move (e.g. the
-        // scenario restarted).
-        if (data.FadeScreen && ctx != null && ctx.Fade != null)
-            ctx.Fade.DoFadeOut();
+        // Never leave the player frozen or the screen black because the step was torn
+        // down mid-move (e.g. the scenario restarted).
+        RestoreController();
+        if (data.FadeScreen && ctx != null && ctx.ScreenFader != null)
+            ctx.ScreenFader.DoFadeOut();
+    }
+
+    private void RestoreController()
+    {
+        if (disabledController != null)
+        {
+            disabledController.enabled = true;
+            disabledController = null;
+        }
     }
 
     private static float FadeSeconds(float speed) => 1f / Mathf.Max(0.01f, speed);

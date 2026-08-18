@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using BNG;
 
 [ExecuteAlways]
 public class NonPickUpGroup : MonoBehaviour
@@ -12,7 +12,12 @@ public class NonPickUpGroup : MonoBehaviour
             DestroyRef(interactComp);
         }
             
-        if (child.TryGetComponent(out XRGrabInteractable grabbableObject))
+        if (child.TryGetComponent(out GrabbableRingHelper ringHelperObject))
+        {
+            DestroyRef(ringHelperObject);
+        }
+            
+        if (child.TryGetComponent(out Grabbable grabbableObject))
         {
             DestroyRef(grabbableObject);
         }

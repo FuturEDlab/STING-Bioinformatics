@@ -15,18 +15,10 @@ public class TVBehavior : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-
-        // Both rays are cast from the hands, so an unwired hand means this never fires.
-        PlayerRig rig = PlayerRig.Instance;
-        if (rig == null) return;
-        if (leftHand == null) leftHand = rig.LeftHand;
-        if (rightHand == null) rightHand = rig.RightHand;
     }
     
     public void Interact()
     {
-        if (rightHand == null || leftHand == null) return;
-
         rendMaterials = renderer.materials;
         
         Ray rayRight = new Ray(rightHand.transform.position, rightHand.transform.forward);
