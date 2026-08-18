@@ -88,12 +88,12 @@ public class ScenarioContext
     [SerializeField] private GameObject pcUiRoot;   // quiz canvas/panel root, toggled with SetActive
     [SerializeField] private ResultsUI resultsUI;   // optional end screen
 
-    [Header("Player / XR Rig (optional)")]
-    [SerializeField] private BNG.BNGPlayerController player;
-    [SerializeField] private Transform playerRig;
+    [Header("Player rig (optional)")]
+    [Tooltip("The player rig. Left empty, the rig in the loaded scene is used, so this only needs setting when a scene has more than one.")]
+    [SerializeField] private PlayerRig player;
 
-    [Tooltip("Optional. Left empty, it is looked up under the player's CameraRig the first time a teleport step needs it.")]
-    [SerializeField] private BNG.ScreenFader screenFader;
+    [Tooltip("Optional. Left empty, the fader on the rig's head is used the first time a teleport step needs one.")]
+    [SerializeField] private ScreenFade screenFade;
 
     public AudioSource VoSource => voSource;
     public CaptionDisplay CaptionDisplay => captionDisplay;
@@ -102,8 +102,20 @@ public class ScenarioContext
     public Quiz Quiz => quiz;
     public GameObject PcUiRoot => pcUiRoot;
     public ResultsUI ResultsUI => resultsUI;
-    public BNG.BNGPlayerController Player => player;
-    public Transform PlayerRig => playerRig;
+
+    /// <summary>
+    /// The player rig teleport steps move. Falls back to the rig in the scene so a
+    /// controller left unwired still works.
+    /// </summary>
+    public PlayerRig Player
+    {
+        get
+        {
+            if (player == null)
+                player = PlayerRig.Instance;
+            return player;
+        }
+    }
     public IReadOnlyList<QuestionPanelBinding> QuestionPanels => questionPanels;
     public IReadOnlyList<TeleportDestinationBinding> TeleportDestinations => teleportDestinations;
 
@@ -216,20 +228,21 @@ public class ScenarioContext
 #endif
 
     /// <summary>
-    /// The screen fader used by teleport steps. Resolved from the player's CameraRig when
-    /// not assigned — a scoped lookup, never a global search.
+    /// The screen fader used by teleport steps. Taken from the rig's head when not
+    /// assigned — a scoped lookup, never a global search.
     /// </summary>
-    public BNG.ScreenFader ScreenFader
+    public ScreenFade Fade
     {
         get
         {
-            if (screenFader == null && !faderSearched)
+            if (screenFade == null && !faderSearched)
             {
                 faderSearched = true;
-                if (player != null && player.CameraRig != null)
-                    screenFader = player.CameraRig.GetComponentInChildren<BNG.ScreenFader>(true);
+                PlayerRig rig = Player;
+                if (rig != null)
+                    screenFade = rig.Fade;
             }
-            return screenFader;
+            return screenFade;
         }
     }
 

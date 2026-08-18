@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [ExecuteAlways]
 public class InteractableGroup: MonoBehaviour
@@ -32,12 +32,7 @@ public class InteractableGroup: MonoBehaviour
             DestroyComponent = DestroyImmediate;
         }
         
-        if (Child.TryGetComponent(out GrabbableRingHelper ringHelperObject))
-        {
-            DestroyComponent(ringHelperObject);
-        }
-            
-        if (Child.TryGetComponent(out Grabbable grabbableObject))
+        if (Child.TryGetComponent(out XRGrabInteractable grabbableObject))
         {
             DestroyComponent(grabbableObject);
         }

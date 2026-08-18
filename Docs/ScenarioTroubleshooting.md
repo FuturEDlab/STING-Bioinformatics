@@ -63,13 +63,14 @@ To check a prop in isolation: enter play mode, then use the component's context 
 
 Two hard blockers, both fixed:
 
-- **`Must Be Held` with no Grabbable.** The scene has only one BNG `Grabbable` in it. If
-  the scanner isn't one, `BeingHeld` is never true and the tool was permanently dead. It
-  now treats a scanner with no Grabbable as always held, and logs a warning once.
-- **No trigger without a headset.** `InputBridge.Instance` is null in the editor without
-  VR, so the trigger check could never fire. There are now desktop fallbacks: press
-  **E** or **left-click** to scan. Or tick **Auto Scan On Aim** and it fires the moment
-  the beam lands on a valid target — the fastest way to test.
+- **`Must Be Held` with no grab interactable.** Held-ness is read off the object's
+  `XRGrabInteractable`. Without one, `isSelected` is never true and the tool was permanently
+  dead. It now treats a scanner with no interactable as always held, and logs a warning once.
+- **No trigger without a headset.** The controller bindings read nothing until either a
+  headset or the XR Interaction Simulator is running, so the trigger check could never fire
+  in a bare editor session. There are still desktop fallbacks: press **E** or **left-click**
+  to scan. Or tick **Auto Scan On Aim** and it fires the moment the beam lands on a valid
+  target — the fastest way to test.
 
 I also moved the spherecast origin slightly behind the muzzle. A spherecast ignores
 anything already overlapping it at the start, so a bottle pressed right against the nose
@@ -80,9 +81,8 @@ of the scanner used to register as nothing.
 Two causes, both fixed:
 
 - **There was nothing to wire.** The setup doc used to say "wire the Grabbable's On Grab
-  event". BNG's `Grabbable` has no such field — its grab UnityEvents live on a *separate*
-  `GrabbableUnityEvents` component. `ScenarioTarget` now finds the `Grabbable` (on itself,
-  a parent, or a child) and watches its `BeingHeld` flag directly, so a grab is detected
+  event". `ScenarioTarget` now finds the `XRGrabInteractable` (on itself,
+  a parent, or a child) and watches its `isSelected` flag directly, so a grab is detected
   with no wiring at all. If it can't find one it now says so in the console.
 - **You picked it up too early.** Grabbing the scanner during the opening narration meant
   you were *already holding it* when step 8 arrived, so there was no pick-up left to

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -66,11 +66,11 @@ public class ScenarioTarget : MonoBehaviour
     private bool focused;
     private bool used;
 
-    // Grab detection is polled rather than event-wired: BNG puts its grab UnityEvents on a
-    // SEPARATE GrabbableUnityEvents component, not on Grabbable itself, so an event hookup
-    // is easy to forget and silently does nothing. BeingHeld is a public field, so watching
+    // Grab detection is polled rather than event-wired: an Inspector hookup to the
+    // interactable's Select Entered event is easy to forget and silently does nothing.
+    // isSelected is a public property, so watching
     // it needs no wiring at all.
-    private Grabbable grabbable;
+    private XRGrabInteractable grabbable;
     private bool wasHeld;
 
     public string TaskId => taskId;
@@ -124,14 +124,14 @@ public class ScenarioTarget : MonoBehaviour
 
         if (trigger == TriggerMode.Grab)
         {
-            // The Grabbable is usually on this object, but on an imported prop it can sit
-            // on a parent or a child, so look in all three places before giving up.
-            grabbable = GetComponent<Grabbable>()
-                     ?? GetComponentInParent<Grabbable>()
-                     ?? GetComponentInChildren<Grabbable>();
+            // The interactable is usually on this object, but on an imported prop it can
+            // sit on a parent or a child, so look in all three places before giving up.
+            grabbable = GetComponent<XRGrabInteractable>()
+                     ?? GetComponentInParent<XRGrabInteractable>()
+                     ?? GetComponentInChildren<XRGrabInteractable>();
 
             if (grabbable == null)
-                Debug.LogWarning($"[ScenarioTarget] '{name}' is set to complete on Grab, but there is no BNG Grabbable on it, its parent, or its children — so being picked up can never be detected. Add a Grabbable, or switch Trigger to Click.", this);
+                Debug.LogWarning($"[ScenarioTarget] '{name}' is set to complete on Grab, but there is no XR Grab Interactable on it, its parent, or its children — so being picked up can never be detected. Add one, or switch Trigger to Click.", this);
         }
 
         // These two are the usual reason "nothing glows and nothing scans": an empty slot
@@ -181,7 +181,7 @@ public class ScenarioTarget : MonoBehaviour
         if (trigger != TriggerMode.Grab || grabbable == null)
             return;
 
-        bool held = grabbable.BeingHeld;
+        bool held = grabbable.isSelected;
 
         // Two ways this counts. The rising edge is the obvious one: the player picks it up
         // while the scenario is asking. The second matters just as much — the player often
@@ -209,7 +209,7 @@ public class ScenarioTarget : MonoBehaviour
     }
 
     /// <summary>
-    /// Complete this task. Wire it to a BNG Grabbable's onGrab, the project's
+    /// Complete this task. Wire it to an XR Grab Interactable's Select Entered, the project's
     /// Interact.onInteract, or a UI Button — or let <see cref="ScannerTool"/> call it.
     /// Silently does nothing when the scenario is not asking for this task yet.
     /// </summary>
@@ -243,11 +243,11 @@ public class ScenarioTarget : MonoBehaviour
     }
 
     // --- Grab support -----------------------------------------------------------------
-    // BNG's Grabbable exposes UnityEvents in the Inspector; wiring onGrab -> Activate() is
+    // XRGrabInteractable exposes UnityEvents in the Inspector; wiring Select Entered -> Activate() is
     // the documented route. This is the code-side equivalent for objects that would rather
     // not carry an extra event hookup.
 
-    /// <summary>Call from a Grabbable's onGrab event when trigger is set to Grab.</summary>
+    /// <summary>Call from an interactable's Select Entered event when trigger is set to Grab.</summary>
     public void OnGrabbed()
     {
         if (trigger == TriggerMode.Grab)

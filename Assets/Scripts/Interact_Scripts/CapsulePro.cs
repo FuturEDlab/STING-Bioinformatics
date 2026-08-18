@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class CapsulePro : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class CapsulePro : MonoBehaviour
     
     private List<Vector3> defaultPositions = new List<Vector3>();
     private List<Transform> affectedObjects = new List<Transform>();
-    private Grabbable grabbableObj;
+    private XRGrabInteractable grabbableObj;
     private Interact interactComponent;
 
     void Start()
@@ -40,12 +40,12 @@ public class CapsulePro : MonoBehaviour
             defaultPositions.Add(transform.localPosition);
         }
 
-        grabbableObj = GetComponent<Grabbable>();
+        grabbableObj = GetComponent<XRGrabInteractable>();
     }
     
     public void Interact()
     {
-        if (grabbableObj != null && grabbableObj.BeingHeld) return;
+        if (grabbableObj != null && grabbableObj.isSelected) return;
         
         ChangeObjectPositions();
     }

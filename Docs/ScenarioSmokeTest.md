@@ -1,6 +1,6 @@
 # Scenario Controller — Script Reference & Smoke Test
 
-**Project:** STING Bioinformatics · Unity 6000.4.9f1 · BNG VRIF
+**Project:** STING Bioinformatics · Unity 6000.4.9f1 · XR Interaction Toolkit 3.4.1
 **Scene used:** `Assets/Scenes/Hospital Room.unity` (work in a duplicate)
 **Purpose:** one page to understand every script, then run a 2-minute test that proves the system works.
 

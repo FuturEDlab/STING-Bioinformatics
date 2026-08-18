@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Convenience raiser for gameplay. Wire Raise() to a BNG Grabbable UnityEvent
+/// Convenience raiser for gameplay. Wire Raise() to an XR Grab Interactable UnityEvent
 /// (onRelease / onSnapZoneEnter) or the project's Interact.onInteract; it raises the
 /// typed task channel with its id, with zero knowledge of the scenario.
 /// </summary>

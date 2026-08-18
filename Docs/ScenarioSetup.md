@@ -33,8 +33,8 @@ Now fill in the **Context** section:
 | Vo Source | see step 2 |
 | Caption Display | see step 3 |
 | Focus Channel | `EV_Focus` |
-| Player | the `XR Rig Full Body` object (its `BNGPlayerController`) |
-| Player Rig | the same rig's transform |
+| Player | leave empty — it finds the `PlayerRig` on the `VR Player` rig by itself |
+| Screen Fade | leave empty — the rig adds a fader to its camera on demand |
 
 ---
 
@@ -140,11 +140,9 @@ On the **`scanner`** object in the scene:
    - Task Channel → `EV_BioTask`, Focus Channel → `EV_Focus`
    - Task Id → `scanner.pickup`
    - Trigger → **Grab / pick up**
-3. Nothing else to wire for the grab. `ScenarioTarget` finds the BNG **Grabbable** on the
-   object (or its parent/child) and watches `BeingHeld` itself. Note that BNG keeps its
-   grab UnityEvents on a *separate* `GrabbableUnityEvents` component rather than on
-   `Grabbable`, so there is no "On Grab" field on the Grabbable to wire — watching the flag
-   avoids that trap entirely. No Grabbable at all? Switch Trigger to **Click**.
+3. Nothing else to wire for the grab. `ScenarioTarget` finds the **XR Grab Interactable**
+   on the object (or its parent/child) and watches `isSelected` itself, so there is no
+   Inspector event to forget. No grab interactable at all? Switch Trigger to **Click**.
 4. Add **ScannerTool**. The defaults are deliberately forgiving; the only thing you
    normally have to set is the aim.
 

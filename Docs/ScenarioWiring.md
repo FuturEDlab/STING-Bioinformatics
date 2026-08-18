@@ -52,7 +52,8 @@ Add a `ScenarioController` to the hospital scene and set:
 - **Context ▸ Vo Source** → an `AudioSource` routed to the Narration mixer group
 - **Context ▸ Caption Display** → the `CaptionDisplay` from step 1
 - **Context ▸ Focus Channel** → `EV_Focus` (drives which prop is glowing)
-- **Context ▸ Player / Player Rig** → the BNG player
+- **Context ▸ Player** → leave empty. It resolves to the `PlayerRig` on the `VR Player` rig
+  in the scene; only set it if a scene ever holds two rigs
 - **Context ▸ Question Panels** → one row: question `MethoAlert_Q` → the in-sim quiz panel
 
 Use the component's context menu: **Fill Binding Rows From Scenario** creates the empty

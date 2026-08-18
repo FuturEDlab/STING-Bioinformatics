@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class GrabStability : MonoBehaviour
 {
     private Rigidbody rb;
-    private Grabbable grabbable;
+    private XRGrabInteractable grabbable;
     private Collider coll;
     private Collider playerColl;
     private List<Collider> ignoreObjsTemp;
@@ -86,7 +86,7 @@ public class GrabStability : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        grabbable = GetComponent<Grabbable>();
+        grabbable = GetComponent<XRGrabInteractable>();
         coll = GetComponent<Collider>();
         parentObject = GetComponentInParent<PickUpGroup>();
         originalLayer = gameObject.layer;
@@ -112,7 +112,7 @@ public class GrabStability : MonoBehaviour
         if (!grabbable || !rb) return;
         if (!groundObj) return;
 
-        if (transform.position.y < 0 && !grabbable.BeingHeld)
+        if (transform.position.y < 0 && !grabbable.isSelected)
         {
             posY_Placement = floorHeight + coll.bounds.extents.y;
             transform.position = new Vector3(playerColl.transform.position.x, posY_Placement, playerColl.transform.position.z);
@@ -120,14 +120,14 @@ public class GrabStability : MonoBehaviour
         }
         
         // started grabbing object
-        if (!wasHeldLastFrame && grabbable.BeingHeld)
+        if (!wasHeldLastFrame && grabbable.isSelected)
         {
             gameObject.layer = LayerMask.NameToLayer("Grabb");
             ManageTriggers(true);
         }
 
         // This is right when the object gets released
-        if (wasHeldLastFrame && !grabbable.BeingHeld)
+        if (wasHeldLastFrame && !grabbable.isSelected)
         {
             CheckTableIntersection();
             CorrectObjectPosition();
@@ -139,7 +139,7 @@ public class GrabStability : MonoBehaviour
         }
 
         IntersectedBelow_PastRelease();
-        wasHeldLastFrame = grabbable.BeingHeld;
+        wasHeldLastFrame = grabbable.isSelected;
     }
 
     void OnTriggerEnter(Collider other)
@@ -164,7 +164,7 @@ public class GrabStability : MonoBehaviour
             inTriggerDict[other] = false;
         }
 
-        if (!grabbable.BeingHeld && isTempIgnoredObj)
+        if (!grabbable.isSelected && isTempIgnoredObj)
         {
             other.isTrigger = false;
         }
