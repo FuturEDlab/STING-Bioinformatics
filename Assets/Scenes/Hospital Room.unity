@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e907a3e8f52b6d8499140955bc531f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneEventRelay
-  channel: {fileID: 11400000, guid: 68341afc531a8503a172eae321c6c199, type: 2}
+  channel: {fileID: 11400000, guid: 5b25e922c5d3c0164ec556ae93a9d0ce, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -4776,6 +4776,21 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1289959093}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289959101}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289959102}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289959103}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289959104}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1289959105}
   m_SourcePrefab: {fileID: 100100000, guid: 15092c83ff175b34eb8f285e336b5a3a, type: 3}
 --- !u!4 &1289959091 stripped
 Transform:
@@ -4852,8 +4867,175 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1289959101}
+        m_TargetAssemblyTypeName: ScenarioTarget, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1289959102}
+        m_TargetAssemblyTypeName: ScenarioTarget, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1289959103}
+        m_TargetAssemblyTypeName: ScenarioTarget, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1289959104}
+        m_TargetAssemblyTypeName: ScenarioTarget, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
   MaxGlowDistance: 1.4
   submeshGlowNumber: 0
+--- !u!114 &1289959101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289959092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01994ee36d8ced6c4aff07f57455b4b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioTarget
+  taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
+  focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
+  taskId: alert.override
+  trigger: 2
+  requireFocus: 1
+  oneShot: 1
+  scanPoint: {fileID: 0}
+  highlight: {fileID: 1289959105}
+  successSound: {fileID: 0}
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  allowMouseClickInEditor: 1
+--- !u!114 &1289959102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289959092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01994ee36d8ced6c4aff07f57455b4b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioTarget
+  taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
+  focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
+  taskId: dose.entered.5000
+  trigger: 2
+  requireFocus: 1
+  oneShot: 1
+  scanPoint: {fileID: 0}
+  highlight: {fileID: 1289959105}
+  successSound: {fileID: 0}
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  allowMouseClickInEditor: 1
+--- !u!114 &1289959103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289959092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01994ee36d8ced6c4aff07f57455b4b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioTarget
+  taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
+  focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
+  taskId: dose.corrected.500
+  trigger: 2
+  requireFocus: 1
+  oneShot: 1
+  scanPoint: {fileID: 0}
+  highlight: {fileID: 1289959105}
+  successSound: {fileID: 0}
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  allowMouseClickInEditor: 1
+--- !u!114 &1289959104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289959092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01994ee36d8ced6c4aff07f57455b4b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioTarget
+  taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
+  focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
+  taskId: contraindication.override
+  trigger: 2
+  requireFocus: 1
+  oneShot: 1
+  scanPoint: {fileID: 0}
+  highlight: {fileID: 1289959105}
+  successSound: {fileID: 0}
+  onActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  allowMouseClickInEditor: 1
+--- !u!114 &1289959105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289959092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fcad9e18cbd7e7fbcd9e60a46766d2, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioHighlight
+  glowColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  intensity: 1.6
+  pulsesPerSecond: 1.2
+  baseColorTint: 0.35
+  targets: []
+  showWhileGlowing: []
+  debugLogging: 0
 --- !u!114 &1317761703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5241,14 +5423,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 984775856700134534, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 984775856700134534, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 984775856700134534, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -5354,14 +5528,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6910033443184970110, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6910033443184970110, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6910033443184970110, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
-      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6910033443184970110, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}

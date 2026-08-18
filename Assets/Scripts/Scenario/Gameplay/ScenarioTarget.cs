@@ -196,6 +196,13 @@ public class ScenarioTarget : MonoBehaviour
 
     private void SetFocused(bool on)
     {
+        // Only act on a real change. Several targets can sit on one prop — the EHR keyboard
+        // carries one per gate — and they share a highlight. Without this, the targets that
+        // are NOT being asked for would each switch the glow back off after the one that is
+        // switched it on, and which of them ran last would decide whether the prop glowed.
+        if (focused == on)
+            return;
+
         focused = on;
         if (highlight != null)
             highlight.SetGlowing(on);
