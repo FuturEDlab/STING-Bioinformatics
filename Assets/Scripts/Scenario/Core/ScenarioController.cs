@@ -170,20 +170,20 @@ public class ScenarioController : MonoBehaviour
             if (scenario.Steps[i] is not InvokeSceneEventStepData ev)
                 continue;
 
-            if (ev.InvokeChannel != null && !AnyRelayFor(relays, ev.InvokeChannel))
+            if (ev.InvokeChannel != null && !AnythingListensTo(relays, ev.InvokeChannel))
             {
-                // Not a problem on its own — the EHR may simply not be built yet — but a
-                // step that blocks until something answers it definitely is.
+                // Not a problem on its own — that part of the room may simply not be built
+                // yet — but a step that blocks until something answers it definitely is.
                 if (ev.WaitForExternalCompletion)
                 {
                     report.AppendLine($"PROBLEM  step {i + 1} raises '{ev.InvokeChannel.name}' and then WAITS for");
-                    report.AppendLine($"         '{(ev.CompletionChannel != null ? ev.CompletionChannel.name : "<none>")}'. No active SceneEventRelay listens to");
+                    report.AppendLine($"         '{(ev.CompletionChannel != null ? ev.CompletionChannel.name : "<none>")}'. Nothing listens to");
                     report.AppendLine("         the first channel, so nothing will ever open — the scenario will stall here.");
                     problems++;
                 }
                 else
                 {
-                    report.AppendLine($"  note   '{ev.InvokeChannel.name}' has no relay listening (fine while the EHR is unbuilt).");
+                    report.AppendLine($"  note   '{ev.InvokeChannel.name}' has nothing listening (no relay, and the EHR has no cue for it).");
                 }
             }
         }
@@ -344,13 +344,27 @@ public class ScenarioController : MonoBehaviour
 
             SkipCurrentStep();
 
-            if (CurrentStep is WaitForTaskStepData || CurrentStep is UIQuestionStepData)
+            // PanelQuestionStepData belongs here as much as the other two: it is the
+            // in-simulation quiz, and leaving it out meant skip-to-gate ran straight past
+            // the question instead of stopping at it.
+            if (CurrentStep is WaitForTaskStepData ||
+                CurrentStep is UIQuestionStepData ||
+                CurrentStep is PanelQuestionStepData)
                 return;
         }
     }
 
-    private static bool AnyRelayFor(SceneEventRelay[] relays, GameEvent channel)
+    /// <summary>
+    /// Is anything at all going to hear this world beat? A SceneEventRelay is the usual
+    /// answer, but not the only one — the EHR terminal subscribes its own screen cues
+    /// directly — so ask the channel itself first and fall back to naming relays. The
+    /// listener count is only meaningful in play mode, hence both checks.
+    /// </summary>
+    private static bool AnythingListensTo(SceneEventRelay[] relays, GameEvent channel)
     {
+        if (channel.ListenerCount > 0)
+            return true;
+
         for (int i = 0; i < relays.Length; i++)
         {
             if (relays[i] != null && relays[i].Channel == channel)

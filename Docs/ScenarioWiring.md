@@ -88,28 +88,40 @@ was entered — raise `dose.entered.5000` only when the value is 5000 and
 `dose.corrected.500` only when it is 500. An unmatched id is ignored, so a raise at the
 wrong moment is harmless.
 
+The four gates that happen *on the terminal* — `alert.override`, `dose.entered.5000`,
+`dose.corrected.500`, `contraindication.override` — can also come from the EHR itself: the
+`EHRScenarioBridge` on the terminal prefab already maps each EHR action name to its task
+id, so a button calling `EHRSequencePlayer.TriggerAction("Confirm override")` satisfies the
+gate with no extra wiring. See `EHRScenarioBridge.md`.
+
 ---
 
 ## 4. World beats (`InvokeSceneEvent` steps)
 
 These steps raise a channel and move on immediately. A step asset is a ScriptableObject
-and cannot reference scene objects, so each one needs a **`SceneEventRelay`** in the
-scene: set its **Channel** to the asset below and wire its **Response** UnityEvent to the
-scene methods that should fire (EHR screen state, SFX, lighting, animation).
+and cannot reference scene objects, so each one needs something in the scene listening on
+that channel — normally a **`SceneEventRelay`**: set its **Channel** to the asset below and
+wire its **Response** UnityEvent to the scene methods that should fire (SFX, lighting,
+animation).
 
-| Channel | What should happen |
-|---|---|
-| `EV_EHR_PatientVerified` | beep + `PATIENT VERIFIED: JOHNSON, M. (Male, 68)` |
-| `EV_EHR_MethoAlert` | beep, pulsing red triangle, 3D teratogenic warning above the terminal |
-| `EV_MethoAdministered` | alert clears; Sarah administers the Methotrexate |
-| `EV_EHR_AmoxPrescription` | Amoxicillin prescription + free-text `Last dose: 5000mg` + keypad |
-| `EV_EHR_DosageConfirmed` | pleasant chime + `Dosage Confirmed.` |
-| `EV_EHR_Contraindication` | big beep + `CONTRAINDICATION!` warning |
-| `EV_MedsAdministered` | Sarah administers the remaining medications |
-| `EV_TimeSkip30Min` | fade to black, show `30 Minutes Later...` |
-| `EV_Scene3B_Emergency` | emergency ambience, dim red room, rashes on Mr. Johnson |
-| `EV_Scene3B_FadeOut` | slow fade out |
-| `EV_OpenAssessment` | open the Question Panel prefab (Scene 4) |
+**The EHR screen is already handled.** The terminal prefab carries an `EHRScenarioBridge`
+that subscribes to the `EV_EHR_*` beats itself and switches the screen, so those rows need
+a relay only for the parts of the beat that are *not* the screen. See
+`EHRScenarioBridge.md`.
+
+| Channel | What should happen | Screen already wired? |
+|---|---|---|
+| `EV_EHR_PatientVerified` | beep + `PATIENT VERIFIED: JOHNSON, M. (Male, 68)` | yes |
+| `EV_EHR_MethoAlert` | beep, pulsing red triangle, 3D teratogenic warning above the terminal | yes |
+| `EV_MethoAdministered` | alert clears; Sarah administers the Methotrexate | yes |
+| `EV_EHR_AmoxPrescription` | Amoxicillin prescription + free-text `Last dose: 5000mg` + keypad | yes |
+| `EV_EHR_DosageConfirmed` | pleasant chime + `Dosage Confirmed.` | yes |
+| `EV_EHR_Contraindication` | big beep + `CONTRAINDICATION!` warning | yes |
+| `EV_MedsAdministered` | Sarah administers the remaining medications | yes |
+| `EV_TimeSkip30Min` | fade to black, show `30 Minutes Later...` | — |
+| `EV_Scene3B_Emergency` | emergency ambience, dim red room, rashes on Mr. Johnson | — |
+| `EV_Scene3B_FadeOut` | slow fade out | — |
+| `EV_OpenAssessment` | open the Question Panel prefab (Scene 4) | — |
 
 `EV_TimeSkip30Min` and `EV_Scene3B_FadeOut` do **not** block — the scenario continues
 while the fade plays. If a beat needs to finish before the next line, use the

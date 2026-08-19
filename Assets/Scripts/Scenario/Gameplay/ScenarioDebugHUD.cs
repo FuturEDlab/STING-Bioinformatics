@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BNG;
 using UnityEngine;
 
 /// <summary>
@@ -44,6 +45,16 @@ public class ScenarioDebugHUD : MonoBehaviour
 
     [Tooltip("Show/hide the panel.")]
     [SerializeField] private KeyCode toggleKey = KeyCode.F1;
+
+    [Header("Controller buttons (these work in a headset; the keys above do not)")]
+    [Tooltip("Force the current step to end. X on the left Quest controller by default. Use the -Down bindings: the plain ones are held-state and would fire every frame.")]
+    [SerializeField] private ControllerBinding vrSkipStepButton = ControllerBinding.XButtonDown;
+
+    [Tooltip("Completes whatever the scenario is waiting for, or skips the step when it is not waiting for anything. None leaves it unbound.")]
+    [SerializeField] private ControllerBinding vrCompleteTaskButton = ControllerBinding.None;
+
+    [Tooltip("Fast-forward to the next thing the player has to do. None leaves it unbound.")]
+    [SerializeField] private ControllerBinding vrSkipToGateButton = ControllerBinding.None;
 
     [Header("World beats")]
     [Tooltip("One button per scene event you want to fire by hand. Fill these with the EV_EHR_* assets while the EHR is still being built.")]
@@ -112,6 +123,28 @@ public class ScenarioDebugHUD : MonoBehaviour
 
         if (Input.GetKeyDown(skipToGateKey) && controller != null)
             controller.SkipToNextGate();
+
+        if (VrPressed(vrCompleteTaskButton))
+            CompleteAwaitedTask();
+
+        if (VrPressed(vrSkipStepButton) && controller != null)
+            controller.SkipCurrentStep();
+
+        if (VrPressed(vrSkipToGateButton) && controller != null)
+            controller.SkipToNextGate();
+    }
+
+    /// <summary>
+    /// A controller button, read through BNG so it works with whatever runtime the rig is
+    /// using. None is the "unbound" value, and InputBridge only exists once the rig is in the
+    /// scene - neither should throw here, since this runs every frame.
+    /// </summary>
+    private static bool VrPressed(ControllerBinding binding)
+    {
+        if (binding == ControllerBinding.None || InputBridge.Instance == null)
+            return false;
+
+        return InputBridge.Instance.GetControllerBindingValue(binding);
     }
 
     /// <summary>

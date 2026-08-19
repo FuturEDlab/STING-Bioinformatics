@@ -2167,7 +2167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6568cbb91e12450a989e8172d4f182f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestionPanelManager
-  QP: {fileID: 0}
+  QP: {fileID: 8448544922591818052}
   QPTitle: {fileID: 5667218760043865018}
   QPMajor: {fileID: 6967676160925550849}
   QPQuestion: {fileID: 7211650695522699498}
@@ -2192,10 +2192,11 @@ MonoBehaviour:
   - {fileID: 8210345457221737753}
   - {fileID: 5478120059003032875}
   - {fileID: 9182767769828769633}
-  answerSelectionGroup: {fileID: 0}
+  answerSelectionGroup: {fileID: 1441510938076137884}
   answerButtonContainer: {fileID: 984775856700134534}
   answerButtonPrefab: {fileID: 0}
   layoutUpdater: {fileID: 9019566606683167174}
+  vrAnchor: {fileID: 0}
   panelClosedEvent: {fileID: 0}
   summaryAnswerImages:
   - {fileID: 936944667459578968}
@@ -5583,7 +5584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8067210293912572223
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6074,7 +6075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7835783573788824161
 RectTransform:
   m_ObjectHideFlags: 0

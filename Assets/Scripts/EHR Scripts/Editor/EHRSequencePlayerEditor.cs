@@ -8,6 +8,7 @@ public class EHRSequencePlayerEditor : Editor
     private SerializedProperty stepsProp;
     private SerializedProperty autoStartOnEnableProp;
     private SerializedProperty loopSequenceProp;
+    private SerializedProperty scenarioDrivenProp;
     private SerializedProperty defaultAnimatorTriggerProp;
 
     private void OnEnable()
@@ -16,6 +17,7 @@ public class EHRSequencePlayerEditor : Editor
         stepsProp = serializedObject.FindProperty("steps");
         autoStartOnEnableProp = serializedObject.FindProperty("autoStartOnEnable");
         loopSequenceProp = serializedObject.FindProperty("loopSequence");
+        scenarioDrivenProp = serializedObject.FindProperty("scenarioDriven");
         defaultAnimatorTriggerProp = serializedObject.FindProperty("defaultAnimatorTrigger");
     }
 
@@ -28,6 +30,19 @@ public class EHRSequencePlayerEditor : Editor
         EditorGUILayout.Space(6f);
         EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("Auto Start On Enable"));
         EditorGUILayout.PropertyField(loopSequenceProp, new GUIContent("Loop Sequence"));
+        EditorGUILayout.Space(6f);
+        EditorGUILayout.PropertyField(scenarioDrivenProp, new GUIContent("Scenario Driven"));
+
+        if (scenarioDrivenProp.boolValue)
+        {
+            EditorGUILayout.HelpBox(
+                "The Scenario Controller drives this terminal. Step durations are ignored and a button " +
+                "press no longer advances the screen - the EHR Scenario Bridge switches screens when the " +
+                "scenario reaches each beat. Durations and action names below are still the authoring " +
+                "surface: the bridge cues screens by Step Name and reports presses by Action Name.",
+                MessageType.Info);
+        }
+
         EditorGUILayout.Space(6f);
         EditorGUILayout.PropertyField(defaultAnimatorTriggerProp, new GUIContent("Default Animator Trigger"));
         EditorGUILayout.Space(10f);

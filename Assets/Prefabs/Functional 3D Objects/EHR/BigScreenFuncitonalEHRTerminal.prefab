@@ -333,6 +333,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39180e86623a549598e8d9a55c53827e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8673695889152424085}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39180e86623a549598e8d9a55c53827e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1348829073561120845}
   m_SourcePrefab: {fileID: 100100000, guid: 39180e86623a549598e8d9a55c53827e, type: 3}
 --- !u!1 &2311772876394828041 stripped
 GameObject:
@@ -462,7 +465,7 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: User scans meds
+  - stepName: User scans methotrexate
     image: {fileID: 21300000, guid: ef5d432c9e7f74975a22e22e150109b1, type: 3}
     conditionType: 1
     duration: 3
@@ -498,7 +501,7 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: Review and correct dose
+  - stepName: Scene 2 intro
     image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
     conditionType: 0
     duration: 3
@@ -507,7 +510,7 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: User scans meds
+  - stepName: User scans Amoxicillin
     image: {fileID: 21300000, guid: b215666e760544a2a93310876ab3d93b, type: 3}
     conditionType: 1
     duration: 3
@@ -516,7 +519,7 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: Next scene
+  - stepName: Amoxicillin prescription
     image: {fileID: 21300000, guid: 244a1ec263f7d43319baf5607dc38845, type: 3}
     conditionType: 1
     duration: 3
@@ -543,7 +546,7 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: Next scene
+  - stepName: Scene 3 intro
     image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
     conditionType: 0
     duration: 3
@@ -588,8 +591,18 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
+  - stepName: Paused - VO Active
+    image: {fileID: 21300000, guid: f7590378a16294cd2b7be95326467630, type: 3}
+    conditionType: 0
+    duration: 3
+    actionName:
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+    animator: {fileID: 0}
+    iconAnimatorTrigger:
   autoStartOnEnable: 1
   loopSequence: 0
+  scenarioDriven: 1
   defaultAnimatorTrigger: PopUp
 --- !u!4 &3125147956879412147 stripped
 Transform:
@@ -976,3 +989,100 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9c36c8632cf07c04191fc89b549867f7, type: 3}
   m_PrefabInstance: {fileID: 7483935931724833499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1348829073561120845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311772876394828041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1a9c5d84b7e4a2ea6d1c8b7f204e93, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EHRScenarioBridge
+  player: {fileID: 8673695889152424085}
+  taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
+  focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
+  startState: Locked - VO Active
+  stateWhileNarrating: Paused - VO Active
+  screens:
+  - label: S1 - prompt to scan the wristband
+    worldBeat: {fileID: 0}
+    whenWaitingFor: wristband.scan
+    state: User scans wristband
+  - label: S1 - patient verified
+    worldBeat: {fileID: 11400000, guid: c14042007680d4749ed032081bb2ae6a, type: 2}
+    whenWaitingFor:
+    state: Patient scan accepted
+  - label: S1 - prompt to scan the Methotrexate
+    worldBeat: {fileID: 0}
+    whenWaitingFor: methotrexate.scan
+    state: User scans methotrexate
+  - label: S1 - teratogenic alert
+    worldBeat: {fileID: 11400000, guid: bbc5047d9db2c0eee060a59f8f697a9f, type: 2}
+    whenWaitingFor:
+    state: Nurse talks and starts override
+  - label: S1 - prompt to override the alert
+    worldBeat: {fileID: 0}
+    whenWaitingFor: alert.override
+    state: User confirms override
+  - label: S1 - knowledge check
+    worldBeat: {fileID: 11400000, guid: 9119f6d21a5436e9d97fc8869d6439e5, type: 2}
+    whenWaitingFor:
+    state: Knowledge Check 1
+  - label: S2 - prompt to scan the Amoxicillin
+    worldBeat: {fileID: 0}
+    whenWaitingFor: amoxicillin.scan
+    state: User scans Amoxicillin
+  - label: S2 - prescription and keypad
+    worldBeat: {fileID: 11400000, guid: 60fbe21d827af01af2a58247f4edf318, type: 2}
+    whenWaitingFor:
+    state: Amoxicillin prescription
+  - label: S2 - prompt to enter the dose
+    worldBeat: {fileID: 0}
+    whenWaitingFor: dose.entered.5000
+    state: Amoxicillin prescription
+  - label: S2 - prompt to correct the dose
+    worldBeat: {fileID: 0}
+    whenWaitingFor: dose.corrected.500
+    state: Review and correct dose
+  - label: S2 - dosage confirmed
+    worldBeat: {fileID: 11400000, guid: 71e86b35b0d84552917b59c2d355f3b3, type: 2}
+    whenWaitingFor:
+    state: Dosage confirmed
+  - label: S3A - prompt to scan the Allopurinol
+    worldBeat: {fileID: 0}
+    whenWaitingFor: allopurinol.scan
+    state: Scan meds
+  - label: S3A - contraindication
+    worldBeat: {fileID: 11400000, guid: 214e27cf77f78c794ea9c7acb829763a, type: 2}
+    whenWaitingFor:
+    state: High severity contraindication detected
+  - label: S3A - prompt to override the contraindication
+    worldBeat: {fileID: 0}
+    whenWaitingFor: contraindication.override
+    state: Confirm override 2
+  - label: S3A - meds administered
+    worldBeat: {fileID: 11400000, guid: 5ede03ec132b00e3ff14e3be59d6829b, type: 2}
+    whenWaitingFor:
+    state: Knowledge check 2
+  actions:
+  - ehrAction: Scan patient wristband
+    taskId: wristband.scan
+  - ehrAction: Scan methotrexate
+    taskId: methotrexate.scan
+  - ehrAction: Confirm override
+    taskId: alert.override
+  - ehrAction: Scan Amoxicillin
+    taskId: amoxicillin.scan
+  - ehrAction: Fix dosage typo
+    taskId: dose.entered.5000
+  - ehrAction: Confirm dosage change
+    taskId: dose.corrected.500
+  - ehrAction: Scan Allopurinol
+    taskId: allopurinol.scan
+  - ehrAction: Override contraindication
+    taskId: contraindication.override
+  reportWiringOnStart: 1
+  debugLogging: 0

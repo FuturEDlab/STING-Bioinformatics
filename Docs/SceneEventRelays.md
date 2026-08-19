@@ -122,21 +122,27 @@ hierarchy active, so it has to run first.
 
 ## The full channel list
 
-Add these as the EHR gets built. None of them block the scenario.
+None of them block the scenario, apart from `EV_OpenAssessment`.
 
-| Channel | What it should do |
-|---|---|
-| `EV_EHR_PatientVerified` | beep + `PATIENT VERIFIED: JOHNSON, M. (Male, 68)` |
-| `EV_EHR_MethoAlert` | beep, pulsing red triangle, 3D teratogenic warning |
-| `EV_MethoAdministered` | alert clears; Sarah administers the Methotrexate |
-| `EV_EHR_AmoxPrescription` | prescription + free-text `Last dose: 5000mg` + keypad |
-| `EV_EHR_DosageConfirmed` | pleasant chime + `Dosage Confirmed.` |
-| `EV_EHR_Contraindication` | big beep + `CONTRAINDICATION!` warning |
-| `EV_MedsAdministered` | Sarah administers the remaining medications |
-| `EV_TimeSkip30Min` | fade to black, show `30 Minutes Later...` |
-| `EV_Scene3B_Emergency` | emergency ambience, dim red room, rashes |
-| `EV_Scene3B_FadeOut` | slow fade out |
-| `EV_OpenAssessment` | open the question panel — **required**, see above |
+**The EHR screen no longer needs a relay.** The terminal prefab carries an
+`EHRScenarioBridge` that listens on the `EV_EHR_*` beats itself and switches the screen —
+see `EHRScenarioBridge.md`. Add a relay on those channels for the rest of the beat: the
+beep, the chime, the room lighting, Sarah's animation. A channel can have as many listeners
+as you like.
+
+| Channel | What it should do | Screen |
+|---|---|---|
+| `EV_EHR_PatientVerified` | beep + `PATIENT VERIFIED: JOHNSON, M. (Male, 68)` | bridge |
+| `EV_EHR_MethoAlert` | beep, pulsing red triangle, 3D teratogenic warning | bridge |
+| `EV_MethoAdministered` | alert clears; Sarah administers the Methotrexate | bridge |
+| `EV_EHR_AmoxPrescription` | prescription + free-text `Last dose: 5000mg` + keypad | bridge |
+| `EV_EHR_DosageConfirmed` | pleasant chime + `Dosage Confirmed.` | bridge |
+| `EV_EHR_Contraindication` | big beep + `CONTRAINDICATION!` warning | bridge |
+| `EV_MedsAdministered` | Sarah administers the remaining medications | bridge |
+| `EV_TimeSkip30Min` | fade to black, show `30 Minutes Later...` | relay |
+| `EV_Scene3B_Emergency` | emergency ambience, dim red room, rashes | relay |
+| `EV_Scene3B_FadeOut` | slow fade out | relay |
+| `EV_OpenAssessment` | open the question panel — **required**, see above | relay |
 
 ---
 
