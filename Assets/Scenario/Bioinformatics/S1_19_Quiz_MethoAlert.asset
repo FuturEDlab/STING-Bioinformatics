@@ -18,35 +18,9 @@ MonoBehaviour:
   questionVo: []
   perAnswerFeedbackVo:
   - phrases:
-    - clip: {fileID: 8300000, guid: b057c92817364c28bc1708ce112bf40a, type: 3}
-      caption: {fileID: 21300000, guid: 1e4bde311f1b0233bfe2d87a11cb1ef1, type: 3}
-      captionText: 'Incorrect. There is no documented allergy for this'
-    - clip: {fileID: 8300000, guid: 20cbe5de887661af8f3b27d0d8629558, type: 3}
-      caption: {fileID: 21300000, guid: ff894f801cf4408010229a521c773341, type: 3}
-      captionText: 'patient. The alert was triggered before any allergy logic was applied.'
-  - phrases:
-    - clip: {fileID: 8300000, guid: 976552260b5057eabc60660eec8442b7, type: 3}
-      caption: {fileID: 21300000, guid: ee24c7b8e053ca599992abcc49bf301e, type: 3}
-      captionText: 'Correct. The CDS logic checked age but failed to account'
-    - clip: {fileID: 8300000, guid: b62047bac958b25c49c5fa534118a582, type: 3}
-      caption: {fileID: 21300000, guid: cbff6d4851d505cf48384f9ae1986893, type: 3}
-      captionText: 'for patient sex, triggering a teratogenic warning for a male'
-    - clip: {fileID: 8300000, guid: 602d11e40b647c7456096c47b8aa47ec, type: 3}
-      caption: {fileID: 21300000, guid: 3681d992a1c8aa5e769205fc0d3607d1, type: 3}
-      captionText: 'patient. This type of poorly scoped logic creates false alerts and'
-    - clip: {fileID: 8300000, guid: 870be10f8633d86c77a1ba2e45fef736, type: 3}
-      caption: {fileID: 21300000, guid: 3eedf2385343dad3d89f9ca1d07751cd, type: 3}
-      captionText: 'undermines trust in the system.'
-  - phrases:
-    - clip: {fileID: 8300000, guid: 2bade2cc741e56c471ba58b148ab1486, type: 3}
-      caption: {fileID: 21300000, guid: 573333b3d36a67b1bdc18579ea34eb02, type: 3}
-      captionText: 'Incorrect. Medication expiration would generate a'
-    - clip: {fileID: 8300000, guid: b47128ff1495df67303d2ab52ad8965a, type: 3}
-      caption: {fileID: 21300000, guid: bdb4a1e03624b8ab7b0951bb7bc07ea6, type: 3}
-      captionText: 'different alert. This warning was unrelated to the medication''s'
-    - clip: {fileID: 8300000, guid: e530fce9d8e3814b58720cce2543d0f3, type: 3}
-      caption: {fileID: 21300000, guid: ed042459f27fa88c15282b9d952d5b38, type: 3}
-      captionText: 'age or storage.'
+    - clip: {fileID: 0}
+      caption: {fileID: 0}
+      captionText: 
   correctFeedbackVo: []
   wrongFeedbackVo: []
   allowedTries: 0

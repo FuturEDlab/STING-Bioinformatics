@@ -17,6 +17,16 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class VRPanelAnchor : MonoBehaviour
 {
+    public enum PlacementMode
+    {
+        VRHeadPlacement,
+        CustomWorldPlacement
+    }
+
+    [Header("Placement Mode")]
+    [Tooltip("Choose whether the panel opens relative to the player's head or at a fixed world location.")]
+    [SerializeField] private PlacementMode placementMode = PlacementMode.VRHeadPlacement;
+
     [Header("Who to place in front of")]
     [Tooltip("The player's head. Left empty, the main camera is used — the XR rig's camera at runtime.")]
     [SerializeField] private Transform head;
@@ -28,6 +38,13 @@ public class VRPanelAnchor : MonoBehaviour
 
     [Tooltip("Metres above (or below) eye height for the panel's centre. Slightly negative keeps the top of a tall panel out of the ceiling.")]
     [SerializeField] private float heightOffset = -0.15f;
+
+    [Header("Custom World Placement")]
+    [Tooltip("World position used when Custom World Placement is selected.")]
+    [SerializeField] private Vector3 customPlacementPosition;
+
+    [Tooltip("World rotation, in Euler angles, used when Custom World Placement is selected.")]
+    [SerializeField] private Vector3 customPlacementEulerAngles;
 
     [Tooltip("How wide the panel should end up, in metres. The canvas is authored at 2000 px square, which is 2 m at its current scale — big enough that the player has to sweep their head across it. 0 leaves the scale untouched.")]
     [SerializeField] private float panelWidthMetres = 1.4f;
@@ -55,23 +72,37 @@ public class VRPanelAnchor : MonoBehaviour
     [ContextMenu("Place In Front Of Player")]
     public void Place()
     {
-        if (!ResolveHead())
-            return;
+        if (placementMode == PlacementMode.CustomWorldPlacement)
+        {
+            transform.SetPositionAndRotation(
+                customPlacementPosition,
+                Quaternion.Euler(customPlacementEulerAngles));
+        }
+        else
+        {
+            if (!ResolveHead())
+                return;
 
-        Vector3 forward = FlattenedFacing();
+            Vector3 forward = FlattenedFacing();
 
-        Vector3 position = head.position + forward * distance + Vector3.up * heightOffset;
+            Vector3 position = head.position + forward * distance + Vector3.up * heightOffset;
 
-        // The canvas reads correctly when its own forward points the same way the player is
-        // looking, i.e. away from them — not back at them.
-        transform.SetPositionAndRotation(position, Quaternion.LookRotation(forward, Vector3.up));
+            // The canvas reads correctly when its own forward points the same way the player is
+            // looking, i.e. away from them — not back at them.
+            transform.SetPositionAndRotation(position, Quaternion.LookRotation(forward, Vector3.up));
+        }
 
         ApplyWidth();
         bool laserReady = RegisterForLaser();
         placed = true;
 
-        if (logPlacement)
-            Debug.Log($"[VRPanelAnchor] '{name}' placed at {transform.position} — {distance} m in front of '{head.name}' at {head.position}, {panelWidthMetres} m wide. Laser: {(laserReady ? "canvas registered with the VR UI system" : "NO VR UI system in the scene, so the hand laser cannot click this")}.", this);
+            if (logPlacement)
+            {
+                string placementDescription = placementMode == PlacementMode.CustomWorldPlacement
+                    ? $"custom world position {transform.position}"
+                    : $"{distance} m in front of '{head.name}' at {head.position}";
+                Debug.Log($"[VRPanelAnchor] '{name}' placed at {placementDescription}, {panelWidthMetres} m wide. Laser: {(laserReady ? "canvas registered with the VR UI system" : "NO VR UI system in the scene, so the hand laser cannot click this") }.", this);
+            }
     }
 
     /// <summary>
@@ -93,7 +124,7 @@ public class VRPanelAnchor : MonoBehaviour
         // Deliberately not VRUISystem.Instance: that getter builds an unconfigured module on
         // the fly if none exists, and a half-wired input module is harder to diagnose than a
         // missing one.
-        BNG.VRUISystem system = FindFirstObjectByType<BNG.VRUISystem>(FindObjectsInactive.Include);
+        BNG.VRUISystem system = FindAnyObjectByType<BNG.VRUISystem>(FindObjectsInactive.Include);
 
         if (system == null)
             return false;
@@ -116,7 +147,7 @@ public class VRPanelAnchor : MonoBehaviour
 
     private void Update()
     {
-        if (!placed || replaceIfFurtherThan <= 0f)
+        if (!placed || placementMode != PlacementMode.VRHeadPlacement || replaceIfFurtherThan <= 0f)
             return;
 
         if (head == null && !ResolveHead())
