@@ -52,12 +52,12 @@ MonoBehaviour:
   majorQuestionSets:
   - majorName: Nursing
     majorQuestion:
-      questionText: Sarah exhibited alert fatigue. How did the false alert in Scene
+      questionText: Taylor exhibited alert fatigue. How did the false alert in Scene
         1 contribute to the error in Scene 3?
       questionTextFieldHeight: 146
       questionAudioClip: {fileID: 8300000, guid: 0ab5a6a1d233440dd97593bd16a2d1c8, type: 3}
       ColoredAnswerSprites:
-      - {fileID: 21300000, guid: f2abc978aca234ffeb1aaa89b7b1a8d0, type: 3}
+      - {fileID: 21300000, guid: 825fbaabec4e149e3a4178b647bebcbe, type: 3}
       - {fileID: 21300000, guid: fb990d74af735436c86ca29a9e07c021, type: 3}
       - {fileID: 21300000, guid: 75e3e428c1a9c4471b68261f01499b9f, type: 3}
       - {fileID: 21300000, guid: ac35d5ee7d5ad45b6ae1d5e4ad82add2, type: 3}
@@ -67,13 +67,13 @@ MonoBehaviour:
       explanationAudioIncorrect: {fileID: 8300000, guid: f83e431c4f75345e5939c80fd3d16907, type: 3}
       answers:
       - answerText: It increased Sarah's workload, making her rush
-        answerImage: {fileID: 21300000, guid: a8e1a634e3e3041109dac1694c3fc54c, type: 3}
+        answerImage: {fileID: 21300000, guid: 825fbaabec4e149e3a4178b647bebcbe, type: 3}
         isCorrect: 0
         buttonStateSprites:
-          defaultSprite: {fileID: 21300000, guid: a8e1a634e3e3041109dac1694c3fc54c, type: 3}
-          hoverSprite: {fileID: 21300000, guid: 50f7e475084b44a73a940b36c9bbbb3a, type: 3}
-          selectedSprite: {fileID: 21300000, guid: 17da483eae36f4bc1a7e7eee4051956d, type: 3}
-          selectedHoverSprite: {fileID: 21300000, guid: c14848c890bfb495daae5c0c669f13ae, type: 3}
+          defaultSprite: {fileID: 21300000, guid: f2abc978aca234ffeb1aaa89b7b1a8d0, type: 3}
+          hoverSprite: {fileID: 21300000, guid: 8ab82b164960049158667495a7f5c2ca, type: 3}
+          selectedSprite: {fileID: 21300000, guid: e0eec74a3fe544c52b8963f39654221e, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: 60f934ecf230642efad845a4d74fc743, type: 3}
       - answerText: It delayed medication administration
         answerImage: {fileID: 21300000, guid: 644ee017e0c5145a0a511a75fc01ee9a, type: 3}
         isCorrect: 0
@@ -96,9 +96,9 @@ MonoBehaviour:
         isCorrect: 1
         buttonStateSprites:
           defaultSprite: {fileID: 21300000, guid: f889345372c7a49b1b23b33537eda85f, type: 3}
-          hoverSprite: {fileID: 21300000, guid: ff21f7e4e97a14653a1ef9778ff585c0, type: 3}
-          selectedSprite: {fileID: 21300000, guid: 5b828c3edfd4544c5bd25bfd461480c5, type: 3}
-          selectedHoverSprite: {fileID: 21300000, guid: 9926d40d65f2d4b489e3ebdbc8fce769, type: 3}
+          hoverSprite: {fileID: 21300000, guid: b8c15d1e31a244a2ea71851b49849644, type: 3}
+          selectedSprite: {fileID: 21300000, guid: 1751d60a2fce14e48a2012608e91733a, type: 3}
+          selectedHoverSprite: {fileID: 21300000, guid: 13e669d9d8cd4429cb51fc52967701f2, type: 3}
   - majorName: Health Informatics / Computing
     majorQuestion:
       questionText: The Amoxicillin error was caused by trusting unstructured free

@@ -933,7 +933,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 0}
   selectedSprite: {fileID: 0}
   selectedHoverSprite: {fileID: 0}
-  disabledSprite: {fileID: 21300000, guid: 8d1b1787a38fa42e09402e59cf314cd1, type: 3}
+  disabledSprite: {fileID: 21300000, guid: 91a4b65cb6f484444b20d91ad277d225, type: 3}
 --- !u!1 &837569320547749754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,9 +1911,9 @@ RectTransform:
   - {fileID: 4982139209409676659}
   m_Father: {fileID: 984775856700134534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 840, y: -599}
   m_SizeDelta: {x: 1680, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &519089776082544064
@@ -2344,7 +2344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &619838394416460392
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2526,9 +2526,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8bbedbe77248154384b0a219289e324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VRPanelAnchor
-  placementPosition: {x: 0, y: 0, z: 0}
-  placementEulerAngles: {x: 0, y: 0, z: 0}
+  placementMode: 0
+  head: {fileID: 0}
+  distance: 1.7
+  heightOffset: -0.15
+  customPlacementPosition: {x: 0, y: 0, z: 0}
+  customPlacementEulerAngles: {x: 0, y: 0, z: 0}
   panelWidthMetres: 1.4
+  replaceIfFurtherThan: 3.5
+  placeOnEnable: 0
   registerWithVrUi: 1
   logPlacement: 1
 --- !u!1 &3324782532057598322
@@ -3925,9 +3931,9 @@ RectTransform:
   - {fileID: 6601248176248444719}
   m_Father: {fileID: 984775856700134534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 840, y: -421}
   m_SizeDelta: {x: 1680, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6130112254064648332
@@ -4079,9 +4085,9 @@ RectTransform:
   - {fileID: 6437449438329128729}
   m_Father: {fileID: 984775856700134534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 840, y: -243}
   m_SizeDelta: {x: 1680, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1138472816590849622
@@ -5078,9 +5084,9 @@ RectTransform:
   - {fileID: 4805621466900432314}
   m_Father: {fileID: 8067210293912572223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1000, y: -1380}
   m_SizeDelta: {x: 1680, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2320921155605324589
@@ -5719,9 +5725,9 @@ RectTransform:
   - {fileID: 155540196535461237}
   m_Father: {fileID: 984775856700134534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 840, y: -65}
   m_SizeDelta: {x: 1680, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1730777644090389939
@@ -5894,7 +5900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8067210293912572223
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6756,9 +6762,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8067210293912572223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1000, y: -545}
   m_SizeDelta: {x: 1680, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6018691563646287376
@@ -6983,9 +6989,9 @@ RectTransform:
   - {fileID: 7920242135745563977}
   m_Father: {fileID: 8067210293912572223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1000, y: -925}
   m_SizeDelta: {x: 1680, y: 664}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4470130693519818633

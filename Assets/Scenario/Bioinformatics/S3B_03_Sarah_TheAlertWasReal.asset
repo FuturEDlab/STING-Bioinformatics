@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah (whispering)
   phrases:
-  - clip: {fileID: 8300000, guid: 15c8c938f8b0f415f85c4d491eb10bc2, type: 3}
+  - clip: {fileID: 8300000, guid: c6c8cdcf335774ba389161eb399aa860, type: 3}
     caption: {fileID: 21300000, guid: 3d0b227467b9c4a339f689f525d34f86, type: 3}
     captionText: "Oh no... the alert. It wasn\u2019t wrong. It was a"
-  - clip: {fileID: 8300000, guid: c15b11d9292014edb891ab8cc6bdeb85, type: 3}
+  - clip: {fileID: 8300000, guid: 1c0a593d7624442bcb32dee798728f40, type: 3}
     caption: {fileID: 21300000, guid: 15e024300930f4c90a921a2674681535, type: 3}
     captionText: real contraindication!

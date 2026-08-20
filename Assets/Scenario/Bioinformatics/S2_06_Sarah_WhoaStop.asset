@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 12d0cdc4d9a534c9f9c6b2afb12f8e56, type: 3}
+  - clip: {fileID: 8300000, guid: 28d022f234bf648ac917cb710cf73e02, type: 3}
     caption: {fileID: 21300000, guid: ccedbaf7ad8bf4623ae37634dfdc6d02, type: 3}
     captionText: "Whoa - stop! That\u2019s a huge dosage. That \"5000mg\" is a"
-  - clip: {fileID: 8300000, guid: 64ec2458167c74d74876cf42e0c1b44a, type: 3}
+  - clip: {fileID: 8300000, guid: de0a9c7b6deab40de94efafe8ceb0b4b, type: 3}
     caption: {fileID: 21300000, guid: 845e169038465411891ae9338c3bce03, type: 3}
     captionText: "typo in free text. It should be 500mg. But because it isn\u2019t"
-  - clip: {fileID: 8300000, guid: 2095da84a6a334ba2b76e8a88405738a, type: 3}
+  - clip: {fileID: 8300000, guid: 6ae3244bbced84a29a18cc9a701ebb0f, type: 3}
     caption: {fileID: 21300000, guid: 1bed3521f873847268529610de470fde, type: 3}
     captionText: "structured data, the system didn\u2019t flag it. A 5000mg dose
       would"
-  - clip: {fileID: 8300000, guid: d12df6465f496497eaf81aecd12be04b, type: 3}
+  - clip: {fileID: 8300000, guid: 3853b4687ad514be392395b2359d9616, type: 3}
     caption: {fileID: 21300000, guid: ed99a93b2392348efbc1c359a0422c95, type: 3}
     captionText: destroy his kidneys.

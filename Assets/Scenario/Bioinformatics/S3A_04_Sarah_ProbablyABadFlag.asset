@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: d6499adbedb6b4e828a0667c215698cb, type: 3}
+  - clip: {fileID: 8300000, guid: 0c23c7e04d310429d97deb40d318ee9e, type: 3}
     caption: {fileID: 21300000, guid: a28afde2e29954276aa387a62790f48e, type: 3}
     captionText: "The software's been wrong all morning. It\u2019s probably"
-  - clip: {fileID: 8300000, guid: f80076686279643b2b97aa19d86a7175, type: 3}
+  - clip: {fileID: 8300000, guid: a0c16210ed128479fbcd17907c80aaab, type: 3}
     caption: {fileID: 21300000, guid: 14a24023bb40f4d27a4bb5030c618029, type: 3}
     captionText: another bad flag.

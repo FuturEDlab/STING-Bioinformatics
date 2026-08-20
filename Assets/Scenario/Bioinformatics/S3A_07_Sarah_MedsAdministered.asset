@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: ccf49669b175948d9acd5e3bc353984a, type: 3}
+  - clip: {fileID: 8300000, guid: 1c40d2272a1d64ffc8be774718cd7295, type: 3}
     caption: {fileID: 21300000, guid: c840b1859e7144a87935b663395a7b82, type: 3}
     captionText: "Okay, meds administered. Let\u2019s move on."

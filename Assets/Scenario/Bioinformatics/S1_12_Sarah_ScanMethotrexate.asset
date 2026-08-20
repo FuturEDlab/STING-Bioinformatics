@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 8a0e549196c2fc5517fbf90eb93ae0c6, type: 3}
+  - clip: {fileID: 8300000, guid: 80dfe73e84f8747ae91a34e0193d5b55, type: 3}
     caption: {fileID: 21300000, guid: 0f042a56be22444e39b238e322584195, type: 3}
     captionText: Good. Now scan the Methotrexate.

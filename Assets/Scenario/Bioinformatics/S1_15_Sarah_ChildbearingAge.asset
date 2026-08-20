@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 8cc311ed275f04976988eee9b27112f3, type: 3}
+  - clip: {fileID: 8300000, guid: 70d032d8c1aa84e8b85d1ede5f1b5e39, type: 3}
     caption: {fileID: 21300000, guid: 8fe82d40f1c454ff996c5b3c0a741899, type: 3}
     captionText: "See? \"Childbearing age\"? He\u2019s a 68-year-old man."

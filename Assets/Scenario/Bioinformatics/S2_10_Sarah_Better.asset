@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 1b655d7b0d71d40d78970ead9e1b10ac, type: 3}
+  - clip: {fileID: 8300000, guid: 69ea7b0ae66584f6990c0d1c6f1ddfd6, type: 3}
     caption: {fileID: 21300000, guid: 94fb7225cf8d64c0f85d369822850664, type: 3}
     captionText: "Better. But the system shouldn\u2019t have let you type"
-  - clip: {fileID: 8300000, guid: d727fa50bfbf64d9cbb444cb03030c39, type: 3}
+  - clip: {fileID: 8300000, guid: a1c08efb1e1f24392b035221ea34a461, type: 3}
     caption: {fileID: 21300000, guid: 73316fa9e2e47404c834cabd97405784, type: 3}
     captionText: that in without screaming at you.

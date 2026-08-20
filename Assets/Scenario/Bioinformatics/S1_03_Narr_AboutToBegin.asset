@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Narrator
   phrases:
-  - clip: {fileID: 8300000, guid: f67ab4199173d4b9d9dbb78223e06f69, type: 3}
+  - clip: {fileID: 8300000, guid: 6b7a4d49dd835444f89ec224d57352e0, type: 3}
     caption: {fileID: 21300000, guid: 265fc26ee62c9407eab7f1c067a7673b, type: 3}
     captionText: We are about to begin. To pause at any time, click Y or B on you
       controllers. Enjoy!
