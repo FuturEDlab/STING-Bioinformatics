@@ -3846,17 +3846,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02998649, y: 0.02543462, z: 0.00003031}
   m_Center: {x: 0.000017030165, y: -0.001057686, z: 0.030005}
---- !u!114 &1637246552 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5370534030288772880, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
-  m_PrefabInstance: {fileID: 4632068048014706281}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TwoSettingsManager
 --- !u!114 &1637246554 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 964570614159785991, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
@@ -5729,7 +5718,7 @@ PrefabInstance:
     - target: {fileID: 8172495775693174374, guid: 0c0833ef86ddf4deb916a700834a4f4d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1637246552}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
