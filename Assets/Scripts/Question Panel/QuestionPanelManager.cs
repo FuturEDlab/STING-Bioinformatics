@@ -30,6 +30,14 @@ public class QuestionPanelManager : MonoBehaviour
     public TextMeshProUGUI questionTMP;
     public Image explanationImage;
 
+    [Header("Question Audio")]
+    [Tooltip("Button that plays the audio clip assigned to the currently displayed question.")]
+    public Button questionAudioButton;
+    [Tooltip("Audio source used for question narration. Assign a scene AudioSource here; this reference must be set on the panel instance, not in the QuestionBank asset.")]
+    public AudioSource questionAudioSource;
+    [Tooltip("Stateful button controller for the audio button. It receives the disabled state while feedback audio plays.")]
+    public StatefulButtonSprites questionAudioButtonSprites;
+
     [Header("Question Continue")]
     public Button questionContinueButton;
     public StatefulButtonSprites questionContinueButtonSprites;
@@ -72,11 +80,6 @@ public class QuestionPanelManager : MonoBehaviour
     /// </summary>
     public event System.Action<int, bool> AnswerConfirmed;
 
-    // Set while the scenario is driving one question through this panel. In that mode the
-    // panel does not run its own 10-second countdown or fall through to the summary page —
-    // the scenario decides when to move on, once its narration has finished.
-    private bool singleQuestionMode;
-
     [Header("Summary Page")]
     [Tooltip("Optional image slots on the summary page that show the selected colored answer sprites.")]
     public Image[] summaryAnswerImages;
@@ -87,9 +90,7 @@ public class QuestionPanelManager : MonoBehaviour
     private QuestionData[] currentQuestionSequence;
     private int currentQuestionIndex;
     private int pendingAnswerIndex = -1;
-    private Coroutine answerCountdownCoroutine;
-    private TextMeshProUGUI questionContinueButtonText;
-    private string questionContinueButtonOriginalText = "Continue";
+    private Coroutine feedbackAudioCoroutine;
     private readonly System.Collections.Generic.List<Sprite> selectedAnswerColoredSprites = new System.Collections.Generic.List<Sprite>();
     private readonly System.Collections.Generic.List<bool> selectedAnswerCorrect = new System.Collections.Generic.List<bool>();
 
@@ -147,15 +148,6 @@ public class QuestionPanelManager : MonoBehaviour
             majorSelectionGroup.OnSelectionChanged += HandleMajorSelectionChanged;
         }
 
-        if (questionContinueButton != null)
-        {
-            questionContinueButtonText = questionContinueButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (questionContinueButtonText != null)
-            {
-                questionContinueButtonOriginalText = questionContinueButtonText.text;
-            }
-        }
-
         UpdateMajorContinueState();
 
         if (openQuestionOnStartForTesting)
@@ -185,6 +177,7 @@ public class QuestionPanelManager : MonoBehaviour
         {
             majorSelectionGroup.OnSelectionChanged -= HandleMajorSelectionChanged;
         }
+
     }
 
     // Update is called once per frame
@@ -302,13 +295,14 @@ public class QuestionPanelManager : MonoBehaviour
         if (currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
             return;
 
+        StopAllQuestionAudio();
+
         // Showing a question means it is answerable. Without this the buttons stay locked
         // from whatever disabled them last: confirming an answer switches them off, so the
         // in-simulation quiz used to leave the panel dead for the Scene 4 assessment.
         SetAnswerButtonsInteractable(true);
 
         DeselectAllAnswers();
-        ResetQuestionContinueButtonText();
         PopulateQuestionUI(currentQuestionSequence[currentQuestionIndex]);
     }
 
@@ -329,12 +323,54 @@ public class QuestionPanelManager : MonoBehaviour
             explanationImage.gameObject.SetActive(false);
         }
 
+        UpdateQuestionAudioButton(question);
+
         CreateAnswerButtons(question);
 
         if (layoutUpdater != null)
         {
             layoutUpdater.UpdateLayout();
         }
+    }
+
+    private void UpdateQuestionAudioButton(QuestionData question)
+    {
+        if (questionAudioButton == null)
+            return;
+
+        bool canPlay = question != null && question.questionAudioClip != null && questionAudioSource != null;
+        questionAudioButton.interactable = canPlay;
+        if (questionAudioButtonSprites != null)
+            questionAudioButtonSprites.SetDisabled(!canPlay);
+    }
+
+    public void PlayQuestionAudio()
+    {
+        if (questionAudioSource == null || currentQuestionSequence == null || currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
+            return;
+
+        var question = currentQuestionSequence[currentQuestionIndex];
+        if (question == null || question.questionAudioClip == null)
+            return;
+
+        StopAllQuestionAudio();
+        questionAudioSource.clip = question.questionAudioClip;
+        questionAudioSource.Play();
+    }
+
+    private void StopAllQuestionAudio()
+    {
+        if (feedbackAudioCoroutine != null)
+        {
+            StopCoroutine(feedbackAudioCoroutine);
+            feedbackAudioCoroutine = null;
+        }
+
+        if (questionAudioSource != null)
+            questionAudioSource.Stop();
+
+        if (currentQuestionSequence != null && currentQuestionIndex >= 0 && currentQuestionIndex < currentQuestionSequence.Length)
+            UpdateQuestionAudioButton(currentQuestionSequence[currentQuestionIndex]);
     }
 
     private void CreateAnswerButtons(QuestionData question)
@@ -466,31 +502,23 @@ public class QuestionPanelManager : MonoBehaviour
     public void ConfirmAnswer()
     {
         if (pendingAnswerIndex < 0)
+        {
+            AdvanceToNextQuestion();
             return;
+        }
 
         int confirmedIndex = pendingAnswerIndex;
 
         StoreSelectedAnswerSprite(pendingAnswerIndex);
         RecordAnswerSelection(pendingAnswerIndex);
         ShowAnswerExplanation(pendingAnswerIndex);
+        PlayExplanationAudio(pendingAnswerIndex);
         pendingAnswerIndex = -1;
-        UpdateQuestionContinueState();
-
-        if (answerCountdownCoroutine != null)
-        {
-            StopCoroutine(answerCountdownCoroutine);
-            answerCountdownCoroutine = null;
-        }
 
         SetAnswerButtonsInteractable(false);
-        SetQuestionContinueButtonInteractable(false);
+        SetQuestionContinueButtonInteractable(true);
 
         AnswerConfirmed?.Invoke(confirmedIndex, IsAnswerCorrect(confirmedIndex));
-
-        // The scenario runs the pacing in single-question mode: its narrator line plays
-        // over the explanation image, and it closes the panel when the line ends.
-        if (!singleQuestionMode)
-            answerCountdownCoroutine = StartCoroutine(RunAnswerCountdown());
     }
 
     private bool IsAnswerCorrect(int answerIndex)
@@ -518,7 +546,6 @@ public class QuestionPanelManager : MonoBehaviour
             return;
         }
 
-        singleQuestionMode = true;
         selectedAnswerColoredSprites.Clear();
         selectedAnswerCorrect.Clear();
 
@@ -599,13 +626,7 @@ public class QuestionPanelManager : MonoBehaviour
     /// <summary>Hide the whole panel without running the exit page. Pairs with <see cref="ShowSingleQuestion"/>.</summary>
     public void ClosePanel()
     {
-        singleQuestionMode = false;
-
-        if (answerCountdownCoroutine != null)
-        {
-            StopCoroutine(answerCountdownCoroutine);
-            answerCountdownCoroutine = null;
-        }
+        StopAllQuestionAudio();
 
         if (QPQuestion != null) QPQuestion.SetActive(false);
         if (QP != null) QP.SetActive(false);
@@ -704,6 +725,50 @@ public class QuestionPanelManager : MonoBehaviour
         var sprite = answer.isCorrect ? question.explanationImageCorrect : question.explanationImageIncorrect;
         explanationImage.sprite = sprite;
         explanationImage.gameObject.SetActive(sprite != null);
+    }
+
+    private void PlayExplanationAudio(int answerIndex)
+    {
+        if (questionAudioSource == null || currentQuestionSequence == null || currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
+            return;
+
+        var question = currentQuestionSequence[currentQuestionIndex];
+        if (question == null || question.answers == null || answerIndex < 0 || answerIndex >= question.answers.Length)
+            return;
+
+        var explanationAudio = question.answers[answerIndex].isCorrect
+            ? question.explanationAudioCorrect
+            : question.explanationAudioIncorrect;
+
+        StopAllQuestionAudio();
+
+        if (explanationAudio == null)
+            return;
+
+        questionAudioSource.clip = explanationAudio;
+        questionAudioSource.Play();
+        SetQuestionAudioButtonDisabled(true);
+        feedbackAudioCoroutine = StartCoroutine(EnableQuestionAudioAfterFeedback(explanationAudio.length));
+    }
+
+    private IEnumerator EnableQuestionAudioAfterFeedback(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        feedbackAudioCoroutine = null;
+        if (currentQuestionSequence == null || currentQuestionIndex < 0 || currentQuestionIndex >= currentQuestionSequence.Length)
+            yield break;
+
+        UpdateQuestionAudioButton(currentQuestionSequence[currentQuestionIndex]);
+    }
+
+    private void SetQuestionAudioButtonDisabled(bool disabled)
+    {
+        if (questionAudioButton != null)
+            questionAudioButton.interactable = !disabled;
+
+        if (questionAudioButtonSprites != null)
+            questionAudioButtonSprites.SetDisabled(disabled);
     }
 
     private void RecordAnswerSelection(int answerIndex)
@@ -805,22 +870,6 @@ public class QuestionPanelManager : MonoBehaviour
         }
     }
 
-    private void ResetQuestionContinueButtonText()
-    {
-        if (questionContinueButtonText != null)
-        {
-            questionContinueButtonText.text = questionContinueButtonOriginalText;
-        }
-    }
-
-    private void SetQuestionContinueButtonText(string text)
-    {
-        if (questionContinueButtonText != null)
-        {
-            questionContinueButtonText.text = text;
-        }
-    }
-
     private void DeselectAllAnswers()
     {
         pendingAnswerIndex = -1;
@@ -861,21 +910,6 @@ public class QuestionPanelManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    private IEnumerator RunAnswerCountdown()
-    {
-        const int countdownSeconds = 10;
-
-        for (int remaining = countdownSeconds; remaining > 0; remaining--)
-        {
-            SetQuestionContinueButtonText($"Next in {remaining}s");
-            yield return new WaitForSeconds(1f);
-        }
-
-        ResetQuestionContinueButtonText();
-        answerCountdownCoroutine = null;
-        AdvanceToNextQuestion();
     }
 
     private void AdvanceToNextQuestion()

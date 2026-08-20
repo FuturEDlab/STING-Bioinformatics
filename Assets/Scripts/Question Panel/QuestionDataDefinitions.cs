@@ -24,9 +24,15 @@ public class QuestionData
 {
     public string questionText;
     public float questionTextFieldHeight;
+    [Tooltip("Optional narration for this question and its answer choices.")]
+    public AudioClip questionAudioClip;
     public Sprite[] ColoredAnswerSprites;
     public Sprite explanationImageCorrect;
     public Sprite explanationImageIncorrect;
+    [Tooltip("Optional narration played when the correct-answer explanation appears.")]
+    public AudioClip explanationAudioCorrect;
+    [Tooltip("Optional narration played when the incorrect-answer explanation appears.")]
+    public AudioClip explanationAudioIncorrect;
     public AnswerData[] answers;
 }
 

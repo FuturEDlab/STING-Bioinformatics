@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 0}
-    caption: {fileID: 21300000, guid: 7648a3ba317cc3af6aad9dc3ebcc5e2d, type: 3}
-    captionText: 'Makes no sense. The system doesn''t even check gender.'
-  - clip: {fileID: 0}
-    caption: {fileID: 21300000, guid: 748ff7edff90da4c2c0a7f51617ea665, type: 3}
-    captionText: 'Just override it while I give the medication.'
+  - clip: {fileID: 8300000, guid: 5e6f6d412e55949f4a2e6bb98b850775, type: 3}
+    caption: {fileID: 21300000, guid: 731c4c51a791d4570bce591e72fda047, type: 3}
+    captionText: Makes no sense. The system doesn't even check gender.
+  - clip: {fileID: 8300000, guid: 6d1a650e4bed14350ac6b4eecca84288, type: 3}
+    caption: {fileID: 21300000, guid: 3ddbc9ebfef6741e9ab185e7230b48d9, type: 3}
+    captionText: Just override it while I give the medication.

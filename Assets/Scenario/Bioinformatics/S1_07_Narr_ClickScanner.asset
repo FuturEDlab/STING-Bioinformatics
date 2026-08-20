@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Narrator
   phrases:
-  - clip: {fileID: 0}
-    caption: {fileID: 21300000, guid: d1d220ecdf5fe6c08597e14f23972bb2, type: 3}
-    captionText: 'Click on the scanner using the trigger button.'
+  - clip: {fileID: 8300000, guid: 3a3e355814314402c956439a9f5e9cd6, type: 3}
+    caption: {fileID: 21300000, guid: 42686ef1bf7e846fcbedfc15fe4eeb1d, type: 3}
+    captionText: Pick up the scanner using the grab button

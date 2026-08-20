@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: b3c9f894a1f7144a4990cb12586e034a, type: 3}
-    caption: {fileID: 21300000, guid: cea2d7e2945356ba84f261c0d0c07309, type: 3}
+  - clip: {fileID: 8300000, guid: 3ff87ca924f2c4a40b2842e188f7dbf7, type: 3}
+    caption: {fileID: 21300000, guid: 5a57155e1eaad40b88aebfb7f0aaa998, type: 3}
     captionText: First, we scan the wristband, then scan the meds, and
-  - clip: {fileID: 8300000, guid: fe644973f081a4029adf949dbb9036f6, type: 3}
-    caption: {fileID: 21300000, guid: a2babeea4456c95dcc7010ff0bb11de2, type: 3}
+  - clip: {fileID: 8300000, guid: 2cca5b1c4569a487c892f602a8110b29, type: 3}
+    caption: {fileID: 21300000, guid: 7a4630819607e4a4488416f4b63f11f3, type: 3}
     captionText: the system should catch any problems. Lately, it's been more of
       a
-  - clip: {fileID: 8300000, guid: ae9b1fb2f491e479682123cfe5346445, type: 3}
-    caption: {fileID: 21300000, guid: 6d392684175724c29b72244073a20bdc, type: 3}
+  - clip: {fileID: 8300000, guid: 7c28baf7d8ea0404badb926e31f883f7, type: 3}
+    caption: {fileID: 21300000, guid: 1b588b7d240124c369c4f436c59c7029, type: 3}
     captionText: headache than help... you'll see.

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NarratorStepData
   speaker: Nurse Sarah
   phrases:
-  - clip: {fileID: 8300000, guid: 037e9eafd6c144baabbaeabf23ae42fa, type: 3}
-    caption: {fileID: 21300000, guid: 2c54034b6cf2116deaa99ed7806bcedb, type: 3}
+  - clip: {fileID: 8300000, guid: c00cb5516e0dd44ebaa8e0a760055001, type: 3}
+    caption: {fileID: 21300000, guid: 9d887af69a8a149008d2bdbcadec32e8, type: 3}
     captionText: 'Next up: Amoxicillin. Go ahead and grab the bottle.'
