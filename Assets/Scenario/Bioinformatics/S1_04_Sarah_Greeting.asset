@@ -15,11 +15,11 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: 5acfc4ebbb75f431198a907a48ecc931, type: 3}
-    caption: {fileID: 21300000, guid: 824ee44e44af3826bde44d01ab788a94, type: 3}
+    caption: {fileID: 21300000, guid: fe8678efdd706498db7ede4486e440ca, type: 3}
     captionText: Glad you could join me. I'm Sarah and our patient
   - clip: {fileID: 8300000, guid: 9c6990fc1aa4d46909b1f026cc37b1fa, type: 3}
-    caption: {fileID: 21300000, guid: ed73600f15a045f335debaccdbc4dd56, type: 3}
+    caption: {fileID: 21300000, guid: 070c4b6d47ff14fa4b18b5152a75bac4, type: 3}
     captionText: this morning is Mr. Johnson. He's stable, but let's get his
   - clip: {fileID: 8300000, guid: 42dd0a43146444cf98b11b4e6bb974ff, type: 3}
-    caption: {fileID: 21300000, guid: 4701317c0254fbdb828ae61f4689436d, type: 3}
+    caption: {fileID: 21300000, guid: 20b2508924145415981baf511aaf6aaf, type: 3}
     captionText: morning meds sorted.

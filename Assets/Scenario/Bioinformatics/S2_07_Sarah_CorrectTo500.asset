@@ -15,5 +15,5 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: 88c95a4817e404e6e932eafb8366245b, type: 3}
-    caption: {fileID: 21300000, guid: d26c4a886388a0d5487ab9ca1babaaf0, type: 3}
+    caption: {fileID: 21300000, guid: fad689cbca4ce48bf8153a20fe46ba2f, type: 3}
     captionText: Correct it to 500mg.

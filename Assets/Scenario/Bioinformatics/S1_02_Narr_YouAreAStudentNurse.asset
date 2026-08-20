@@ -15,14 +15,14 @@ MonoBehaviour:
   speaker: Narrator
   phrases:
   - clip: {fileID: 8300000, guid: 94b1df0b5d545465a897c352389703e8, type: 3}
-    caption: {fileID: 21300000, guid: 6570a8bc21902468a3c75482dec39e64, type: 3}
+    caption: {fileID: 21300000, guid: 32325f3b93fed4fefbe187632bf91b53, type: 3}
     captionText: In this world, you are a student nurse shadowing the
   - clip: {fileID: 8300000, guid: 28a2e50e210044f88a0239000c499f02, type: 3}
-    caption: {fileID: 21300000, guid: 1c9faadc4afbd7d84a3c9c0914fa81db, type: 3}
+    caption: {fileID: 21300000, guid: b22cf1a4b5515486f94ba04d68ec7899, type: 3}
     captionText: charge nurse, Sarah. This is your first ever shift. In order to
   - clip: {fileID: 8300000, guid: 6ce3e55beb2a5455485bb471e13f7cf7, type: 3}
-    caption: {fileID: 21300000, guid: 4da9aa55b8742808de59dd7c24d69b96, type: 3}
+    caption: {fileID: 21300000, guid: 77a6167c1d7bd4b48b072f7e9fed8a96, type: 3}
     captionText: interact with objects, wait for them to glow, then point and click
   - clip: {fileID: 8300000, guid: 062ecd4689ca14744959b629c873a0d0, type: 3}
-    caption: {fileID: 21300000, guid: 0edbcb32e40f9950d263e93c08128612, type: 3}
+    caption: {fileID: 21300000, guid: 31055ae9e11a54976acf6cba7afc0ae7, type: 3}
     captionText: either of your trigger buttons.

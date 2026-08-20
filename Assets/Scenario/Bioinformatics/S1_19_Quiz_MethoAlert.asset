@@ -16,11 +16,7 @@ MonoBehaviour:
   source: 0
   majorIndex: 0
   questionVo: []
-  perAnswerFeedbackVo:
-  - phrases:
-    - clip: {fileID: 0}
-      caption: {fileID: 0}
-      captionText: 
+  perAnswerFeedbackVo: []
   correctFeedbackVo: []
   wrongFeedbackVo: []
   allowedTries: 0

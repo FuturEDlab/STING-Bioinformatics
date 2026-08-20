@@ -15,5 +15,5 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: ce8566aae7fb9473c94b74da2b6b3593, type: 3}
-    caption: {fileID: 21300000, guid: d7ab91144eb0ef28ca1ce9d5bc178a55, type: 3}
+    caption: {fileID: 21300000, guid: f90b01a576c844b9190d9e90d5c4047b, type: 3}
     captionText: Now, you can scan Mr. Johnson's wristband.

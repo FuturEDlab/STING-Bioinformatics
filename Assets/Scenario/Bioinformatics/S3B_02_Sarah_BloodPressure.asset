@@ -15,5 +15,5 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: 3838595f25851474794974f1aff59c24, type: 3}
-    caption: {fileID: 21300000, guid: eec74b4a5306e601e9e53e56acc9e27e, type: 3}
+    caption: {fileID: 21300000, guid: 6141e1bcace74445c8dceb60a993df5a, type: 3}
     captionText: His blood pressure is dropping! This rash - could be anaphylaxis!

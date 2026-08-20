@@ -15,8 +15,8 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: aee2326b862c94d2c85eaeaf15618c74, type: 3}
-    caption: {fileID: 21300000, guid: f14b5caf054c9e78e8d61b77d80c0b59, type: 3}
+    caption: {fileID: 21300000, guid: d4e8c1f0378c5438bbb596c6c7068574, type: 3}
     captionText: The trick is knowing when to trust the system... and
   - clip: {fileID: 8300000, guid: 6715593c4805f4feda9943331f425509, type: 3}
-    caption: {fileID: 21300000, guid: 9ddb2168fb5cf0764e6760b5545fab95, type: 3}
+    caption: {fileID: 21300000, guid: 52a6b16c2139e4c93836325f5e498f5d, type: 3}
     captionText: "when to trust your judgment. Let\u2019s keep going."
