@@ -4256,6 +4256,40 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 029e9d97276464cf4b74fbf04e930b0f, type: 3}
+--- !u!1 &1002945453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1002945454}
+  m_Layer: 0
+  m_Name: Destinations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1002945454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002945453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.66789, y: 0.12157, z: -12.7531}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1320698592}
+  - {fileID: 1187826947}
+  - {fileID: 1971395710}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042360295
 GameObject:
   m_ObjectHideFlags: 0
@@ -5021,6 +5055,37 @@ MonoBehaviour:
   restSpeedThreshold: 0.06
   restSpinThreshold: 0.5
   restDelay: 0.35
+--- !u!1 &1187826946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187826947}
+  m_Layer: 0
+  m_Name: Mid-Room Destination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1187826947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187826946}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.10521295, z: -0, w: 0.99444973}
+  m_LocalPosition: {x: 0.039000034, y: 0.009429984, z: 2.1210003}
+  m_LocalScale: {x: 0.107, y: 0.107, z: 0.107}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1002945454}
+  m_LocalEulerAnglesHint: {x: 0, y: -12.079, z: 0}
 --- !u!1001 &1205674487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5906,6 +5971,37 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1320698591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1320698592}
+  m_Layer: 0
+  m_Name: Start Destination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1320698592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320698591}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.6413806, z: -0, w: 0.7672229}
+  m_LocalPosition: {x: -0.9291098, y: 0.009429984, z: 3.5481005}
+  m_LocalScale: {x: 0.107, y: 0.107, z: 0.107}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1002945454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1322744450
 GameObject:
   m_ObjectHideFlags: 0
@@ -6835,6 +6931,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NurseController
   scenarioController: {fileID: 833923704}
   animator: {fileID: 1613580394}
+  startDestination: {fileID: 1320698592}
+  patientDestination: {fileID: 1971395710}
+  midRoomDestination: {fileID: 1187826947}
+  moveSpeed: 1
+  turnSpeed: 180
+  stoppingDistance: 0.1
 --- !u!114 &1631624015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4864490123495703556, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
@@ -7844,7 +7946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e69345c727754e8408b8661193394416, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.0484536
+      value: -3.597
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e69345c727754e8408b8661193394416, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7852,7 +7954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e69345c727754e8408b8661193394416, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.105715
+      value: -9.205
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e69345c727754e8408b8661193394416, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7978,6 +8080,37 @@ LineRenderer:
   m_CorrespondingSourceObject: {fileID: 4916726048972810322, guid: 9f87e785e9ac9c14bb8dc5718f4378d0, type: 3}
   m_PrefabInstance: {fileID: 2123034102}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1971395709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971395710}
+  m_Layer: 0
+  m_Name: Patient Destination
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1971395710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971395709}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.56689, y: -0.12157, z: 0.58110046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1002945454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2001840028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9489,3 +9622,4 @@ SceneRoots:
   - {fileID: 233223634063261759}
   - {fileID: 880965175}
   - {fileID: 1205674487}
+  - {fileID: 1002945454}
