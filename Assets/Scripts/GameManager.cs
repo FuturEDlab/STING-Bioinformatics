@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         controlsPanel.SetActive(false);
         mainMenuPanel.transform.position = panelPosition;
         mainMenuPanel.transform.rotation = panelRotation;
-        mainMenuPanel.SetActive(true);
+        //mainMenuPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
     }
 
     // Update is called once per frame
