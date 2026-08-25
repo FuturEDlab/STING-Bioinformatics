@@ -15,7 +15,7 @@ MonoBehaviour:
   speaker: Nurse Sarah
   phrases:
   - clip: {fileID: 8300000, guid: 28d022f234bf648ac917cb710cf73e02, type: 3}
-    caption: {fileID: 21300000, guid: ccedbaf7ad8bf4623ae37634dfdc6d02, type: 3}
+    caption: {fileID: 21300000, guid: 9d887af69a8a149008d2bdbcadec32e8, type: 3}
     captionText: "Whoa - stop! That\u2019s a huge dosage. That \"5000mg\" is a"
   - clip: {fileID: 8300000, guid: de0a9c7b6deab40de94efafe8ceb0b4b, type: 3}
     caption: {fileID: 21300000, guid: 845e169038465411891ae9338c3bce03, type: 3}

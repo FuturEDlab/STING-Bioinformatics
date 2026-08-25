@@ -480,7 +480,7 @@ MonoBehaviour:
     duration: 8
     actionName: Scan methotrexate
     sceneObject: {fileID: 7991795243675042210}
-    showSceneObject: 1
+    showSceneObject: 0
     animator: {fileID: 1665817746858675021}
     iconAnimatorTrigger: 
   - stepName: User confirms override
@@ -489,7 +489,7 @@ MonoBehaviour:
     duration: 3
     actionName: Confirm override
     sceneObject: {fileID: 7991795243675042210}
-    showSceneObject: 1
+    showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
   - stepName: Knowledge Check 1
@@ -570,7 +570,7 @@ MonoBehaviour:
     duration: 3
     actionName: Override contraindication
     sceneObject: {fileID: 7991795243675042210}
-    showSceneObject: 1
+    showSceneObject: 0
     animator: {fileID: 1665817746858675021}
     iconAnimatorTrigger: 
   - stepName: Confirm override 2
@@ -579,7 +579,7 @@ MonoBehaviour:
     duration: 3
     actionName: Override contraindication
     sceneObject: {fileID: 7991795243675042210}
-    showSceneObject: 1
+    showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
   - stepName: Knowledge check 2
