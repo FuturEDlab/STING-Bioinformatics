@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using BNG;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -66,11 +65,12 @@ public class ScenarioTarget : MonoBehaviour
     private bool focused;
     private bool used;
 
-    // Grab detection is polled rather than event-wired: BNG puts its grab UnityEvents on a
-    // SEPARATE GrabbableUnityEvents component, not on Grabbable itself, so an event hookup
-    // is easy to forget and silently does nothing. BeingHeld is a public field, so watching
-    // it needs no wiring at all.
-    private Grabbable grabbable;
+    // Grab detection is polled rather than event-wired, and for the same reason it always
+    // was: BNG puts its grab UnityEvents on a SEPARATE GrabbableUnityEvents component, and
+    // XRI's are on the interactable, so an event hookup is easy to forget and silently does
+    // nothing. GrabHandle just watches the held state, whichever rig — or the desktop mouse
+    // pointer — is doing the holding, and needs no wiring at all.
+    private GrabHandle grab;
     private bool wasHeld;
 
     public string TaskId => taskId;
@@ -124,14 +124,12 @@ public class ScenarioTarget : MonoBehaviour
 
         if (trigger == TriggerMode.Grab)
         {
-            // The Grabbable is usually on this object, but on an imported prop it can sit
-            // on a parent or a child, so look in all three places before giving up.
-            grabbable = GetComponent<Grabbable>()
-                     ?? GetComponentInParent<Grabbable>()
-                     ?? GetComponentInChildren<Grabbable>();
+            // The grab component is usually on this object, but on an imported prop it can
+            // sit on a parent or a child, so GrabHandle looks in all three places.
+            grab = new GrabHandle(this);
 
-            if (grabbable == null)
-                Debug.LogWarning($"[ScenarioTarget] '{name}' is set to complete on Grab, but there is no BNG Grabbable on it, its parent, or its children — so being picked up can never be detected. Add a Grabbable, or switch Trigger to Click.", this);
+            if (!grab.Exists)
+                Debug.LogWarning($"[ScenarioTarget] '{name}' is set to complete on Grab, but there is no grab component on it, its parent, or its children — so being picked up can never be detected. Add an XRGrabInteractable (new hands) or a BNG Grabbable (army-guy rig), or switch Trigger to Click.", this);
         }
 
         // These two are the usual reason "nothing glows and nothing scans": an empty slot
@@ -178,10 +176,10 @@ public class ScenarioTarget : MonoBehaviour
 
     private void Update()
     {
-        if (trigger != TriggerMode.Grab || grabbable == null)
+        if (trigger != TriggerMode.Grab || grab == null || !grab.Exists)
             return;
 
-        bool held = grabbable.BeingHeld;
+        bool held = grab.IsHeld;
 
         // Two ways this counts. The rising edge is the obvious one: the player picks it up
         // while the scenario is asking. The second matters just as much — the player often

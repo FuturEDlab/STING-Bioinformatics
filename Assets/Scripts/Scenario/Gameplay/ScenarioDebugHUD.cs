@@ -135,16 +135,45 @@ public class ScenarioDebugHUD : MonoBehaviour
     }
 
     /// <summary>
-    /// A controller button, read through BNG so it works with whatever runtime the rig is
-    /// using. None is the "unbound" value, and InputBridge only exists once the rig is in the
-    /// scene - neither should throw here, since this runs every frame.
+    /// A controller button. The binding enum is BNG's, because that is what the Inspector
+    /// dropdown on this component has always offered — but the read goes through
+    /// <see cref="Rig"/>, so the common buttons work on the new XRI hands too. None is the
+    /// "unbound" value; nothing here should throw, since it runs every frame.
     /// </summary>
     private static bool VrPressed(ControllerBinding binding)
     {
-        if (binding == ControllerBinding.None || InputBridge.Instance == null)
+        if (binding == ControllerBinding.None)
             return false;
 
-        return InputBridge.Instance.GetControllerBindingValue(binding);
+        if (Rig.UsingXRHands)
+        {
+            // Only the buttons a debug shortcut would sensibly be bound to. Note BNG's
+            // convention: the plain name is "held", the ...Down name is "pressed this
+            // frame". Thumbsticks, Start and Back have no XRI equivalent wired up here and
+            // read as unpressed rather than silently doing the wrong thing.
+            switch (binding)
+            {
+                case ControllerBinding.AButton: return Rig.AButton;
+                case ControllerBinding.AButtonDown: return Rig.AButtonDown;
+                case ControllerBinding.BButton: return Rig.BButton;
+                case ControllerBinding.BButtonDown: return Rig.BButtonDown;
+                case ControllerBinding.XButton: return Rig.XButton;
+                case ControllerBinding.XButtonDown: return Rig.XButtonDown;
+                case ControllerBinding.YButton: return Rig.YButton;
+                case ControllerBinding.YButtonDown: return Rig.YButtonDown;
+                case ControllerBinding.LeftTrigger: return Rig.LeftTrigger > 0.5f;
+                case ControllerBinding.LeftTriggerDown: return Rig.LeftTriggerDown;
+                case ControllerBinding.RightTrigger: return Rig.RightTrigger > 0.5f;
+                case ControllerBinding.RightTriggerDown: return Rig.RightTriggerDown;
+                case ControllerBinding.LeftGrip: return Rig.LeftGrip > 0.5f;
+                case ControllerBinding.LeftGripDown: return Rig.LeftGripDown;
+                case ControllerBinding.RightGrip: return Rig.RightGrip > 0.5f;
+                case ControllerBinding.RightGripDown: return Rig.RightGripDown;
+                default: return false;
+            }
+        }
+
+        return InputBridge.Instance != null && InputBridge.Instance.GetControllerBindingValue(binding);
     }
 
     /// <summary>

@@ -121,6 +121,17 @@ public class VRPanelAnchor : MonoBehaviour
         if (canvas == null)
             return false;
 
+        // The new hands drive world-space UI through XRI's ray interactor and XRUIInputModule,
+        // which find canvases by raycast every frame rather than from a registry. There is
+        // nothing to hand the canvas to, and nothing missing either.
+        if (Rig.UsingXRHands)
+        {
+            if (canvas.worldCamera == null && Rig.Head != null)
+                canvas.worldCamera = Rig.Head.GetComponent<Camera>();
+
+            return true;
+        }
+
         // Deliberately not VRUISystem.Instance: that getter builds an unconfigured module on
         // the fly if none exists, and a half-wired input module is harder to diagnose than a
         // missing one.
@@ -214,18 +225,21 @@ public class VRPanelAnchor : MonoBehaviour
         if (head != null)
             return true;
 
-        Camera main = Camera.main;
+        // Ask the rig first. Camera.main works most of the time, but a scene that has a
+        // second camera tagged MainCamera — which the Hospital Room scene does — can hand
+        // back the wrong one, and then the panel opens somewhere nobody is looking.
+        Transform rigHead = Rig.Head;
 
-        if (main != null)
+        if (rigHead != null)
         {
-            head = main.transform;
+            head = rigHead;
             return true;
         }
 
         if (!headMissingReported)
         {
             headMissingReported = true;
-            Debug.LogWarning($"[VRPanelAnchor] '{name}' has no Head assigned and there is no enabled camera tagged MainCamera, so the panel cannot be placed and will stay wherever it was left in the scene.", this);
+            Debug.LogWarning($"[VRPanelAnchor] '{name}' has no Head assigned and there is no player rig or enabled camera tagged MainCamera, so the panel cannot be placed and will stay wherever it was left in the scene.", this);
         }
 
         return false;

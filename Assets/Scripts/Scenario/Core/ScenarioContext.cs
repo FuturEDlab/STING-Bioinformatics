@@ -88,11 +88,14 @@ public class ScenarioContext
     [SerializeField] private GameObject pcUiRoot;   // quiz canvas/panel root, toggled with SetActive
     [SerializeField] private ResultsUI resultsUI;   // optional end screen
 
-    [Header("Player / XR Rig (optional)")]
+    [Header("Player / XR Rig — no longer required, kept so old scenes keep their wiring")]
+    [Tooltip("Legacy. Teleport steps and everything else now find the player through Rig, which resolves either the BNG army-guy rig or the new VR Player hands on its own. Leave empty in new scenes.")]
     [SerializeField] private BNG.BNGPlayerController player;
+
+    [Tooltip("Legacy. See above — nothing reads this any more.")]
     [SerializeField] private Transform playerRig;
 
-    [Tooltip("Optional. Left empty, it is looked up under the player's CameraRig the first time a teleport step needs it.")]
+    [Tooltip("Legacy. Screen fades go through Rig now, which uses BNG's ScreenFader on the old rig and ScreenFade on the new one. Leave empty in new scenes.")]
     [SerializeField] private BNG.ScreenFader screenFader;
 
     public AudioSource VoSource => voSource;

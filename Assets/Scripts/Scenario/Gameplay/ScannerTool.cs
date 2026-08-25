@@ -1,4 +1,3 @@
-using BNG;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -56,7 +55,7 @@ public class ScannerTool : MonoBehaviour
     [SerializeField] private LayerMask hitLayers = ~0;
 
     [Header("Trigger")]
-    [Tooltip("Require the scanner to be held before it will fire. Ignored when the object has no Grabbable, so a non-grabbable scanner still works.")]
+    [Tooltip("Require the scanner to be held before it will fire. Ignored when the object cannot be picked up at all, so a non-grabbable scanner still works. Being carried by the desktop mouse pointer counts as held.")]
     [SerializeField] private bool mustBeHeld = true;
 
     [Tooltip("Fire as soon as the beam finds a valid target, with no trigger pull. The easiest way to test without a headset.")]
@@ -97,7 +96,7 @@ public class ScannerTool : MonoBehaviour
     [Tooltip("Draw the beam and cone in the Scene view even when this object is not selected.")]
     [SerializeField] private bool alwaysDrawGizmos = true;
 
-    private Grabbable grabbable;
+    private GrabHandle grab;
     private float nextScanTime;
     private float dwellTimer;
     private ScenarioTarget lastLogged;
@@ -116,30 +115,33 @@ public class ScannerTool : MonoBehaviour
 
     private void Awake()
     {
-        grabbable = GetComponent<Grabbable>();
+        // GrabHandle answers "is this held?" for a BNG Grabbable, an XRI XRGrabInteractable,
+        // or the desktop mouse pointer, so the scanner works on either rig and at a desk
+        // without knowing which is which.
+        grab = new GrabHandle(this);
     }
 
     /// <summary>
-    /// Whether the scanner is live. A scanner with no Grabbable can never report "being
-    /// held", so requiring that would make it permanently inert — treat it as held instead
-    /// and say so once.
+    /// Whether the scanner is live. A scanner that cannot be picked up at all can never
+    /// report "being held", so requiring that would make it permanently inert — treat it as
+    /// held instead and say so once.
     /// </summary>
     private bool IsHeld()
     {
         if (!mustBeHeld)
             return true;
 
-        if (grabbable == null)
+        if (!grab.Exists)
         {
             if (!warnedNoGrabbable)
             {
                 warnedNoGrabbable = true;
-                Debug.LogWarning($"[ScannerTool] '{name}' has 'Must Be Held' ticked but no BNG Grabbable component, so there is nothing to hold. Treating it as always held. Add a Grabbable, or untick Must Be Held to silence this.", this);
+                Debug.LogWarning($"[ScannerTool] '{name}' has 'Must Be Held' ticked but carries no grab component, so there is nothing to hold. Treating it as always held. Add an XRGrabInteractable (new hands) or a BNG Grabbable (army-guy rig), or untick Must Be Held to silence this.", this);
             }
             return true;
         }
 
-        return grabbable.BeingHeld;
+        return grab.IsHeld;
     }
 
     private void Update()
@@ -342,19 +344,15 @@ public class ScannerTool : MonoBehaviour
 
     private bool TriggerPressed()
     {
-        // Desktop fallbacks first: without a headset InputBridge.Instance is null, so the
-        // controller path alone would make the scanner untestable in the editor.
+        // Desktop fallbacks first: with no rig at all the controller path reads as nothing,
+        // so the key and the mouse click are what make the scanner testable at a desk.
         if (keyboardScanKey != KeyCode.None && Input.GetKeyDown(keyboardScanKey))
             return true;
 
         if (mouseButtonScans && Input.GetMouseButtonDown(0))
             return true;
 
-        InputBridge input = InputBridge.Instance;
-        if (input == null)
-            return false;
-
-        return input.LeftTriggerDown || input.RightTriggerDown;
+        return Rig.LeftTriggerDown || Rig.RightTriggerDown;
     }
 
     // ---------------------------------------------------------------- editor helpers
