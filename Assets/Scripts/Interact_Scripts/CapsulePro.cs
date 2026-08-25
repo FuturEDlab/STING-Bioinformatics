@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BNG;
 
 public class CapsulePro : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class CapsulePro : MonoBehaviour
     
     private List<Vector3> defaultPositions = new List<Vector3>();
     private List<Transform> affectedObjects = new List<Transform>();
-    private Grabbable grabbableObj;
+    private GrabHandle grab;
     private Interact interactComponent;
 
     void Start()
@@ -40,12 +39,14 @@ public class CapsulePro : MonoBehaviour
             defaultPositions.Add(transform.localPosition);
         }
 
-        grabbableObj = GetComponent<Grabbable>();
+        // Held state comes from GrabHandle so this works on the BNG rig, on the new XRI
+        // hands, and when the desktop mouse pointer is carrying the object.
+        grab = new GrabHandle(this, searchRelatives: false);
     }
     
     public void Interact()
     {
-        if (grabbableObj != null && grabbableObj.BeingHeld) return;
+        if (grab != null && grab.IsHeld) return;
         
         ChangeObjectPositions();
     }

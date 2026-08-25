@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using BNG;
 using Unity.VisualScripting;
 using System.Collections;
 
@@ -17,8 +16,6 @@ public class Draggable : MonoBehaviour
     // private bool isDragging = false;
     private bool isDraggingLeft = false;
     private bool isDraggingRight = false;
-    private InputBridge input;
-    private BNGPlayerController playerController;
     private DraggableGroup dragGroup;
     // [SerializeField]
     private Rigidbody rb;
@@ -37,10 +34,10 @@ public class Draggable : MonoBehaviour
     void Start()
     {
         dragGroup = GetComponentInParent<DraggableGroup>();
-        input = InputBridge.Instance;
-        if (!input) return;
-        playerController = input.GetComponentInChildren<BNGPlayerController>();
-        if (!playerController) return;
+
+        // Nothing here needs the rig at Start any more — Rig resolves whichever one is in
+        // the scene on first use, so this no longer bails out when the rig happens to wake
+        // up after the props do.
         // if (rb == null)
         // {
         rb = GetComponent<Rigidbody>();
@@ -68,36 +65,42 @@ public class Draggable : MonoBehaviour
         }
         
         // if (Input.GetKeyUp(KeyCode.B))
-        if (input.LeftGrip < 0.1f)
+        if (Rig.LeftGrip < 0.1f)
         {
             isDraggingLeft = false;
             // StartCoroutine(ReleasePhysics());
         }
-        
+
         if (OnlyRightGripPressed())
         {
             isDraggingRight = true;
             // Physics.IgnoreCollision(coll, dragGroup.PlayerCollider, true);
         }
-        
+
         // if (Input.GetKeyUp(KeyCode.B))
-        if (input.RightGrip < 0.1f)
+        if (Rig.RightGrip < 0.1f)
         {
             isDraggingRight = false;
             // StartCoroutine(ReleasePhysics());
         }
-        
+
         if (isDraggingLeft)
         {
-            Vector3 handPos = dragGroup.LeftHand.transform.position;
+            Transform hand = dragGroup.LeftHandTransform;
+            if (hand == null) return;
+
+            Vector3 handPos = hand.position;
 
             // Keep object on floor plane
             targetPositionLeft = new Vector3(handPos.x, transform.position.y, handPos.z);
         }
-        
+
         if (isDraggingRight)
         {
-            Vector3 handPos = dragGroup.RightHand.transform.position;
+            Transform hand = dragGroup.RightHandTransform;
+            if (hand == null) return;
+
+            Vector3 handPos = hand.position;
 
             // Keep object on floor plane
             targetPositionRight = new Vector3(handPos.x, transform.position.y, handPos.z);
@@ -193,9 +196,9 @@ public class Draggable : MonoBehaviour
     {
         if (!touchingLeft) return false;
 
-        // return (input.LeftGrip > 0.9f && input.RightGrip < 0.1f);
-        // return input.LeftGrip > 0.9f;
-        return input.LeftGripDown;
+        // return (Rig.LeftGrip > 0.9f && Rig.RightGrip < 0.1f);
+        // return Rig.LeftGrip > 0.9f;
+        return Rig.LeftGripDown;
 
         // bool isPressed = false;
         //
@@ -212,9 +215,9 @@ public class Draggable : MonoBehaviour
     {
         if (!touchingRight) return false;
 
-        // return (input.RightGrip > 0.9f && input.LeftGrip < 0.1f);
-        // return input.RightGrip > 0.9f;
-        return input.RightGripDown;
+        // return (Rig.RightGrip > 0.9f && Rig.LeftGrip < 0.1f);
+        // return Rig.RightGrip > 0.9f;
+        return Rig.RightGripDown;
     }
     
 }

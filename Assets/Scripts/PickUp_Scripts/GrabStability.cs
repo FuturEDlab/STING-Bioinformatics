@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using BNG;
 
 public class GrabStability : MonoBehaviour
 {
     [Header("Release feel")]
-    [Tooltip("How much of the hand's speed the object keeps when you let go. 1 is BNG's untouched throw. Nothing in this sim is meant to be thrown, so a release should read as putting something down - and tracked hands report a speed spike on the frame the grab ends, which is what makes a gently released bottle fly.")]
+    [Tooltip("How much of the hand's speed the object keeps when you let go. 1 is the rig's untouched throw. Nothing in this sim is meant to be thrown, so a release should read as putting something down - and tracked hands report a speed spike on the frame the grab ends, which is what makes a gently released bottle fly.")]
     [Range(0f, 1f)]
     [SerializeField] private float releaseSpeedScale = 0.35f;
 
@@ -38,7 +37,7 @@ public class GrabStability : MonoBehaviour
     [SerializeField] private float restDelay = 0.35f;
 
     private Rigidbody rb;
-    private Grabbable grabbable;
+    private GrabHandle grab;
     private Collider coll;
     private Collider playerColl;
     private List<Collider> ignoreObjsTemp;
@@ -122,7 +121,9 @@ public class GrabStability : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        grabbable = GetComponent<Grabbable>();
+        // GrabHandle reports "held" for a BNG Grabbable, an XRI XRGrabInteractable, or the
+        // desktop mouse pointer, so the settle-down physics behave the same on either rig.
+        grab = new GrabHandle(this, searchRelatives: false);
         coll = GetComponent<Collider>();
         parentObject = GetComponentInParent<PickUpGroup>();
         originalLayer = gameObject.layer;
@@ -130,7 +131,15 @@ public class GrabStability : MonoBehaviour
         groundObj = parentObject.Ground;
         
         floorHeight = groundObj.transform.position.y;
-        Physics.IgnoreCollision(coll, playerColl, true);
+
+        // An empty Player Collider slot used to mean a NullReferenceException here and no
+        // stability behaviour at all. PickUpGroup now falls back to the rig's capsule, but
+        // stay defensive: a prop that cannot ignore the player is still worth settling.
+        if (playerColl != null)
+            Physics.IgnoreCollision(coll, playerColl, true);
+        else
+            Debug.LogWarning($"[GrabStability] '{name}' has no player collider to ignore — held props will push the player around. Set Player Collider on the PickUpGroup, or add a rig with a CharacterController.", this);
+
         ignoreObjsTemp = parentObject.IgnoreObjectsTemp;
         rb.solverIterations = 12;
         rb.solverVelocityIterations = 6;
@@ -147,23 +156,26 @@ public class GrabStability : MonoBehaviour
 
     void Update()
     {
-        if (!grabbable || !rb) return;
+        if (grab == null || !grab.Exists || !rb) return;
         if (!groundObj) return;
 
-        if (transform.position.y < 0 && !grabbable.BeingHeld)
+        if (transform.position.y < 0 && !grab.IsHeld)
         {
             posY_Placement = floorHeight + coll.bounds.extents.y;
-            transform.position = new Vector3(playerColl.transform.position.x, posY_Placement, playerColl.transform.position.z);
+            // Fell through the world: put it back at the player's feet. Without a player
+            // collider, put it back where it is rather than at the world origin.
+            Vector3 feet = playerColl != null ? playerColl.transform.position : transform.position;
+            transform.position = new Vector3(feet.x, posY_Placement, feet.z);
             gameObject.layer = originalLayer;
         }
         
         // started grabbing object
-        if (!wasHeldLastFrame && grabbable.BeingHeld)
+        if (!wasHeldLastFrame && grab.IsHeld)
         {
             gameObject.layer = LayerMask.NameToLayer("Grabb");
             ManageTriggers(true);
 
-            // While held BNG drives the body through a joint, so give it back the damping
+            // While held the rig drives the body through physics, so give it back the damping
             // the Rigidbody was authored with and drop any settling still in progress.
             rb.linearDamping = heldLinearDamping;
             rb.angularDamping = heldAngularDamping;
@@ -172,7 +184,7 @@ public class GrabStability : MonoBehaviour
         }
 
         // This is right when the object gets released
-        if (wasHeldLastFrame && !grabbable.BeingHeld)
+        if (wasHeldLastFrame && !grab.IsHeld)
         {
             CheckTableIntersection();
             CorrectObjectPosition();
@@ -183,16 +195,16 @@ public class GrabStability : MonoBehaviour
         }
 
         IntersectedBelow_PastRelease();
-        wasHeldLastFrame = grabbable.BeingHeld;
+        wasHeldLastFrame = grab.IsHeld;
     }
 
     /// <summary>
-    /// Turn BNG's throw into a place-down, once, on the frame the object is let go.
+    /// Turn the rig's throw into a place-down, once, on the frame the object is let go.
     ///
-    /// Grabbable.DropItem sets BeingHeld false and applies the tracked hand velocity inside
-    /// the same synchronous call, so by the time Update() here sees BeingHeld go false the
-    /// throw is already on the Rigidbody and this is scaling the real number rather than a
-    /// value that is about to be overwritten.
+    /// Both rigs apply the tracked hand velocity in the same synchronous call that ends the
+    /// grab — BNG in Grabbable.DropItem, XRI as the interactable detaches — so by the time
+    /// Update() here sees the held state go false the throw is already on the Rigidbody, and
+    /// this is scaling the real number rather than one that is about to be overwritten.
     /// </summary>
     private void TameRelease()
     {
@@ -210,7 +222,7 @@ public class GrabStability : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!rb || !grabbable || grabbable.BeingHeld)
+        if (!rb || grab == null || !grab.Exists || grab.IsHeld)
             return;
 
         // The ceilings are re-applied (never re-scaled - that would shrink the velocity to
@@ -264,7 +276,7 @@ public class GrabStability : MonoBehaviour
             inTriggerDict[other] = false;
         }
 
-        if (!grabbable.BeingHeld && isTempIgnoredObj)
+        if (grab != null && !grab.IsHeld && isTempIgnoredObj)
         {
             other.isTrigger = false;
         }

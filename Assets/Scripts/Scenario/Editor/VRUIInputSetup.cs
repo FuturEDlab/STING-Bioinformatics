@@ -35,6 +35,19 @@ public static class VRUIInputSetup
             return;
         }
 
+        // This tool is BNG-specific: it switches the desktop module off and installs BNG's
+        // VRUISystem. A scene on the new hands drives UI through XRI's XRUIInputModule
+        // instead, and running this on it would take the panels away from both the hand ray
+        // and the mouse.
+        if (Object.FindFirstObjectByType<PlayerRig>(FindObjectsInactive.Include) != null)
+        {
+            EditorUtility.DisplayDialog("VR UI input setup",
+                "This scene runs the new hands (VR Player), which drive world-space UI through XRI's XRUIInputModule — already on the EventSystem.\n\n" +
+                "This tool sets up BNG's VRUISystem instead, and running it here would break UI for both the hand ray and the mouse. Nothing was changed.",
+                "OK");
+            return;
+        }
+
         Undo.RegisterFullObjectHierarchyUndo(eventSystem.gameObject, "Set Up VR UI Input");
 
         var log = new System.Text.StringBuilder();

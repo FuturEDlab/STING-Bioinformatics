@@ -153,7 +153,12 @@ public static class QuestionPanelVRSetup
 
     private static void ReportDistanceFromPlayer(QuestionPanelManager panel, System.Text.StringBuilder log)
     {
-        var rig = Object.FindFirstObjectByType<BNG.BNGPlayerController>(FindObjectsInactive.Include);
+        // Either rig: the BNG army guy or the new hands. Measuring from whichever is here
+        // beats reporting "no player rig" in half the project's scenes.
+        Transform rig = Object.FindFirstObjectByType<BNG.BNGPlayerController>(FindObjectsInactive.Include)?.transform;
+
+        if (rig == null)
+            rig = Object.FindFirstObjectByType<PlayerRig>(FindObjectsInactive.Include)?.transform;
 
         if (rig == null)
         {
@@ -161,7 +166,7 @@ public static class QuestionPanelVRSetup
             return;
         }
 
-        Vector3 offset = panel.transform.position - rig.transform.position;
+        Vector3 offset = panel.transform.position - rig.position;
         offset.y = 0f;
 
         log.AppendLine($"  note   the panel currently sits {offset.magnitude:0.0} m from the player rig, at {panel.transform.position}. Anything past about 3 m is why it reads as 'not showing'.");

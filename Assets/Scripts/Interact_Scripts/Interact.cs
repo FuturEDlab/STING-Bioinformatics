@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using BNG;
 
 public enum InteractInput
 {
@@ -27,7 +26,6 @@ public class Interact : MonoBehaviour
     [SerializeField] private float MaxGlowDistance = 2f;
     [SerializeField] private int submeshGlowNumber = -1;
     
-    private BNGPlayerController playerController;
     private float distance;
     private Renderer renderer;
     private Collider objectCollider;
@@ -66,18 +64,16 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (!playerController && InputBridge.Instance)
-        {
-            playerController = InputBridge.Instance.GetComponentInChildren<BNGPlayerController>();
-        }
-        
-        if (!playerController) return;
+        // Whichever rig the scene is running — the BNG army-guy rig or the new XRI hands —
+        // Rig.Body is the capsule the player is standing in. Nothing here needs to know which.
+        Transform player = Rig.Body;
+
+        if (!player) return;
 
         // Calculates distance to nearest point on collider surface. -->
         // This helps prevent checking only the object's center
-        closestPoint = objectCollider.ClosestPoint(playerController.transform.position);
-        distance = Vector3.Distance(closestPoint, playerController.transform.position); 
+        closestPoint = objectCollider.ClosestPoint(player.position);
+        distance = Vector3.Distance(closestPoint, player.position);
 
         if (distance <= MaxGlowDistance && !glowAdded)
         {
@@ -98,31 +94,41 @@ public class Interact : MonoBehaviour
         {
             onInteract?.Invoke();
         }
-        
+
     }
-    
+
+    /// <summary>
+    /// Fire this object's interaction without a controller button. The desktop mouse pointer
+    /// calls it so a click does exactly what pressing the bound button would, glow gate and
+    /// all — it does not reach past <c>onInteract</c> to do its own thing.
+    /// </summary>
+    public void TriggerInteract()
+    {
+        onInteract?.Invoke();
+    }
+
     private bool IsInteractButtonPressed()
     {
-        InputBridge input = InputBridge.Instance;
+        // Buttons come from Rig, which reads BNG's InputBridge on the army-guy rig and the
+        // XR Input System on the new hands. Same call, same meaning, either scene.
         switch (parentComponent.InteractButton)
         {
             case InteractInput.X_AButton:
-                return (input.XButtonDown && !input.AButton) ||
-                       (input.AButtonDown && !input.XButton);
-            
+                return (Rig.XButtonDown && !Rig.AButton) ||
+                       (Rig.AButtonDown && !Rig.XButton);
+
             case InteractInput.B_YButton:
-                return (input.YButtonDown && !input.BButton) ||
-                       (input.BButtonDown && !input.YButton);
-            
+                return (Rig.YButtonDown && !Rig.BButton) ||
+                       (Rig.BButtonDown && !Rig.YButton);
+
             case InteractInput.Left_RightTrigger:
-                // return input.LeftTriggerDown ^ input.RightTriggerDown;
-                return (input.LeftTriggerDown && input.RightTrigger < 0.1f) ||
-                       (input.RightTriggerDown && input.LeftTrigger < 0.1f);
-            
+                return (Rig.LeftTriggerDown && Rig.RightTrigger < 0.1f) ||
+                       (Rig.RightTriggerDown && Rig.LeftTrigger < 0.1f);
+
             case InteractInput.Left_RightGrip:
-                return (input.LeftGripDown && input.RightGrip < 0.1f) ||
-                       (input.RightGripDown && input.LeftGrip < 0.1f);
-            
+                return (Rig.LeftGripDown && Rig.RightGrip < 0.1f) ||
+                       (Rig.RightGripDown && Rig.LeftGrip < 0.1f);
+
             default:
                 return false;
         }

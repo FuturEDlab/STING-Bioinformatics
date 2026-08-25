@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [ExecuteAlways]
 public class InteractableGroup: MonoBehaviour
@@ -41,7 +42,14 @@ public class InteractableGroup: MonoBehaviour
         {
             DestroyComponent(grabbableObject);
         }
-            
+
+        // The XRI equivalent, for children added while a new-hands scene is open.
+        if (Child.TryGetComponent(out XRGrabInteractable xrGrabbable))
+        {
+            DestroyComponent(xrGrabbable);
+        }
+
+
         if (Child.TryGetComponent(out GrabStability stableObject))
         {
             DestroyComponent(stableObject);

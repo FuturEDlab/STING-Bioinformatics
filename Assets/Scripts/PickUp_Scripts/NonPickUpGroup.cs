@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using BNG;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [ExecuteAlways]
 public class NonPickUpGroup : MonoBehaviour
@@ -21,7 +22,14 @@ public class NonPickUpGroup : MonoBehaviour
         {
             DestroyRef(grabbableObject);
         }
-            
+
+        // The XRI equivalent, for children added while a new-hands scene is open.
+        if (child.TryGetComponent(out XRGrabInteractable xrGrabbable))
+        {
+            DestroyRef(xrGrabbable);
+        }
+
+
         if (child.TryGetComponent(out GrabStability stableObject))
         {
             DestroyRef(stableObject);
