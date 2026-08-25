@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using UnityEngine.Serialization;
 using System.IO;
 using System.Drawing.Text;
 using Unity.VisualScripting;
@@ -15,6 +17,11 @@ public class SettingsManager : MonoBehaviour
     public SettingsData settingsData {get; private set;}
     private SettingsData pendingSettingsData;
     private static string path;
+    [Header("Audio")]
+    [SerializeField] private AudioMixer mainAudioMixer;
+    [FormerlySerializedAs("masterVolumeSlider")]
+    [SerializeField] private Slider speechVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
     public Slider subtitlesToggle;
     public Slider comfortVignetteSlider;
     private bool areSubtitlesActive; //Probably wont need this because pendingSettingsData.subtitles 
@@ -44,7 +51,8 @@ public class SettingsManager : MonoBehaviour
         {
             settingsData = new SettingsData
             {
-                narrationVolume = 1f,
+                speechVolume = 1f,
+                sfxVolume = 1f,
                 movementMode = "Teleport",
                 turningMode = "Snap",
                 subtitles = true,
@@ -57,6 +65,8 @@ public class SettingsManager : MonoBehaviour
 
         //create a copy of the settings data to hold pending changes
         pendingSettingsData = CloneSettingsData(settingsData);
+
+        ApplyAudioVolumes(settingsData);
 
         //Apply loaded settings to the player when the game starts
         //TODO: load (ex: ApplySavedMovementMode) and apply settings to the player when the game starts
@@ -87,12 +97,15 @@ public class SettingsManager : MonoBehaviour
     public void OnCancelButtonClicked()
     {
         pendingSettingsData = CloneSettingsData(settingsData);
+        ApplyAudioVolumes(settingsData);
+        RefreshAudioSliders(settingsData);
         Debug.Log("Pending settings data has been reset to current settings data");
     }
 
     public void ApplyPendingSettings()
     {
         settingsData = CloneSettingsData(pendingSettingsData);
+        ApplyAudioVolumes(settingsData);
         Debug.Log("Pending settings data has been applied to current settings data");
 
         // Notify listeners (e.g., PlayerManager) that settings have been applied so runtime
@@ -101,10 +114,16 @@ public class SettingsManager : MonoBehaviour
     }
 
     // Public setter methods intended to be called from inspector OnValueChanged / OnClick
-    public void SetNarrationVolume(float value)
+    public void SetSpeechVolume(float value)
     {
-        pendingSettingsData.narrationVolume = value;
-        Debug.Log("Pending narrationVolume: " + value);
+        pendingSettingsData.speechVolume = Mathf.Clamp01(value);
+        ApplyAudioVolumes(pendingSettingsData);
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        pendingSettingsData.sfxVolume = Mathf.Clamp01(value);
+        ApplyAudioVolumes(pendingSettingsData);
     }
 
     public void SetMovementMode(int index)
@@ -177,7 +196,8 @@ public class SettingsManager : MonoBehaviour
 
         SettingsData clone = new SettingsData
         {
-            narrationVolume = originalData.narrationVolume,
+            speechVolume = originalData.speechVolume,
+            sfxVolume = originalData.sfxVolume,
             movementMode = originalData.movementMode,
             turningMode = originalData.turningMode,
             subtitles = originalData.subtitles,
@@ -186,6 +206,46 @@ public class SettingsManager : MonoBehaviour
         };
 
         return clone;
+    }
+
+    private void ApplyAudioVolumes(SettingsData data)
+    {
+        if (mainAudioMixer == null || data == null)
+        {
+            return;
+        }
+
+        SetMixerVolume("NarrationVolume", data.speechVolume);
+        SetMixerVolume("SFXVolume", data.sfxVolume);
+    }
+
+    private void SetMixerVolume(string parameterName, float value)
+    {
+        float clampedValue = Mathf.Clamp01(value);
+        float decibels = clampedValue <= 0f ? -80f : Mathf.Log10(clampedValue) * 20f;
+
+        if (!mainAudioMixer.SetFloat(parameterName, decibels))
+        {
+            Debug.LogWarning($"SettingsManager: AudioMixer parameter '{parameterName}' was not found.");
+        }
+    }
+
+    private void RefreshAudioSliders(SettingsData data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        if (speechVolumeSlider != null)
+        {
+            speechVolumeSlider.SetValueWithoutNotify(data.speechVolume);
+        }
+
+        if (sfxVolumeSlider != null)
+        {
+            sfxVolumeSlider.SetValueWithoutNotify(data.sfxVolume);
+        }
     }
 
     private void SaveSettingsData()
@@ -199,7 +259,7 @@ public class SettingsManager : MonoBehaviour
 
             Debug.Log("Settings data has been saved to: " + path);
             Debug.Log("Saved settings JSON:\n" + json);
-            Debug.Log($"Values -> narrationVolume: {settingsData.narrationVolume}, movementMode: {settingsData.movementMode}, turningMode: {settingsData.turningMode}, subtitles: {settingsData.subtitles}, textSize: {settingsData.textSize}, comfortVignette: {settingsData.comfortVignette}");
+            Debug.Log($"Values -> speechVolume: {settingsData.speechVolume}, sfxVolume: {settingsData.sfxVolume}, movementMode: {settingsData.movementMode}, turningMode: {settingsData.turningMode}, subtitles: {settingsData.subtitles}, textSize: {settingsData.textSize}, comfortVignette: {settingsData.comfortVignette}");
         }
         catch (System.Exception ex)
         {
@@ -219,7 +279,18 @@ public class SettingsManager : MonoBehaviour
 
         string json = File.ReadAllText(path);
         SettingsData loadedData = JsonUtility.FromJson<SettingsData>(json);
-        Debug.Log(loadedData.narrationVolume + ", " + loadedData.movementMode + ", " + loadedData.turningMode + ", " + loadedData.subtitles + ", " + loadedData.textSize + ", " + loadedData.comfortVignette);
+        if (!json.Contains("\"speechVolume\"") && json.Contains("\"masterVolume\""))
+        {
+            LegacySettingsData legacyData = JsonUtility.FromJson<LegacySettingsData>(json);
+            loadedData.speechVolume = legacyData.masterVolume;
+        }
+        Debug.Log(loadedData.speechVolume + ", " + loadedData.sfxVolume + ", " + loadedData.movementMode + ", " + loadedData.turningMode + ", " + loadedData.subtitles + ", " + loadedData.textSize + ", " + loadedData.comfortVignette);
         return loadedData;
+    }
+
+    [Serializable]
+    private class LegacySettingsData
+    {
+        public float masterVolume;
     }
 }

@@ -66,6 +66,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 044e5143a15fd8b43925c00634ad68e3
   m_Children:
+  - {fileID: -2824269672966628120}
   - {fileID: 1999955229478799778}
   m_Volume: 326fd04e80561264086d95b74ad0c8c0
   m_Pitch: 3ae980f14d22fa3459d4fc77419f586b
@@ -254,8 +255,7 @@ AudioMixerGroupController:
   m_Name: Voices
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 657cf40e2b6ba384ba12f4704d4b42b7
-  m_Children:
-  - {fileID: -2824269672966628120}
+  m_Children: []
   m_Volume: 3712135732d9fc24d9d2bb754d4231ed
   m_Pitch: 58100f2158715ae4d9b85e7f4fa00a51
   m_Send: 00000000000000000000000000000000

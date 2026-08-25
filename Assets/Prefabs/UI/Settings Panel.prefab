@@ -363,7 +363,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &722718581949114630
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2968439674885227722}
   m_Layer: 5
-  m_Name: Narration Volume Setting
+  m_Name: Speech Volume Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Narration Volume
+  m_text: Speech Volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1510,8 +1522,8 @@ GameObject:
   - component: {fileID: 1180801672747280523}
   - component: {fileID: 5777862440611134551}
   - component: {fileID: 4268249010599900480}
-  - component: {fileID: 4993093007082921714}
   - component: {fileID: 2038491421768816657}
+  - component: {fileID: 4993093007082921714}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
@@ -1622,6 +1634,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &2038491421768816657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159067974877082684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+  mainAudioMixer: {fileID: 24100000, guid: 82c3383293375ec4a939f573a589553d, type: 2}
+  masterVolumeSlider: {fileID: 5606338095211922030}
+  sfxVolumeSlider: {fileID: 1029104291163705120}
+  subtitlesToggle: {fileID: 4469573786573266056}
+  comfortVignetteSlider: {fileID: 8934181961119271844}
 --- !u!114 &4993093007082921714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,20 +1679,6 @@ MonoBehaviour:
   vignettingBackgroundImageInspector: {fileID: 0}
   toggleOnSprite: {fileID: 0}
   toggleOffSprite: {fileID: 0}
---- !u!114 &2038491421768816657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3159067974877082684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
-  subtitlesToggle: {fileID: 4469573786573266056}
-  comfortVignetteSlider: {fileID: 8934181961119271844}
 --- !u!1 &3311711763077192348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4364,7 +4379,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2038491421768816657}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7506464732334352346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4375,7 +4402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5670484667472070752}
   m_Layer: 5
-  m_Name: Background Volume Setting
+  m_Name: Sound FX Volume Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5651,7 +5678,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Background Volume
+  m_text: Sound FX Volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
