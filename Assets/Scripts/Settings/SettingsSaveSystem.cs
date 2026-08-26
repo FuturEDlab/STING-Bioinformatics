@@ -5,6 +5,8 @@ public static class SettingsSaveSystem
 {
     private static string path = Application.persistentDataPath + "/settings.json";
 
+
+
     public static void Save(SettingsData data)
     {
         string json = JsonUtility.ToJson(data, true);
