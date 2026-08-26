@@ -1595,6 +1595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 442261057}
   - component: {fileID: 442261056}
+  - component: {fileID: 900000005}
   m_Layer: 0
   m_Name: SceneEvents
   m_TagString: Untagged
@@ -1618,9 +1619,9 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 833923704}
-        m_TargetAssemblyTypeName: ScenarioController, Assembly-CSharp
-        m_MethodName: ReportWiring
+      - m_Target: {fileID: 1043239147}
+        m_TargetAssemblyTypeName: QuestionPanelManager, Assembly-CSharp
+        m_MethodName: OpenPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2144,6 +2145,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7975a0517f28d740bbbaa6930a07c7f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1164210112}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7975a0517f28d740bbbaa6930a07c7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 900000004}
   m_SourcePrefab: {fileID: 100100000, guid: d7975a0517f28d740bbbaa6930a07c7f, type: 3}
 --- !u!1001 &518178651
 PrefabInstance:
@@ -3260,6 +3264,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 753544079}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 900000003}
   m_SourcePrefab: {fileID: 100100000, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
 --- !u!1 &753544078 stripped
 GameObject:
@@ -4161,7 +4168,7 @@ MonoBehaviour:
     player: {fileID: 0}
     playerRig: {fileID: 0}
     screenFader: {fileID: 0}
-  playOnStart: 1
+  playOnStart: 0
   reportWiringOnStart: 1
   onScenarioComplete:
     m_PersistentCalls:
@@ -5580,6 +5587,10 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3759537163407510759, guid: c7221d570e64c4bb5b0f810b29f97dad, type: 3}
+      propertyPath: panelClosedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 68341afc531a8503a172eae321c6c199, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6549,6 +6560,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1396523780}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 900000001}
   m_SourcePrefab: {fileID: 100100000, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
 --- !u!1 &1396523779 stripped
 GameObject:
@@ -6595,7 +6609,7 @@ MonoBehaviour:
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
-  highlight: {fileID: 374821825}
+  highlight: {fileID: 1396523782}
   successSound: {fileID: 0}
   onActivated:
     m_PersistentCalls:
@@ -8910,6 +8924,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2116195775}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 900000002}
   m_SourcePrefab: {fileID: 100100000, guid: a59841ec58c684732bf56bb7d0c966eb, type: 3}
 --- !u!1 &2116195774 stripped
 GameObject:
@@ -8956,7 +8973,7 @@ MonoBehaviour:
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
-  highlight: {fileID: 140857772}
+  highlight: {fileID: 2116195777}
   successSound: {fileID: 0}
   onActivated:
     m_PersistentCalls:
@@ -9795,6 +9812,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 964570614159785991, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: menuDrivesTraining
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 964570614159785991, guid: 5f7d6ac3a55a84293a3d6970e3b576de, type: 3}
+      propertyPath: scenario
+      value: 
+      objectReference: {fileID: 833923704}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10011,3 +10036,88 @@ SceneRoots:
   - {fileID: 1002945454}
   - {fileID: 4477000000000000001}
   - {fileID: 4477000000000000011}
+--- !u!114 &900000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396523779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9a71c5b6d24f8f9c0e5a2d84b31f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnToOrigin
+  respawnDelaySeconds: 30
+  positionTolerance: 0.05
+  homeOverride: {fileID: 0}
+  debugLogging: 0
+--- !u!114 &900000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116195774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9a71c5b6d24f8f9c0e5a2d84b31f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnToOrigin
+  respawnDelaySeconds: 30
+  positionTolerance: 0.05
+  homeOverride: {fileID: 0}
+  debugLogging: 0
+--- !u!114 &900000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753544078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9a71c5b6d24f8f9c0e5a2d84b31f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnToOrigin
+  respawnDelaySeconds: 30
+  positionTolerance: 0.05
+  homeOverride: {fileID: 0}
+  debugLogging: 0
+--- !u!114 &900000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164210097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9a71c5b6d24f8f9c0e5a2d84b31f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnToOrigin
+  respawnDelaySeconds: 30
+  positionTolerance: 0.05
+  homeOverride: {fileID: 0}
+  debugLogging: 0
+--- !u!114 &900000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442261055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1d5b2e4a9f4d3ab6e08f21c4d75a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeSkipCard
+  triggerChannel: {fileID: 11400000, guid: 45c0f80a4cc11bd65f426a4f982f906d, type: 2}
+  completedChannel: {fileID: 11400000, guid: 8f2c14a6b7d34e59a1c06d3b2e5f7081, type: 2}
+  message: 30 minutes later
+  holdSeconds: 2.5
+  leadInSeconds: 0.35
+  whileBlack:
+    m_PersistentCalls:
+      m_Calls: []
+  debugLogging: 0

@@ -16,5 +16,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   invokeChannel: {fileID: 11400000, guid: 45c0f80a4cc11bd65f426a4f982f906d, type: 2}
-  waitForExternalCompletion: 0
-  completionChannel: {fileID: 0}
+  waitForExternalCompletion: 1
+  completionChannel: {fileID: 11400000, guid: 8f2c14a6b7d34e59a1c06d3b2e5f7081, type: 2}
+  pauseBeforeNextStep: 0
