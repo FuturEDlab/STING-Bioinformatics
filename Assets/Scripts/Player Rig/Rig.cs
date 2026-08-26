@@ -314,8 +314,79 @@ public static class Rig
         }
     }
 
+    /// <summary>
+    /// Seconds the fade back to the scene takes. Counterpart of <see cref="FadeInSeconds"/>,
+    /// for anything that has to hold until the player can see again.
+    /// </summary>
+    public static float FadeOutSeconds
+    {
+        get
+        {
+            if (UsingXRHands)
+            {
+                ScreenFade fade = XR.Fade;
+                return fade != null ? 1f / Mathf.Max(0.01f, fade.FadeOutSpeed) : 0f;
+            }
+
+            BNG.ScreenFader fader = BngFader;
+            return fader != null ? 1f / Mathf.Max(0.01f, fader.FadeOutSpeed) : 0f;
+        }
+    }
+
     /// <summary>True when a fade would actually be visible.</summary>
     public static bool HasFade => UsingXRHands ? XR.Fade != null : BngFader != null;
+
+    /// <summary>
+    /// How black the view is right now, 0-1. For anything that has to change the world
+    /// behind a blackout and must not do it while the player can still see. Reads 0 when
+    /// there is no fader, so a caller that waits for black gives up rather than acting.
+    /// </summary>
+    public static float FadeAlpha
+    {
+        get
+        {
+            if (UsingXRHands)
+            {
+                ScreenFade fade = XR.Fade;
+                return fade != null ? fade.CurrentAlpha : 0f;
+            }
+
+            BNG.ScreenFader fader = BngFader;
+            if (fader == null)
+                return 0f;
+
+            // BNG keeps its alpha on a CanvasGroup it builds at runtime and never exposes,
+            // so this is a best effort — a miss reads as "not black", which is the safe answer.
+            CanvasGroup group = fader.GetComponentInChildren<CanvasGroup>(true);
+            return group != null ? group.alpha : 0f;
+        }
+    }
+
+    /// <summary>
+    /// Hold a line of text on the black — the "30 minutes later" title card. Only the new
+    /// rig's <see cref="ScreenFade"/> can do this; BNG's fader is a bare quad, so on that rig
+    /// the fade still happens and the card is simply skipped.
+    /// </summary>
+    public static void ShowFadeMessage(string message)
+    {
+        if (!UsingXRHands)
+            return;
+
+        ScreenFade fade = XR.Fade;
+        if (fade != null)
+            fade.ShowMessage(message);
+    }
+
+    /// <summary>Drop the title card. The black itself is unaffected.</summary>
+    public static void HideFadeMessage()
+    {
+        if (!UsingXRHands)
+            return;
+
+        ScreenFade fade = XR.Fade;
+        if (fade != null)
+            fade.HideMessage();
+    }
 
     private static BNG.ScreenFader BngFader
     {
