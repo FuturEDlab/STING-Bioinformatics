@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 // Applies current SettingsData values to selection button groups and basic UI controls.
 // Configure the option arrays to match the order of buttons in each ButtonSelectionGroup.
@@ -12,6 +13,20 @@ public class SettingsUIApplier : MonoBehaviour
     [Header("Option Labels (must match button order)")]
     public string[] movementOptions = new string[] { "Teleport", "Continuous" };
     public string[] turningOptions = new string[] { "Snap", "Smooth" };
+
+    [Header("Audio References")]
+    [SerializeField] private Slider speechVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
+    [SerializeField] private AudioMixer mainAudioMixer;
+    [SerializeField] private Image speechVolumeFillImage;
+    [SerializeField] private Image sfxVolumeFillImage;
+    private const string SpeechVolumeParam = "SpeechVolume";
+    private const string SFXVolumeParam = "SFXVolume";
+
+    [Header("Slider Layout")]
+    [SerializeField] private float volumeSliderLeftPadding = 50f;
+    [SerializeField] private float volumeSliderRightPadding = 50f;
+
 
     [Header("Toggles (Slider Game Objects)")]
     public Slider subtitlesSlider; // optional slider for subtitles
@@ -33,8 +48,14 @@ public class SettingsUIApplier : MonoBehaviour
 
     private void OnEnable()
     {
+        SettingsManager.OnSettingsLoaded += ApplySettings;
         ValidateReferences();
         ApplySavedSettings();
+    }
+
+    private void OnDisable()
+    {
+        SettingsManager.OnSettingsLoaded -= ApplySettings;
     }
 
     // Read saved settings and apply to UI
@@ -50,6 +71,20 @@ public class SettingsUIApplier : MonoBehaviour
     public void ApplySettings(SettingsData data)
     {
         if (data == null) return;
+
+        // Speech Volume
+        if (speechVolumeSlider != null)
+        {
+            speechVolumeSlider.SetValueWithoutNotify(data.speechVolume);
+            UpdateSpeechVolumeFill(data.speechVolume);
+        }
+
+        // SFX Volume
+        if (sfxVolumeSlider != null)
+        {
+            sfxVolumeSlider.SetValueWithoutNotify(data.sfxVolume);
+            UpdateSFXVolumeFill(data.sfxVolume);
+        }
 
         // Movement
         int mi = GetOptionIndex(data.movementMode, movementOptions);
@@ -127,6 +162,51 @@ public class SettingsUIApplier : MonoBehaviour
         }
     }
 
+    public void UpdateSpeechVolumeFill(float value)
+    {
+        UpdateVolumeSliderFill(speechVolumeSlider, speechVolumeFillImage, value);
+    }
+
+    public void UpdateSFXVolumeFill(float value)
+    {
+        UpdateVolumeSliderFill(sfxVolumeSlider, sfxVolumeFillImage, value);
+    }
+
+    private void UpdateVolumeSliderFill(Slider slider, Image fillImage, float value)
+    {
+        if (slider == null || fillImage == null)
+        {
+            return;
+        }
+
+        float fillWidth = fillImage.rectTransform.rect.width;
+
+        if (fillWidth <= 0f)
+        {
+            return;
+        }
+
+        // Convert the slider value into a clean 0-1 value.
+        float normalizedValue = Mathf.InverseLerp(
+            slider.minValue,
+            slider.maxValue,
+            value
+        );
+
+        // Convert the 50-unit left/right padding into percentages
+        // of the full fill image width.
+        float minFill = volumeSliderLeftPadding / fillWidth;
+        float maxFill = 1f - (volumeSliderRightPadding / fillWidth);
+
+        // Move the visible fill between the same boundaries
+        // used by the handle.
+        fillImage.fillAmount = Mathf.Lerp(
+            minFill,
+            maxFill,
+            normalizedValue
+        );
+    }
+
     // Helper: find option index by case-insensitive match
     private int GetOptionIndex(string value, string[] options)
     {
@@ -148,6 +228,10 @@ public class SettingsUIApplier : MonoBehaviour
             Debug.LogWarning("SettingsUIApplier: movementGroup reference is missing.");
         if (turningGroup == null)
             Debug.LogWarning("SettingsUIApplier: turningGroup reference is missing.");
+        if (speechVolumeSlider == null)
+            Debug.LogWarning("SettingsUIApplier: speechVolumeSlider reference is missing.");
+        if (sfxVolumeSlider == null)
+            Debug.LogWarning("SettingsUIApplier: sfxVolumeSlider reference is missing.");
         if (subtitlesSlider == null)
             Debug.LogWarning("SettingsUIApplier: subtitlesSlider reference is missing.");
         if (subtitlesToggleSwitch == null)

@@ -22,31 +22,35 @@ public class SettingsManager : MonoBehaviour
     [FormerlySerializedAs("masterVolumeSlider")]
     [SerializeField] private Slider speechVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
+    private const string SpeechVolumeParam = "SpeechVolume";
+    private const string SFXVolumeParam = "SFXVolume";
     public Slider subtitlesToggle;
     public Slider comfortVignetteSlider;
     private bool areSubtitlesActive; //Probably wont need this because pendingSettingsData.subtitles 
     //will be used to check if subtitles are active or not.
 
-    void Awake()
+    private void Awake()
     {
-        //Settings manager is an instance and will be the way we reach the settings
-        //data rather than making SettingsData an instance as SettingsData
-        //is not a monobehavior and can not be attahced to a gameobject.
-        if (Instance != null && Instance != this)
+        // Set up the singleton.
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
         {
             Destroy(gameObject);
             return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         path = Application.persistentDataPath + "/settings.json";
 
         Debug.Log($"SettingsManager Awake. settings.json path: {path}");
 
+        // Load saved settings.
         settingsData = LoadSettingsData();
 
+        // If no settings file exists, create default settings.
         if (settingsData == null)
         {
             settingsData = new SettingsData
@@ -63,19 +67,14 @@ public class SettingsManager : MonoBehaviour
             SaveSettingsData();
         }
 
-        //create a copy of the settings data to hold pending changes
+        // Create an editable copy for the settings menu.
         pendingSettingsData = CloneSettingsData(settingsData);
-
-        ApplyAudioVolumes(settingsData);
-
-        //Apply loaded settings to the player when the game starts
-        //TODO: load (ex: ApplySavedMovementMode) and apply settings to the player when the game starts
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        OnSettingsLoaded?.Invoke(settingsData);
+        ApplyCurrentSettings();
     }
 
     // NOTE: We do NOT automatically attach listeners. Use the inspector OnValueChanged / OnClick
@@ -90,40 +89,102 @@ public class SettingsManager : MonoBehaviour
     public void OnSaveButtonClicked()
     {
         Debug.Log("SettingsManager: OnSaveButtonClicked invoked");
+
         ApplyPendingSettings();
         SaveSettingsData();
     }
 
     public void OnCancelButtonClicked()
     {
+        // Throw away unsaved changes.
         pendingSettingsData = CloneSettingsData(settingsData);
-        ApplyAudioVolumes(settingsData);
-        RefreshAudioSliders(settingsData);
-        Debug.Log("Pending settings data has been reset to current settings data");
+
+        // Restore the currently saved settings to the game and UI.
+        ApplyCurrentSettings();
+
+        Debug.Log(
+            "Pending settings have been discarded and current settings restored."
+        );
     }
+
+    private void ApplyCurrentSettings()
+    {
+        ApplyAllSettings(settingsData);
+
+        // Tell UI and other listeners to refresh.
+        OnSettingsLoaded?.Invoke(settingsData);
+    }
+
 
     public void ApplyPendingSettings()
     {
         settingsData = CloneSettingsData(pendingSettingsData);
-        ApplyAudioVolumes(settingsData);
-        Debug.Log("Pending settings data has been applied to current settings data");
 
-        // Notify listeners (e.g., PlayerManager) that settings have been applied so runtime
-        // systems can update themselves immediately.
-        OnSettingsLoaded?.Invoke(settingsData);
+        Debug.Log(
+            "Pending settings data has been applied to current settings data"
+        );
+
+        ApplyCurrentSettings();
     }
 
-    // Public setter methods intended to be called from inspector OnValueChanged / OnClick
+    private void ApplyAllSettings(SettingsData data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        ApplyAudioSettings(data);
+
+        /*ApplyMovementMode(data.movementMode);
+        ApplyTurningMode(data.turningMode);
+        ApplySubtitles(data.subtitles);
+        ApplyComfortVignette(data.comfortVignette);
+        */
+    }
+
     public void SetSpeechVolume(float value)
     {
-        pendingSettingsData.speechVolume = Mathf.Clamp01(value);
-        ApplyAudioVolumes(pendingSettingsData);
+        mainAudioMixer.SetFloat(SpeechVolumeParam, Mathf.Log10(value) * 20f);
+        pendingSettingsData.speechVolume = value;
+        Debug.Log($"Pending speechVolume set to {value}");
     }
 
     public void SetSFXVolume(float value)
     {
-        pendingSettingsData.sfxVolume = Mathf.Clamp01(value);
-        ApplyAudioVolumes(pendingSettingsData);
+        mainAudioMixer.SetFloat(SFXVolumeParam, Mathf.Log10(value) * 20f);
+        pendingSettingsData.sfxVolume = value;
+        Debug.Log($"Pending sfxVolume set to {value}");
+    }
+
+    private void ApplyAudioSettings(SettingsData data)
+    {
+        if (data == null || mainAudioMixer == null)
+        {
+            Debug.Log("Cannot apply audio settings: data or mainAudioMixer is null.");
+            return;
+        }
+
+        mainAudioMixer.SetFloat(
+            SpeechVolumeParam,
+            VolumeToDecibels(data.speechVolume)
+        );
+
+        mainAudioMixer.SetFloat(
+            SFXVolumeParam,
+            VolumeToDecibels(data.sfxVolume)
+        );
+    }
+
+    private float VolumeToDecibels(float volume)
+    {
+        // Avoid Mathf.Log10(0), which would produce negative infinity.
+        if (volume <= 0.0001f)
+        {
+            return -80f;
+        }
+
+        return Mathf.Log10(volume) * 20f;
     }
 
     public void SetMovementMode(int index)
@@ -206,46 +267,6 @@ public class SettingsManager : MonoBehaviour
         };
 
         return clone;
-    }
-
-    private void ApplyAudioVolumes(SettingsData data)
-    {
-        if (mainAudioMixer == null || data == null)
-        {
-            return;
-        }
-
-        SetMixerVolume("NarrationVolume", data.speechVolume);
-        SetMixerVolume("SFXVolume", data.sfxVolume);
-    }
-
-    private void SetMixerVolume(string parameterName, float value)
-    {
-        float clampedValue = Mathf.Clamp01(value);
-        float decibels = clampedValue <= 0f ? -80f : Mathf.Log10(clampedValue) * 20f;
-
-        if (!mainAudioMixer.SetFloat(parameterName, decibels))
-        {
-            Debug.LogWarning($"SettingsManager: AudioMixer parameter '{parameterName}' was not found.");
-        }
-    }
-
-    private void RefreshAudioSliders(SettingsData data)
-    {
-        if (data == null)
-        {
-            return;
-        }
-
-        if (speechVolumeSlider != null)
-        {
-            speechVolumeSlider.SetValueWithoutNotify(data.speechVolume);
-        }
-
-        if (sfxVolumeSlider != null)
-        {
-            sfxVolumeSlider.SetValueWithoutNotify(data.sfxVolume);
-        }
     }
 
     private void SaveSettingsData()
