@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 964570614159785991}
   - component: {fileID: 236156613478586860}
   - component: {fileID: -8485387824948293711}
+  - component: {fileID: 6998663547462510983}
+  - component: {fileID: 5800312827331773695}
   m_Layer: 5
   m_Name: Game Manager
   m_TagString: Untagged
@@ -52,6 +54,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mainMenuPanel: {fileID: 0}
   settingsPanel: {fileID: 0}
+  controlsPanel: {fileID: 0}
+  menuDrivesTraining: 0
+  scenario: {fileID: 0}
+  menuStandPoint: {fileID: 0}
+  fadeOnMenuMove: 1
+  blackHoldSeconds: 0.1
 --- !u!114 &236156613478586860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,8 +84,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353fbd13e48414750932defca82f0bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
-  locoManager: {fileID: 0}
-  locoMotion: {fileID: 0}
-  teleportPlayer: {fileID: 0}
-  smoothLoco: {fileID: 0}
-  playerRotate: {fileID: 0}
+  teleportationProvider: {fileID: 0}
+  continuousMoveProvider: {fileID: 0}
+  continuousTurnProvider: {fileID: 0}
+  snapTurnProvider: {fileID: 0}
+  vignette: {fileID: 0}
+  captions: {fileID: 0}
+  MasterAudioSource: {fileID: 0}
+--- !u!114 &6998663547462510983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426940212812518953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7366cb7b20dd4e4fa02b5a1b21d07cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+  mainAudioMixer: {fileID: 24100000, guid: 82c3383293375ec4a939f573a589553d, type: 2}
+  speechVolumeSlider: {fileID: 0}
+  sfxVolumeSlider: {fileID: 0}
+  subtitlesToggle: {fileID: 0}
+  comfortVignetteSlider: {fileID: 0}
+--- !u!114 &5800312827331773695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426940212812518953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebba8e7b518464841a0e5ff36b54be0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsUIApplier
+  movementGroup: {fileID: 0}
+  turningGroup: {fileID: 0}
+  movementOptions:
+  - Teleport
+  - Continuous
+  turningOptions:
+  - Snap
+  - Smooth
+  speechVolumeSlider: {fileID: 0}
+  sfxVolumeSlider: {fileID: 0}
+  mainAudioMixer: {fileID: 24100000, guid: 82c3383293375ec4a939f573a589553d, type: 2}
+  speechVolumeFillImage: {fileID: 0}
+  sfxVolumeFillImage: {fileID: 0}
+  volumeSliderLeftPadding: 50
+  volumeSliderRightPadding: 50
+  subtitlesSlider: {fileID: 0}
+  subtitlesToggleSwitch: {fileID: 0}
+  subtitlesBackgroundImageInspector: {fileID: 0}
+  vignettingSlider: {fileID: 0}
+  vignettingToggleSwitch: {fileID: 0}
+  vignettingBackgroundImageInspector: {fileID: 0}
+  toggleOnSprite: {fileID: 0}
+  toggleOffSprite: {fileID: 0}

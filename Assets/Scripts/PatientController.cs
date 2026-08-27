@@ -3,66 +3,121 @@ using UnityEngine;
 
 public class PatientController : MonoBehaviour
 {
+    [Header("Scene References")]
 
     // Assign the scene's ScenarioController in the Inspector.
     [SerializeField] private ScenarioController scenarioController;
 
-    // Assign the Animator on the nurse in the Inspector.
+    // Assign the patient's Animator in the Inspector.
     [SerializeField] private Animator animator;
+
+    // Assign the patient's Renderer in the Inspector.
     [SerializeField] private Renderer patientRenderer;
+
+
+    [Header("Patient Materials")]
+
     [SerializeField] private Material normalMaterial;
     [SerializeField] private Material anaphylaxisMaterial;
+
+
+    [Header("Random Tapping")]
+
+    // How often the script attempts to play a random tapping animation.
     [SerializeField] private float repeatInterval = 10f;
 
-    [Tooltip("How long to wait for the '30 minutes later' blackout before giving up and leaving the rashes to the step they always appeared on. Only matters in a scene that has a Time Skip Card.")]
+
+    [Header("Time Skip")]
+
+    [Tooltip(
+        "How long to wait for the '30 minutes later' blackout before giving up. " +
+        "Only matters in a scene that has a Time Skip Card."
+    )]
     [SerializeField] private float blackoutWaitSeconds = 5f;
 
-    private bool isAnimating = false;
+    private float nextTimeScaleLog;
+    private Coroutine randomAnimationCoroutine;
 
-    void Start()
-    {
-        // First random check happens after 30 seconds,
-        // then repeats every 30 seconds.
-        InvokeRepeating(nameof(RandomizeNumber), repeatInterval, repeatInterval);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    // This now tracks only the random left and right tapping animations.
+    private bool isAnimating;
+
+    // Used to make debugging easier in the Console.
+    private string activeAnimationReason = "None";
+    private bool useLeftHand = true;
+
 
     private void OnEnable()
     {
-        // Subscribe before the scenario starts.
+        Debug.Log(
+            "PatientController enabled. Starting random animation timer.",
+            this
+        );
+
         if (scenarioController != null)
         {
             scenarioController.StepEntered += OnScenarioStepEntered;
         }
+
+        if (randomAnimationCoroutine != null)
+        {
+            StopCoroutine(randomAnimationCoroutine);
+        }
+
+        randomAnimationCoroutine = StartCoroutine(RandomAnimationLoop());
     }
 
     private void OnDisable()
     {
-        // Always unsubscribe when disabled.
+        Debug.Log(
+            "PatientController disabled. Stopping random animation timer.",
+            this
+        );
+
         if (scenarioController != null)
         {
             scenarioController.StepEntered -= OnScenarioStepEntered;
         }
-    }
 
-
-    private void OnScenarioStepEntered(int stepIndex, ScenarioStepData stepData)
-    {
-        // Step 0 is the first step entered by the linear timeline. Place the
-        // nurse here without firing an Animator trigger or playing an animation.
-        if (stepIndex == 0)
+        if (randomAnimationCoroutine != null)
         {
-            // Update skin to normal skin
-            DisableRashes();
-            StopReactToAnaphylaxis();
+            StopCoroutine(randomAnimationCoroutine);
+            randomAnimationCoroutine = null;
         }
 
-        // Stop whatever the nurse was doing during the previous step.
-        //StopCurrentAnimation();
+        ResetRandomAnimation();
+    }
+
+    /*private void Update()
+    {
+        if (Time.unscaledTime >= nextTimeScaleLog)
+        {
+            nextTimeScaleLog = Time.unscaledTime + 2f;
+
+            Debug.Log(
+                $"Time.timeScale: {Time.timeScale}, " +
+                $"Time.time: {Time.time}, " +
+                $"Time.unscaledTime: {Time.unscaledTime}",
+                this
+            );
+        }
+    }*/
+
+    private void OnScenarioStepEntered(
+        int stepIndex,
+        ScenarioStepData stepData
+    )
+    {
+        // Step 0 is the first step entered by the linear timeline.
+        if (stepIndex == 0)
+        {
+            DisableRashes();
+            StopReactToAnaphylaxis();
+
+            // Reset random tapping in case the scenario restarted while
+            // a tapping animation was playing.
+            ResetRandomAnimation();
+        }
 
         if (stepData == null)
         {
@@ -71,28 +126,14 @@ public class PatientController : MonoBehaviour
 
         switch (stepData.name)
         {
-
-            // No show wristband animation because the patient raises the wrong arm
-
-            /*case "S1_09_Sarah_ScanWristband":
-                ShowWristbandAnimation();
-                break;
-
-            case "S1_12_Sarah_ScanMethotrexate":
-                StopShowWristbandAnimation();
-                break;*/
-
             case "S1_16_Sarah_JustOverrideIt":
                 LookAtNurse();
                 break;
-            
+
             case "S1_20_Sarah_TrustTheSystem":
                 StopLookAtNurse();
                 break;
 
-            // The rashes belong to the half hour the player does not see. This step is the
-            // "30 minutes later" blackout, so the skin changes behind the black and Mr.
-            // Johnson is already covered when the view comes back.
             case "S3A_08_TimeSkip30Minutes":
                 EnableRashesUnderTheFade();
                 break;
@@ -101,9 +142,9 @@ public class PatientController : MonoBehaviour
                 EnableRashes();
                 ReactToAnaphylaxis();
                 break;
-
         }
     }
+
 
     /// <summary>
     /// The time-skip step raises its beat the instant it is entered, which is the instant the
@@ -124,7 +165,6 @@ public class PatientController : MonoBehaviour
     private IEnumerator EnableRashesWhenBlack()
     {
         float deadline = Time.time + blackoutWaitSeconds;
-
         while (Time.time < deadline)
         {
             if (Rig.FadeAlpha >= 0.9f)
@@ -132,87 +172,183 @@ public class PatientController : MonoBehaviour
                 EnableRashes();
                 yield break;
             }
-
             yield return null;
         }
     }
 
     private void RandomizeNumber()
     {
-        if (isAnimating)
+        if (animator == null)
         {
+            Debug.LogWarning(
+                "Random tapping was skipped because the patient Animator reference is missing.",
+                this
+            );
             return;
         }
 
-        // Random.Range with ints excludes the maximum,
-        // so 11 means numbers 0-10.
-        int randomNumber = Random.Range(0, 2);
-
-        Debug.Log("Random number: " + randomNumber);
-
-        if (randomNumber == 0)
+        if (isAnimating)
         {
-            animator.SetTrigger("Left Tapping"); 
-            isAnimating = true;
+            Debug.LogWarning(
+                "Random tapping was skipped because isAnimating is still " +
+                $"true. Active animation: {activeAnimationReason}",
+                this
+            );
+
+            return;
         }
-        if (randomNumber == 1)
-        {
-            animator.SetTrigger("Right Tapping");
-            isAnimating = true;
-        }
+
+        StartRandomAnimation(useLeftHand ? "Left Tapping" : "Right Tapping");
+        useLeftHand = !useLeftHand;
     }
+
+    private IEnumerator RandomAnimationLoop()
+    {
+        if (repeatInterval <= 0f)
+        {
+            Debug.LogError(
+                "Random tapping was not started because repeatInterval must be greater than zero.",
+                this
+            );
+            yield break;
+        }
+
+        while (isActiveAndEnabled)
+        {
+            Debug.Log(
+                $"Random tapping timer waiting {repeatInterval} realtime seconds. " +
+                $"isAnimating: {isAnimating}, active animation: {activeAnimationReason}",
+                this
+            );
+
+            yield return new WaitForSecondsRealtime(repeatInterval);
+            RandomizeNumber();
+        }
+
+        Debug.LogWarning(
+            "Random tapping timer stopped because PatientController is no longer active and enabled.",
+            this
+        );
+    }
+
+    private void StartRandomAnimation(string triggerName)
+    {
+        // Set the lock before setting the trigger so another request
+        // cannot start during the same frame.
+        SetAnimating(true, triggerName);
+
+        // Clear both triggers before setting the selected trigger.
+        // This prevents an old trigger from still being queued.
+        animator.ResetTrigger("Left Tapping");
+        animator.ResetTrigger("Right Tapping");
+
+        animator.SetTrigger(triggerName);
+
+        Debug.Log(
+            $"Started random patient animation: {triggerName}",
+            this
+        );
+    }
+
+
+    // Call this with an Animation Event near the end of both the
+    // Left Tapping and Right Tapping animation clips.
+    public void RandomAnimationFinished()
+    {
+        ResetRandomAnimation();
+
+        Debug.Log(
+            "Random animation finished. Tapping is available again.",
+            this
+        );
+    }
+
+    private void ResetRandomAnimation()
+    {
+        if (animator != null)
+        {
+            animator.ResetTrigger("Left Tapping");
+            animator.ResetTrigger("Right Tapping");
+        }
+
+        SetAnimating(false, "Random tapping finished or reset");
+    }
+
+    private void SetAnimating(bool value, string reason)
+    {
+        isAnimating = value;
+        activeAnimationReason = value ? reason : "None";
+
+        Debug.Log(
+            $"Patient isAnimating changed to {value}. Reason: {reason}",
+            this
+        );
+    }
+
 
     private void ShowWristbandAnimation()
     {
         animator.SetBool("Show Wristband", true);
-        isAnimating = true;
     }
 
     private void StopShowWristbandAnimation()
     {
         animator.SetBool("Show Wristband", false);
-        isAnimating = false;
     }
+
 
     private void EnableRashes()
     {
+        if (patientRenderer == null || anaphylaxisMaterial == null)
+        {
+            Debug.LogWarning(
+                "The patient Renderer or anaphylaxis Material is missing.",
+                this
+            );
+
+            return;
+        }
+
         patientRenderer.material = anaphylaxisMaterial;
     }
 
     private void DisableRashes()
     {
+        if (patientRenderer == null || normalMaterial == null)
+        {
+            Debug.LogWarning(
+                "The patient Renderer or normal Material is missing.",
+                this
+            );
+
+            return;
+        }
+
         patientRenderer.material = normalMaterial;
     }
-    
+
+
     private void ReactToAnaphylaxis()
     {
         animator.SetBool("React to Rashes", true);
-        isAnimating = true;
     }
 
     private void StopReactToAnaphylaxis()
     {
-        animator.SetBool("React to Rashes", false);
-        isAnimating = false;
+        if (animator != null)
+        {
+            animator.SetBool("React to Rashes", false);
+        }
     }
+
 
     private void LookAtNurse()
     {
         animator.SetBool("Look at Nurse", true);
-        isAnimating = true;
     }
 
     private void StopLookAtNurse()
     {
         animator.SetBool("Look at Nurse", false);
-        isAnimating = false;
-    }
-
-    // Call this when the Left Tapping animation finishes.
-    public void RandomAnimationFinished()
-    {
-        animator.ResetTrigger("Left Tapping");
-        animator.ResetTrigger("Right Tapping");
-        isAnimating = false;
     }
 }

@@ -26,6 +26,9 @@ public class QuestionPanelManager : MonoBehaviour
     [Tooltip("Skip the universal question in the full assessment. The script asks it twice — once in the simulation after the Methotrexate alert, and again as Question 1 here. Tick this to ask it only during the simulation and go straight to the major-specific question.")]
     public bool skipUniversalQuestionInAssessment = false;
 
+    [Tooltip("When enabled, Panel Question steps can open this panel during the simulation. Leave disabled to show questions only in the final assessment.")]
+    public bool showSimulationQuestions = false;
+
     [Header("Question Page UI")]
     public TextMeshProUGUI questionTMP;
     public Image explanationImage;
@@ -150,8 +153,9 @@ public class QuestionPanelManager : MonoBehaviour
 
         UpdateMajorContinueState();
 
-        if (openQuestionOnStartForTesting)
+        /*if (openQuestionOnStartForTesting)
             ShowUniversalQuestionForTesting();
+            */
     }
 
     /// <summary>

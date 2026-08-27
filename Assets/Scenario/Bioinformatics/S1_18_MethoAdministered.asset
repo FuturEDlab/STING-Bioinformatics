@@ -18,3 +18,4 @@ MonoBehaviour:
   invokeChannel: {fileID: 11400000, guid: 9119f6d21a5436e9d97fc8869d6439e5, type: 2}
   waitForExternalCompletion: 0
   completionChannel: {fileID: 0}
+  pauseBeforeNextStep: 5

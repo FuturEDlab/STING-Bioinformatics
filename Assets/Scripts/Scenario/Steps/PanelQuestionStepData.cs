@@ -111,6 +111,14 @@ public class PanelQuestionStep : IScenarioStep
         completed = false;
 
         panel = ctx.QuestionPanel;
+
+        if (panel != null && !panel.showSimulationQuestions)
+        {
+            Debug.Log($"[PanelQuestionStep] '{data.name}': simulation questions are disabled. Continuing without opening the question panel.", panel);
+            onComplete?.Invoke();
+            return;
+        }
+
         QuestionData question = data.ResolveQuestion();
 
         if (panel == null)

@@ -492,11 +492,11 @@ MonoBehaviour:
     showSceneObject: 0
     animator: {fileID: 0}
     iconAnimatorTrigger: 
-  - stepName: Knowledge Check 1
-    image: {fileID: 21300000, guid: 8d85a52de1b6f46ff95ef01d32745d50, type: 3}
+  - stepName: Locked
+    image: {fileID: 21300000, guid: 2c9449d35a8944b009a321db2dda85d5, type: 3}
     conditionType: 1
     duration: 3
-    actionName: Take quiz
+    actionName: 
     sceneObject: {fileID: 0}
     showSceneObject: 0
     animator: {fileID: 0}
