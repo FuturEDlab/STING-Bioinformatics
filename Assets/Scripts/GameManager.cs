@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject settingsPanel;
     public GameObject controlsPanel;
+    public GameObject continueTrainingButton;
 
     [Header("Training session")]
     [Tooltip("On: the menu is up at the start, the player cannot move until Begin Training, and Y/B brings the menu back mid-session. Off: this behaves exactly as it always has — the panels are placed and hidden, and nothing else happens. Leave OFF in scenes that only borrow the menu.")]
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
 
         SetActive(settingsPanel, false);
         SetActive(controlsPanel, false);
+        SetupContinueTrainingButton();
 
         if (!menuDrivesTraining)
         {
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"[GameManager] '{name}' drives the training but has no Scenario Controller assigned, so Begin Training will only close the menu.", this);
 
         SetActive(mainMenuPanel, true);
+        SetTrainingButtonVisibility(continueVisible: false);
         SetMovementEnabled(false);
     }
 
@@ -126,6 +129,7 @@ public class GameManager : MonoBehaviour
         trainingStarted = true;
 
         HideAllPanels();
+        SetTrainingButtonVisibility(continueVisible: false);
         SetMovementEnabled(true);
 
         if (scenario != null)
@@ -139,12 +143,13 @@ public class GameManager : MonoBehaviour
     public void ContinueTraining()
     {
         ResumeWorldFromMenu();
+        HideAllPanels();
+        SetTrainingButtonVisibility(continueVisible: false);
+        scenario?.Resume();
 
         if (!hasReturnPoint)
         {
-            HideAllPanels();
             SetMovementEnabled(true);
-            scenario?.Resume();
             return;
         }
 
@@ -167,6 +172,8 @@ public class GameManager : MonoBehaviour
         }
 
         RememberWhereThePlayerIs();
+        RespawnHeldObjects();
+        SetTrainingButtonVisibility(continueVisible: true);
         SetMovementEnabled(false);
         scenario?.Pause();
         StartMove(menuFootPosition, menuFacing, showMenuOnArrival: true);
@@ -194,6 +201,20 @@ public class GameManager : MonoBehaviour
     {
         SetActive(mainMenuPanel, true);
         SetActive(controlsPanel, false);
+    }
+
+    private void RespawnHeldObjects()
+    {
+        RespawnToOrigin[] respawnableObjects = FindObjectsByType<RespawnToOrigin>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < respawnableObjects.Length; i++)
+        {
+            RespawnToOrigin respawnable = respawnableObjects[i];
+            if (respawnable != null && respawnable.IsHeld)
+                respawnable.Respawn();
+        }
     }
 
     public void ResetExperience()
@@ -394,6 +415,61 @@ public class GameManager : MonoBehaviour
         SetActive(mainMenuPanel, false);
         SetActive(settingsPanel, false);
         SetActive(controlsPanel, false);
+    }
+
+    private void SetupContinueTrainingButton()
+    {
+        if (!menuDrivesTraining || mainMenuPanel == null)
+            return;
+
+        if (continueTrainingButton == null)
+        {
+            Transform beginButton = FindChildByName(mainMenuPanel.transform, "Begin Training Button");
+            if (beginButton == null)
+                return;
+
+            continueTrainingButton = Instantiate(beginButton.gameObject, beginButton.parent);
+            continueTrainingButton.name = "Continue Training Button";
+
+            TMPro.TMP_Text label = continueTrainingButton.GetComponentInChildren<TMPro.TMP_Text>(true);
+            if (label != null)
+                label.text = "Continue Training";
+
+        }
+
+        UnityEngine.UI.Button button = continueTrainingButton.GetComponent<UnityEngine.UI.Button>();
+        if (button != null)
+        {
+            button.onClick.RemoveListener(ContinueTraining);
+            button.onClick.AddListener(ContinueTraining);
+        }
+
+        SetActive(continueTrainingButton, false);
+    }
+
+    private void SetTrainingButtonVisibility(bool continueVisible)
+    {
+        if (!menuDrivesTraining)
+            return;
+
+        Transform beginButton = FindChildByName(mainMenuPanel != null ? mainMenuPanel.transform : null, "Begin Training Button");
+        SetActive(beginButton != null ? beginButton.gameObject : null, !continueVisible);
+        SetActive(continueTrainingButton, continueVisible);
+    }
+
+    private static Transform FindChildByName(Transform root, string childName)
+    {
+        if (root == null)
+            return null;
+
+        Transform[] children = root.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < children.Length; i++)
+        {
+            if (children[i].name == childName)
+                return children[i];
+        }
+
+        return null;
     }
 
     private void PlacePanel(GameObject panel)

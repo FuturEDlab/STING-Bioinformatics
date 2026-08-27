@@ -25,6 +25,8 @@ public class Interact : MonoBehaviour
     [SerializeField] private UnityEvent onInteract;
     [Tooltip("Invoke the interaction when a player's hand touches this object's trigger collider.")]
     [SerializeField] private bool touchToInteract;
+    [Tooltip("Allow the configured controller button to invoke this interaction.")]
+    [SerializeField] private bool buttonToInteract = true;
     [SerializeField] private float MaxGlowDistance = 2f;
     [SerializeField] private int submeshGlowNumber = -1;
     
@@ -77,14 +79,14 @@ public class Interact : MonoBehaviour
         closestPoint = objectCollider.ClosestPoint(player.position);
         distance = Vector3.Distance(closestPoint, player.position);
 
-        if (distance <= MaxGlowDistance && !glowAdded)
+        /*if (distance <= MaxGlowDistance && !glowAdded)
         {
             glowAdded = AddGlow(submeshGlowNumber);
         }
         else if (distance > MaxGlowDistance && glowAdded)
         {
             glowAdded = RemoveGlow(submeshGlowNumber);
-        }
+        }*/
 
         // At this point, we can assume that if player is outside glow radius,
         // the glow isn't present, leading to returning early since interaction
@@ -109,8 +111,21 @@ public class Interact : MonoBehaviour
         onInteract?.Invoke();
     }
 
+    public void SetButtonInteractionEnabled(bool enabled)
+    {
+        buttonToInteract = enabled;
+    }
+
+    public void SetTouchInteractionEnabled(bool enabled)
+    {
+        touchToInteract = enabled;
+    }
+
     private bool IsInteractButtonPressed()
     {
+        if (!buttonToInteract)
+            return false;
+
         // Buttons come from Rig, which reads BNG's InputBridge on the army-guy rig and the
         // XR Input System on the new hands. Same call, same meaning, either scene.
         switch (parentComponent.InteractButton)

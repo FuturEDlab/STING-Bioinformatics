@@ -475,7 +475,7 @@ MonoBehaviour:
     animator: {fileID: 0}
     iconAnimatorTrigger: 
   - stepName: Nurse talks and starts override
-    image: {fileID: 21300000, guid: 65baa3adc29ab46f385c328e1fa9d6f9, type: 3}
+    image: {fileID: 21300000, guid: fb4f2be6e77fd4b3cb6b11658be69cad, type: 3}
     conditionType: 0
     duration: 8
     actionName: Scan methotrexate
@@ -532,6 +532,15 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 244a1ec263f7d43319baf5607dc38845, type: 3}
     conditionType: 1
     duration: 3
+    actionName: 
+    sceneObject: {fileID: 0}
+    showSceneObject: 0
+    animator: {fileID: 0}
+    iconAnimatorTrigger: 
+  - stepName: User corrects doseage
+    image: {fileID: 21300000, guid: fa5236b3942834ecbac70e11fce8395c, type: 3}
+    conditionType: 0
+    duration: 5
     actionName: 
     sceneObject: {fileID: 0}
     showSceneObject: 0
@@ -662,6 +671,10 @@ MonoBehaviour:
     worldBeat: {fileID: 0}
     whenWaitingFor: dose.entered.5000
     state: Wait for user to correct doseage
+  - label: S2 - correct doseage entered
+    worldBeat: {fileID: 0}
+    whenWaitingFor: dose.corrected.500
+    state: User corrects doseage
   - label: S2 - prompt to correct the dose
     worldBeat: {fileID: 0}
     whenWaitingFor: dose.corrected.500

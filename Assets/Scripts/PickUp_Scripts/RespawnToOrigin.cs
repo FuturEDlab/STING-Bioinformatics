@@ -1,4 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 /// <summary>
 /// Puts a prop back where it started once it has been left somewhere else for a while.
@@ -44,6 +48,9 @@ public class RespawnToOrigin : MonoBehaviour
 
     /// <summary>Where this prop returns to.</summary>
     public Vector3 Home => homePosition;
+
+    /// <summary>True while this prop is held by a hand or desktop pointer.</summary>
+    public bool IsHeld => grab != null && grab.IsHeld;
 
     private void Awake()
     {
@@ -93,6 +100,7 @@ public class RespawnToOrigin : MonoBehaviour
     public void Respawn()
     {
         awaySeconds = 0f;
+        ReleaseFromHands();
 
         // Clearing the velocities first stops the prop from carrying the speed it had when it
         // was moved and immediately sliding off the shelf again.
@@ -106,6 +114,33 @@ public class RespawnToOrigin : MonoBehaviour
 
         if (debugLogging)
             Debug.Log($"[RespawnToOrigin] '{name}' put back.", this);
+    }
+
+    private void ReleaseFromHands()
+    {
+        BNG.Grabbable bngGrabbable = GetComponent<BNG.Grabbable>();
+        if (bngGrabbable != null)
+        {
+            BNG.Grabber[] grabbers = FindObjectsByType<BNG.Grabber>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+
+            for (int i = 0; i < grabbers.Length; i++)
+            {
+                if (grabbers[i] != null && grabbers[i].HeldGrabbable == bngGrabbable)
+                    grabbers[i].TryRelease();
+            }
+        }
+
+        XRGrabInteractable xrGrabbable = GetComponent<XRGrabInteractable>();
+        if (xrGrabbable == null || !xrGrabbable.isSelected || xrGrabbable.interactionManager == null)
+            return;
+
+        List<IXRSelectInteractor> selectingInteractors = new List<IXRSelectInteractor>(
+            xrGrabbable.interactorsSelecting);
+
+        for (int i = selectingInteractors.Count - 1; i >= 0; i--)
+            xrGrabbable.interactionManager.SelectExit(selectingInteractors[i], xrGrabbable);
     }
 
     /// <summary>Re-read the current pose as the spot to return to.</summary>

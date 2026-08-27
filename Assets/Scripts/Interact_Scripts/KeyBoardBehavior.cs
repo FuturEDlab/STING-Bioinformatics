@@ -22,6 +22,11 @@ public class KeyBoardBehavior : MonoBehaviour
     void Start()
     {
         interactComp = GetComponent<Interact>();
+        if (interactComp != null)
+        {
+            interactComp.SetButtonInteractionEnabled(false);
+            interactComp.SetTouchInteractionEnabled(true);
+        }
     }
     
     public void Interact()

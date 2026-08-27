@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PatientController : MonoBehaviour
+public class PatientMaterialController : MonoBehaviour
 {
     [Header("Scene References")]
 
