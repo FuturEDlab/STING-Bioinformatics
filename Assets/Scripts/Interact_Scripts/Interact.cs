@@ -23,6 +23,8 @@ public class Interact : MonoBehaviour
     
     [Tooltip("Event triggered when this object is interacted with")]
     [SerializeField] private UnityEvent onInteract;
+    [Tooltip("Invoke the interaction when a player's hand touches this object's trigger collider.")]
+    [SerializeField] private bool touchToInteract;
     [SerializeField] private float MaxGlowDistance = 2f;
     [SerializeField] private int submeshGlowNumber = -1;
     
@@ -143,10 +145,14 @@ public class Interact : MonoBehaviour
         if (other.CompareTag("LeftHand"))
         {
             isLeftHandNear = true;
+            if (touchToInteract)
+                onInteract?.Invoke();
         }
         else if (other.CompareTag("RightHand"))
         {
             isRightHandNear = true;
+            if (touchToInteract)
+                onInteract?.Invoke();
         }
     }
 
