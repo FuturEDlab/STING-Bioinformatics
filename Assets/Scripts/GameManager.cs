@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 /// <summary>
@@ -51,7 +52,11 @@ public class GameManager : MonoBehaviour
     private Vector3 returnFacing;
     private bool hasReturnPoint;
     private bool trainingStarted;
+    private bool menuPausedWorld;
+    private float timeScaleBeforeMenu;
+    private bool audioPausedBeforeMenu;
     private LocomotionProvider[] locomotion;
+    private XRRayInteractor[] rayInteractors;
     private Coroutine move;
 
     /// <summary>True while any of the three panels is on screen.</summary>
@@ -100,6 +105,11 @@ public class GameManager : MonoBehaviour
             OpenMainMenu();
     }
 
+    private void OnDisable()
+    {
+        ResumeWorldFromMenu();
+    }
+
     /// <summary>
     /// Begin Training. Starts the scenario the first time and lets the player move; pressed
     /// again later it behaves like Continue, so a menu without a Continue button on it yet
@@ -128,10 +138,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ContinueTraining()
     {
+        ResumeWorldFromMenu();
+
         if (!hasReturnPoint)
         {
             HideAllPanels();
             SetMovementEnabled(true);
+            scenario?.Resume();
             return;
         }
 
@@ -155,6 +168,7 @@ public class GameManager : MonoBehaviour
 
         RememberWhereThePlayerIs();
         SetMovementEnabled(false);
+        scenario?.Pause();
         StartMove(menuFootPosition, menuFacing, showMenuOnArrival: true);
     }
 
@@ -240,9 +254,37 @@ public class GameManager : MonoBehaviour
             Rig.FadeFromBlack();
 
         if (!showMenuOnArrival)
+        {
             SetMovementEnabled(true);
+            scenario?.Resume();
+        }
+
+        if (showMenuOnArrival)
+            PauseWorldForMenu();
 
         move = null;
+    }
+
+    private void PauseWorldForMenu()
+    {
+        if (menuPausedWorld)
+            return;
+
+        timeScaleBeforeMenu = Time.timeScale;
+        audioPausedBeforeMenu = AudioListener.pause;
+        Time.timeScale = 0f;
+        AudioListener.pause = true;
+        menuPausedWorld = true;
+    }
+
+    private void ResumeWorldFromMenu()
+    {
+        if (!menuPausedWorld)
+            return;
+
+        Time.timeScale = timeScaleBeforeMenu;
+        AudioListener.pause = audioPausedBeforeMenu;
+        menuPausedWorld = false;
     }
 
     /// <summary>
@@ -320,6 +362,28 @@ public class GameManager : MonoBehaviour
         {
             if (locomotion[i] != null)
                 locomotion[i].enabled = on;
+        }
+
+        if (!on)
+        {
+            EnsureMenuRayInteractorsEnabled();
+        }
+    }
+
+    private void EnsureMenuRayInteractorsEnabled()
+    {
+        if (rayInteractors == null)
+        {
+            PlayerRig rig = Rig.XR;
+            rayInteractors = rig != null
+                ? rig.GetComponentsInChildren<XRRayInteractor>(true)
+                : System.Array.Empty<XRRayInteractor>();
+        }
+
+        for (int i = 0; i < rayInteractors.Length; i++)
+        {
+            if (rayInteractors[i] != null && rayInteractors[i].gameObject.activeInHierarchy)
+                rayInteractors[i].enabled = true;
         }
     }
 

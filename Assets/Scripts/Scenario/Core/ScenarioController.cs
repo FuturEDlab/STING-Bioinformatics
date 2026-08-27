@@ -21,6 +21,8 @@ public class ScenarioController : MonoBehaviour
     private int index;
     private IScenarioStep current;
     private bool stepCompletedLatch;
+    private bool isPaused;
+    private bool stepCompletionPending;
 
     /// <summary>Raised whenever a step is entered, with its index and data. Used by the debug HUD.</summary>
     public event System.Action<int, ScenarioStepData> StepEntered;
@@ -28,6 +30,7 @@ public class ScenarioController : MonoBehaviour
     public int CurrentIndex => index;
     public int StepCount => scenario != null && scenario.Steps != null ? scenario.Steps.Count : 0;
     public bool IsRunning => current != null;
+    public bool IsPaused => isPaused;
 
     public ScenarioStepData CurrentStep =>
         (scenario != null && scenario.Steps != null && index >= 0 && index < scenario.Steps.Count)
@@ -55,6 +58,8 @@ public class ScenarioController : MonoBehaviour
         // subscriptions are released before we start over.
         current?.Exit();
         current = null;
+        isPaused = false;
+        stepCompletionPending = false;
 
         // Re-read the Inspector bindings, then make sure no panel left visible in the
         // scene sits on top of the question we are about to ask.
@@ -66,6 +71,30 @@ public class ScenarioController : MonoBehaviour
 
         index = 0;
         EnterCurrent();
+    }
+
+    /// <summary>Pause progression without restarting or exiting the current step.</summary>
+    public void Pause()
+    {
+        if (!IsRunning)
+            return;
+
+        isPaused = true;
+    }
+
+    /// <summary>Resume progression from the current step.</summary>
+    public void Resume()
+    {
+        if (!isPaused)
+            return;
+
+        isPaused = false;
+
+        if (stepCompletionPending)
+        {
+            stepCompletionPending = false;
+            OnStepComplete();
+        }
     }
 
     /// <summary>
@@ -387,6 +416,13 @@ public class ScenarioController : MonoBehaviour
         // Guarantee a single completion per step entry.
         if (stepCompletedLatch)
             return;
+
+        if (isPaused)
+        {
+            stepCompletionPending = true;
+            return;
+        }
+
         stepCompletedLatch = true;
 
         current.Exit();
