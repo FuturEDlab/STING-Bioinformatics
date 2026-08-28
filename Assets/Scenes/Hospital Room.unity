@@ -7112,7 +7112,7 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: alert.override
-  trigger: 2
+  trigger: 4
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7137,7 +7137,7 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: dose.entered.5000
-  trigger: 2
+  trigger: 4
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7162,7 +7162,7 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: dose.corrected.500
-  trigger: 2
+  trigger: 4
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7187,7 +7187,7 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: contraindication.override
-  trigger: 2
+  trigger: 4
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}

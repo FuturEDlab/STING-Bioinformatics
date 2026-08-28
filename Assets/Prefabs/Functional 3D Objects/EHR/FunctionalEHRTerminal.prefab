@@ -663,10 +663,10 @@ MonoBehaviour:
     worldBeat: {fileID: 11400000, guid: 60fbe21d827af01af2a58247f4edf318, type: 2}
     whenWaitingFor: 
     state: Amoxicillin prescription
-  - label: S2 - prompt to enter the dose
-    worldBeat: {fileID: 0}
-    whenWaitingFor: dose.entered.5000
-    state: Amoxicillin prescription
+  - label: S2 - dose corrected, hold on 2.2b before the confirmation
+    worldBeat: {fileID: 11400000, guid: 84af9acd22dd4aa4a617db589260698a, type: 2}
+    whenWaitingFor: 
+    state: User corrects doseage
   - label: S2 - waiting on dose correction
     worldBeat: {fileID: 0}
     whenWaitingFor: dose.entered.5000

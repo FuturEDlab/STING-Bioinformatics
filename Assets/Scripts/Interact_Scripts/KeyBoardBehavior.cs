@@ -31,6 +31,13 @@ public class KeyBoardBehavior : MonoBehaviour
     
     public void Interact()
     {
+        // The terminal renderer is left empty in both hospital scenes, and this method is
+        // still wired to the keyboard's Interact event. Without this guard every hand that
+        // came near threw a NullReferenceException out of the UnityEvent, which stopped the
+        // listeners AFTER it — the ScenarioTarget gates — from ever running.
+        if (ehrTerminal == null)
+            return;
+
         rendMaterials = ehrTerminal.materials;
 
         Transform right = rightHand != null ? rightHand : Rig.RightHand;

@@ -12,8 +12,8 @@ using UnityEngine.Events;
 ///  * and it raises the task back to the scenario once satisfied.
 ///
 /// Put it on the scanner, the wristband, each medication bottle, and the EHR keyboard.
-/// How the player satisfies it is up to <see cref="Trigger"/>: grab it, click it, or scan
-/// it with the <see cref="ScannerTool"/>.
+/// How the player satisfies it is up to <see cref="Trigger"/>: grab it, click it, touch it
+/// with a hand, or scan it with the <see cref="ScannerTool"/>.
 /// </summary>
 public class ScenarioTarget : MonoBehaviour
 {
@@ -23,6 +23,10 @@ public class ScenarioTarget : MonoBehaviour
         [InspectorName("Grab / pick up")] Grab,
         [InspectorName("Click / press")] Click,
         [InspectorName("Script only (call Activate)")] Manual,
+
+        // Appended rather than slotted in next to Click: the enum is serialized by index, so
+        // inserting above would silently repoint every target already authored in a scene.
+        [InspectorName("Touch with a hand")] Touch,
     }
 
     [Header("Scenario wiring (both channels are shared assets)")]
@@ -38,6 +42,10 @@ public class ScenarioTarget : MonoBehaviour
     [Header("Behaviour")]
     [Tooltip("How the player completes it.")]
     [SerializeField] private TriggerMode trigger = TriggerMode.Scan;
+
+    [Tooltip("Touch only: how close a hand has to get to the object, in metres. 0.08 is a fingertip's reach past the collider — big enough to hit a keyboard key without having to push through it.")]
+    [Min(0.005f)]
+    [SerializeField] private float touchRadius = 0.08f;
 
     [Tooltip("Only allow the interaction while the scenario is actually asking for this task. Turn off for props that should always be usable.")]
     [SerializeField] private bool requireFocus = true;
@@ -176,6 +184,12 @@ public class ScenarioTarget : MonoBehaviour
 
     private void Update()
     {
+        if (trigger == TriggerMode.Touch)
+        {
+            CheckTouch();
+            return;
+        }
+
         if (trigger != TriggerMode.Grab || grab == null || !grab.Exists)
             return;
 
@@ -190,6 +204,39 @@ public class ScenarioTarget : MonoBehaviour
             Activate();
 
         wasHeld = held;
+    }
+
+    /// <summary>
+    /// Hand proximity rather than a trigger collider: a trigger needs a Rigidbody, matching
+    /// layers and a collider on the hand, and any one of the three being wrong fails
+    /// silently. Distance to the collider's bounds needs nothing set up at all and reads the
+    /// same on both rigs, because <see cref="Rig"/> hands the same two transforms back
+    /// whichever one is driving.
+    /// </summary>
+    private void CheckTouch()
+    {
+        if (!CanActivate)
+            return;
+
+        if (HandWithinReach(Rig.LeftHand) || HandWithinReach(Rig.RightHand))
+            Activate();
+    }
+
+    private bool HandWithinReach(Transform hand)
+    {
+        if (hand == null)
+            return false;
+
+        if (cachedCollider == null)
+            cachedCollider = GetComponentInChildren<Collider>();
+
+        // bounds, not Collider.ClosestPoint: the latter logs an error every frame on a
+        // non-convex mesh collider, which is what an imported keyboard or monitor arrives as.
+        Vector3 surface = cachedCollider != null
+            ? cachedCollider.bounds.ClosestPoint(hand.position)
+            : transform.position;
+
+        return (hand.position - surface).sqrMagnitude <= touchRadius * touchRadius;
     }
 
     private void SetFocused(bool on)

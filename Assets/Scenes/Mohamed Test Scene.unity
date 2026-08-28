@@ -425,6 +425,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: amoxicillin.scan
   trigger: 1
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -1036,6 +1037,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: wristband.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -1204,6 +1206,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: allopurinol.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -2286,6 +2289,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: methotrexate.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -3814,6 +3818,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: methotrexate.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -5116,6 +5121,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: wristband.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -5674,6 +5680,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: scanner.pickup
   trigger: 1
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -6874,8 +6881,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.051182, y: 0.017454512, z: 0.0022210833}
-  m_Center: {x: 0.0008950337, y: -0.0008794107, z: 0.0010840445}
+  m_Size: {x: 0.051182, y: 0.017454512, z: 0.010768406}
+  m_Center: {x: 0.0008950341, y: -0.0008794108, z: 0.005357714}
 --- !u!114 &1289959095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6970,7 +6977,8 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: alert.override
-  trigger: 2
+  trigger: 4
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -6995,7 +7003,8 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: dose.entered.5000
-  trigger: 2
+  trigger: 4
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7020,7 +7029,8 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: dose.corrected.500
-  trigger: 2
+  trigger: 4
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7045,7 +7055,8 @@ MonoBehaviour:
   taskChannel: {fileID: 11400000, guid: 6047d91a89a37b6bab42472f8bc8eb5b, type: 2}
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: contraindication.override
-  trigger: 2
+  trigger: 4
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -7589,6 +7600,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: allopurinol.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -9104,6 +9116,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: wristband.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
@@ -11176,6 +11189,7 @@ MonoBehaviour:
   focusChannel: {fileID: 11400000, guid: b37c63c4f02fd6de2022cd5ce7535aaf, type: 2}
   taskId: amoxicillin.scan
   trigger: 0
+  touchRadius: 0.08
   requireFocus: 1
   oneShot: 1
   scanPoint: {fileID: 0}
