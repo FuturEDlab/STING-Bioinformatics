@@ -11,8 +11,6 @@ using UnityEngine.UI;
 /// </summary>
 public class CaptionDisplay : MonoBehaviour
 {
-    private const string PrefsKey = "captions_enabled";
-
     [Tooltip("Object toggled on/off with the caption. Leave empty to use this GameObject.")]
     [SerializeField] private GameObject root;
 
@@ -25,48 +23,12 @@ public class CaptionDisplay : MonoBehaviour
     [Tooltip("Optional plate shown behind the fallback text so it stays readable against a bright wall. Hidden for blob captions, which carry their own background.")]
     [SerializeField] private GameObject textBackdrop;
 
-    /// <summary>
-    /// Player-facing captions toggle, persisted in PlayerPrefs (on by default). Wire a
-    /// settings toggle to <see cref="SetCaptionsEnabled"/>.
-    /// </summary>
-    public static bool CaptionsEnabled
-    {
-        get => PlayerPrefs.GetInt(PrefsKey, 1) == 1;
-        set => PlayerPrefs.SetInt(PrefsKey, value ? 1 : 0);
-    }
-
-    /// <summary>UnityEvent-friendly instance wrapper (Toggle.onValueChanged can bind it).</summary>
-    public void SetCaptionsEnabled(bool enabled)
-    {
-        CaptionsEnabled = enabled;
-        if (!enabled)
-            Hide();
-    }
-
     private GameObject Root => root != null ? root : gameObject;
-
-    private void OnEnable()
-    {
-        SettingsManager.OnSettingsLoaded += OnSettingsLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SettingsManager.OnSettingsLoaded -= OnSettingsLoaded;
-    }
 
     private void Awake()
     {
         ValidateRoot();
         Hide();
-    }
-
-    private void OnSettingsLoaded(SettingsData data)
-    {
-        if (data != null && !data.subtitles)
-        {
-            Hide();
-        }
     }
 
     /// <summary>
@@ -90,7 +52,7 @@ public class CaptionDisplay : MonoBehaviour
     /// <summary>Show the caption for one phrase: blob when available, text otherwise.</summary>
     public void Show(CaptionedClip phrase)
     {
-        if (!AreCaptionsEnabled() || phrase == null)
+        if (phrase == null)
         {
             Hide();
             return;
@@ -126,17 +88,6 @@ public class CaptionDisplay : MonoBehaviour
             textBackdrop.SetActive(showingText);
 
         Root.SetActive(true);
-    }
-
-    private bool AreCaptionsEnabled()
-    {
-        SettingsManager settingsManager = SettingsManager.Instance;
-        if (settingsManager != null && settingsManager.settingsData != null)
-        {
-            return settingsManager.settingsData.subtitles;
-        }
-
-        return CaptionsEnabled;
     }
 
     public void Hide()

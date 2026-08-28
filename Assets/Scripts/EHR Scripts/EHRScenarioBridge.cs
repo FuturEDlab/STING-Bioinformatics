@@ -32,6 +32,9 @@ public class EHRScenarioBridge : MonoBehaviour
         [Tooltip("A task id, e.g. wristband.scan. When the scenario starts waiting for it, the terminal switches to State. Use this for the screens that prompt the player to do something.")]
         public string whenWaitingFor;
 
+        [Tooltip("An EHR action, e.g. Confirm dosage change. When that button is pressed, the terminal switches to State before the action is sent to the scenario.")]
+        public string whenAction;
+
         [Tooltip("Step Name of the screen to switch to. Must match a Step Name on the sequence player exactly.")]
         public string state;
     }
@@ -211,6 +214,19 @@ public class EHRScenarioBridge : MonoBehaviour
         if (string.IsNullOrWhiteSpace(ehrAction))
             return;
 
+        for (int i = 0; i < screens.Count; i++)
+        {
+            ScreenCue cue = screens[i];
+            if (cue == null || string.IsNullOrWhiteSpace(cue.whenAction))
+                continue;
+
+            if (string.Equals(cue.whenAction.Trim(), ehrAction.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                ShowScreen(cue.state, $"action '{ehrAction}'");
+                break;
+            }
+        }
+
         for (int i = 0; i < actions.Count; i++)
         {
             ActionTask row = actions[i];
@@ -226,17 +242,22 @@ public class EHRScenarioBridge : MonoBehaviour
                 return;
             }
 
-            if (debugLogging)
-                Debug.Log($"[EHRScenarioBridge] '{ehrAction}' -> raising '{row.taskId}'.", this);
-
-            // Raised whatever the scenario happens to be doing: a Wait For Task step ignores
-            // an id it is not waiting for, so a press at the wrong moment costs nothing.
-            taskChannel.Raise(row.taskId);
+            RaiseTask(row.taskId, ehrAction);
             return;
         }
 
         if (debugLogging)
             Debug.Log($"[EHRScenarioBridge] '{ehrAction}' has no task mapped to it; nothing raised.", this);
+    }
+
+    private void RaiseTask(string taskId, string ehrAction)
+    {
+        if (debugLogging)
+            Debug.Log($"[EHRScenarioBridge] '{ehrAction}' -> raising '{taskId}'.", this);
+
+        // Raised whatever the scenario happens to be doing: a Wait For Task step ignores
+        // an id it is not waiting for, so a press at the wrong moment costs nothing.
+        taskChannel.Raise(taskId);
     }
 
     private void ShowScreen(string state, string because)

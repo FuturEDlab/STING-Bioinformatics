@@ -25,6 +25,7 @@ public class EHRSequencePlayerEditor : Editor
     private SerializedProperty stepsProp;
     private SerializedProperty autoStartOnEnableProp;
     private SerializedProperty loopSequenceProp;
+    private SerializedProperty scenarioDrivenProp;
     private SerializedProperty defaultAnimatorTriggerProp;
 
     private ReorderableList stepsList;
@@ -47,6 +48,9 @@ public class EHRSequencePlayerEditor : Editor
 
         loopSequenceProp =
             serializedObject.FindProperty("loopSequence");
+
+        scenarioDrivenProp =
+            serializedObject.FindProperty("scenarioDriven");
 
         defaultAnimatorTriggerProp =
             serializedObject.FindProperty("defaultAnimatorTrigger");
@@ -153,6 +157,13 @@ public class EHRSequencePlayerEditor : Editor
         EditorGUILayout.Space(10f);
 
         stepsList.DoLayoutList();
+
+        EditorGUILayout.Space(8f);
+        EditorGUILayout.LabelField("Scenario Control", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(
+            scenarioDrivenProp,
+            new GUIContent("Scenario Driven")
+        );
 
 
         serializedObject.ApplyModifiedProperties();

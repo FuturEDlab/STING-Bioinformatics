@@ -21,6 +21,10 @@ public class TeleportationActivator : MonoBehaviour
         if (teleportActivatorAction.action.WasReleasedThisFrame())
         {
             teleportInteractor.gameObject.SetActive(false);
+            if (rayInteractor != null)
+            {
+                rayInteractor.enabled = true;
+            }
         }
     }
 
@@ -41,4 +45,5 @@ public class TeleportationActivator : MonoBehaviour
         teleportInteractor.gameObject.SetActive(false);
         rayInteractor.enabled = true;
     }
+
 }
