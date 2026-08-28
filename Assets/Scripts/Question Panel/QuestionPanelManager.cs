@@ -76,6 +76,9 @@ public class QuestionPanelManager : MonoBehaviour
     [Tooltip("Optional. Raised when the player exits the panel, so a scenario step waiting on this channel can advance.")]
     public GameEvent panelClosedEvent;
 
+    [Tooltip("Optional GameManager used to return to the fresh Begin Training menu after the quiz exit button is pressed.")]
+    public GameManager gameManager;
+
     /// <summary>
     /// Raised when the player confirms an answer, with the answer index and whether it was
     /// correct. Lets a scenario step play its own per-answer narration without this class
@@ -234,6 +237,12 @@ public class QuestionPanelManager : MonoBehaviour
         QPExit.SetActive(false);
         QP.SetActive(false);
         RestoreHierarchyActive();
+
+        if (gameManager == null)
+            gameManager = FindFirstObjectByType<GameManager>();
+
+        if (gameManager != null)
+            gameManager.ReturnToMainMenuForRestart();
 
         if (panelClosedEvent != null)
             panelClosedEvent.Raise();

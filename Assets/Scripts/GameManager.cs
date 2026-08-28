@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     [Min(0f)]
     [SerializeField] private float blackHoldSeconds = 0.1f;
 
-    private Vector3 panelPosition = new Vector3(5.96999979f, 1.8f, -10.75f);
+    [SerializeField] private Vector3 panelPosition = new Vector3(5.96999979f, 1.8f, -10.75f);
     private Quaternion panelRotation = Quaternion.Euler(new Vector3(0, -40.66f, 0));
 
     private Vector3 menuFootPosition;
@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
         SetActive(settingsPanel, false);
         SetActive(controlsPanel, false);
+        HideAllQuestionPanels();
         SetupContinueTrainingButton();
 
         if (!menuDrivesTraining)
@@ -120,6 +121,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void BeginTraining()
     {
+        ResumeWorldFromMenu();
+
         if (trainingStarted)
         {
             ContinueTraining();
@@ -129,6 +132,7 @@ public class GameManager : MonoBehaviour
         trainingStarted = true;
 
         HideAllPanels();
+        HideAllQuestionPanels();
         SetTrainingButtonVisibility(continueVisible: false);
         SetMovementEnabled(true);
 
@@ -154,6 +158,28 @@ public class GameManager : MonoBehaviour
         }
 
         StartMove(returnFootPosition, returnFacing, showMenuOnArrival: false);
+    }
+
+    /// <summary>
+    /// Return from the quiz to the authored menu position with a fresh Begin Training button.
+    /// Pressing Begin after this starts the scenario again from its first step.
+    /// </summary>
+    public void ReturnToMainMenuForRestart()
+    {
+        if (move != null)
+        {
+            StopCoroutine(move);
+            move = null;
+        }
+
+        trainingStarted = false;
+        hasReturnPoint = false;
+        ResumeWorldFromMenu();
+        RespawnHeldObjects();
+        ResetEhrTerminals();
+        SetTrainingButtonVisibility(continueVisible: false);
+        SetMovementEnabled(false);
+        StartMove(menuFootPosition, menuFacing, showMenuOnArrival: true);
     }
 
     /// <summary>
@@ -217,10 +243,70 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ResetEhrTerminals()
+    {
+        EHRScenarioBridge[] bridges = FindObjectsByType<EHRScenarioBridge>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < bridges.Length; i++)
+        {
+            if (bridges[i] != null)
+                bridges[i].RestartSequence();
+        }
+    }
+
+    private void HideAllQuestionPanels()
+    {
+        QuestionPanelManager[] panels = FindObjectsByType<QuestionPanelManager>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < panels.Length; i++)
+        {
+            if (panels[i] != null)
+                panels[i].ClosePanel();
+        }
+    }
+
     public void ResetExperience()
     {
-        Debug.Log("Resetting Progress...");
-        //To do: reset progress
+        if (move != null)
+        {
+            StopCoroutine(move);
+            move = null;
+        }
+
+        ResumeWorldFromMenu();
+        ResetSceneState();
+        trainingStarted = false;
+        hasReturnPoint = false;
+        BeginTraining();
+    }
+
+    private void ResetSceneState()
+    {
+        RespawnToOrigin[] respawnableObjects = FindObjectsByType<RespawnToOrigin>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < respawnableObjects.Length; i++)
+        {
+            if (respawnableObjects[i] != null)
+                respawnableObjects[i].Respawn();
+        }
+
+        ScenarioTarget[] targets = FindObjectsByType<ScenarioTarget>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < targets.Length; i++)
+        {
+            if (targets[i] != null)
+                targets[i].ResetTarget();
+        }
+
+        ResetEhrTerminals();
     }
 
     // ------------------------------------------------------------------ moving the player

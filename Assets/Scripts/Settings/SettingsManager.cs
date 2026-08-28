@@ -26,6 +26,8 @@ public class SettingsManager : MonoBehaviour
     private const string SFXVolumeParam = "SFXVolume";
     public Slider subtitlesToggle;
     public Slider comfortVignetteSlider;
+    [SerializeField] private GameObject subtitles;
+    [SerializeField] private GameObject comfortVignette;
     private bool areSubtitlesActive; //Probably wont need this because pendingSettingsData.subtitles 
     //will be used to check if subtitles are active or not.
 
@@ -60,7 +62,6 @@ public class SettingsManager : MonoBehaviour
                 movementMode = "Teleport",
                 turningMode = "Snap",
                 subtitles = true,
-                textSize = "Medium",
                 comfortVignette = false
             };
 
@@ -135,12 +136,19 @@ public class SettingsManager : MonoBehaviour
         }
 
         ApplyAudioSettings(data);
+        ApplyComfortVignette(data.comfortVignette);
 
         /*ApplyMovementMode(data.movementMode);
         ApplyTurningMode(data.turningMode);
-        ApplySubtitles(data.subtitles);
-        ApplyComfortVignette(data.comfortVignette);
         */
+    }
+
+    private void ApplyComfortVignette(bool enabled)
+    {
+        if (comfortVignette != null)
+        {
+            comfortVignette.SetActive(enabled);
+        }
     }
 
     public void SetSpeechVolume(float value)
@@ -262,7 +270,6 @@ public class SettingsManager : MonoBehaviour
             movementMode = originalData.movementMode,
             turningMode = originalData.turningMode,
             subtitles = originalData.subtitles,
-            textSize = originalData.textSize,
             comfortVignette = originalData.comfortVignette
         };
 
@@ -280,7 +287,7 @@ public class SettingsManager : MonoBehaviour
 
             Debug.Log("Settings data has been saved to: " + path);
             Debug.Log("Saved settings JSON:\n" + json);
-            Debug.Log($"Values -> speechVolume: {settingsData.speechVolume}, sfxVolume: {settingsData.sfxVolume}, movementMode: {settingsData.movementMode}, turningMode: {settingsData.turningMode}, subtitles: {settingsData.subtitles}, textSize: {settingsData.textSize}, comfortVignette: {settingsData.comfortVignette}");
+            Debug.Log($"Values -> speechVolume: {settingsData.speechVolume}, sfxVolume: {settingsData.sfxVolume}, movementMode: {settingsData.movementMode}, turningMode: {settingsData.turningMode}, subtitles: {settingsData.subtitles}, comfortVignette: {settingsData.comfortVignette}");
         }
         catch (System.Exception ex)
         {
@@ -305,7 +312,7 @@ public class SettingsManager : MonoBehaviour
             LegacySettingsData legacyData = JsonUtility.FromJson<LegacySettingsData>(json);
             loadedData.speechVolume = legacyData.masterVolume;
         }
-        Debug.Log(loadedData.speechVolume + ", " + loadedData.sfxVolume + ", " + loadedData.movementMode + ", " + loadedData.turningMode + ", " + loadedData.subtitles + ", " + loadedData.textSize + ", " + loadedData.comfortVignette);
+        Debug.Log(loadedData.speechVolume + ", " + loadedData.sfxVolume + ", " + loadedData.movementMode + ", " + loadedData.turningMode + ", " + loadedData.subtitles + ", " + loadedData.comfortVignette);
         return loadedData;
     }
 

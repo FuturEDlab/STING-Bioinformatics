@@ -127,8 +127,8 @@ public class ScenarioDebugHUD : MonoBehaviour
         if (VrPressed(vrCompleteTaskButton))
             CompleteAwaitedTask();
 
-        if (VrPressed(vrSkipStepButton) && controller != null)
-            controller.SkipCurrentStep();
+        // if (VrPressed(vrSkipStepButton) && controller != null)
+        //     controller.SkipCurrentStep();
 
         if (VrPressed(vrSkipToGateButton) && controller != null)
             controller.SkipToNextGate();

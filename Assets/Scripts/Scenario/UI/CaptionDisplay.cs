@@ -45,10 +45,28 @@ public class CaptionDisplay : MonoBehaviour
 
     private GameObject Root => root != null ? root : gameObject;
 
+    private void OnEnable()
+    {
+        SettingsManager.OnSettingsLoaded += OnSettingsLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SettingsManager.OnSettingsLoaded -= OnSettingsLoaded;
+    }
+
     private void Awake()
     {
         ValidateRoot();
         Hide();
+    }
+
+    private void OnSettingsLoaded(SettingsData data)
+    {
+        if (data != null && !data.subtitles)
+        {
+            Hide();
+        }
     }
 
     /// <summary>
@@ -72,7 +90,7 @@ public class CaptionDisplay : MonoBehaviour
     /// <summary>Show the caption for one phrase: blob when available, text otherwise.</summary>
     public void Show(CaptionedClip phrase)
     {
-        if (!CaptionsEnabled || phrase == null)
+        if (!AreCaptionsEnabled() || phrase == null)
         {
             Hide();
             return;
@@ -108,6 +126,17 @@ public class CaptionDisplay : MonoBehaviour
             textBackdrop.SetActive(showingText);
 
         Root.SetActive(true);
+    }
+
+    private bool AreCaptionsEnabled()
+    {
+        SettingsManager settingsManager = SettingsManager.Instance;
+        if (settingsManager != null && settingsManager.settingsData != null)
+        {
+            return settingsManager.settingsData.subtitles;
+        }
+
+        return CaptionsEnabled;
     }
 
     public void Hide()

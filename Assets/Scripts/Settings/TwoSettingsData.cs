@@ -9,7 +9,6 @@ public class SettingsData {
     public string movementMode;
     public string turningMode;
     public bool subtitles;
-    public string textSize;
     public bool comfortVignette;
     public struct SaveSettingsData()
     {

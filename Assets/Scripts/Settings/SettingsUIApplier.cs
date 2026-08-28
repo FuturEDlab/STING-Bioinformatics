@@ -49,6 +49,7 @@ public class SettingsUIApplier : MonoBehaviour
     private void OnEnable()
     {
         SettingsManager.OnSettingsLoaded += ApplySettings;
+        RegisterToggleSliderListeners();
         ValidateReferences();
         ApplySavedSettings();
     }
@@ -56,6 +57,45 @@ public class SettingsUIApplier : MonoBehaviour
     private void OnDisable()
     {
         SettingsManager.OnSettingsLoaded -= ApplySettings;
+        UnregisterToggleSliderListeners();
+    }
+
+    private void RegisterToggleSliderListeners()
+    {
+        if (subtitlesSlider != null)
+        {
+            subtitlesSlider.onValueChanged.RemoveListener(OnSubtitlesSliderChanged);
+            subtitlesSlider.onValueChanged.AddListener(OnSubtitlesSliderChanged);
+        }
+
+        if (vignettingSlider != null)
+        {
+            vignettingSlider.onValueChanged.RemoveListener(OnVignettingSliderChanged);
+            vignettingSlider.onValueChanged.AddListener(OnVignettingSliderChanged);
+        }
+    }
+
+    private void UnregisterToggleSliderListeners()
+    {
+        if (subtitlesSlider != null)
+        {
+            subtitlesSlider.onValueChanged.RemoveListener(OnSubtitlesSliderChanged);
+        }
+
+        if (vignettingSlider != null)
+        {
+            vignettingSlider.onValueChanged.RemoveListener(OnVignettingSliderChanged);
+        }
+    }
+
+    private void OnSubtitlesSliderChanged(float value)
+    {
+        SettingsManager.Instance?.SetSubtitlesFromSlider(value);
+    }
+
+    private void OnVignettingSliderChanged(float value)
+    {
+        SettingsManager.Instance?.SetComfortVignetteFromSlider(value);
     }
 
     // Read saved settings and apply to UI
@@ -144,7 +184,7 @@ public class SettingsUIApplier : MonoBehaviour
 
         if (slider != null)
         {
-            slider.value = isOn ? 1 : 0;
+            slider.SetValueWithoutNotify(isOn ? 1 : 0);
         }
         else
         {

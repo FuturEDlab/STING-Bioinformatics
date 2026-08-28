@@ -970,7 +970,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 840, y: -292}
-  m_SizeDelta: {x: 1680, y: 110}
+  m_SizeDelta: {x: 1680, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8495244938035008987
 CanvasRenderer:
@@ -2452,6 +2452,7 @@ MonoBehaviour:
   majorSelectButtonSprites: {fileID: 4739246401875723175}
   questionBank: {fileID: 11400000, guid: 70c99c17e715a4e4f849faa7a5193a23, type: 2}
   skipUniversalQuestionInAssessment: 0
+  showSimulationQuestions: 0
   questionTMP: {fileID: 2140377500822852347}
   explanationImage: {fileID: 2533640355584383313}
   questionAudioButton: {fileID: 674177787594322100}
@@ -2476,6 +2477,7 @@ MonoBehaviour:
   openQuestionOnStartForTesting: 0
   vrAnchor: {fileID: 0}
   panelClosedEvent: {fileID: 0}
+  gameManager: {fileID: 0}
   summaryAnswerImages:
   - {fileID: 936944667459578968}
   - {fileID: 2047864562855310451}
@@ -2733,7 +2735,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 1000, y: -1227.755}
-  m_SizeDelta: {x: 1400, y: 371}
+  m_SizeDelta: {x: 1400, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1682895169173369900
 CanvasRenderer:
@@ -2789,7 +2791,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 371
+  m_PreferredHeight: 360
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -7073,7 +7075,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 840, y: -134}
-  m_SizeDelta: {x: 1680, y: 110}
+  m_SizeDelta: {x: 1680, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4392140620317073150
 CanvasRenderer:

@@ -20,8 +20,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 807ab2286130b44b9b0434cde5ea686e, type: 3}
     - {fileID: 21300000, guid: 6be7df84cf55743e4b7aa730c97dca50, type: 3}
     - {fileID: 21300000, guid: d0102ef5c298a4b438e1a6460978a2ef, type: 3}
-    explanationImageCorrect: {fileID: 21300000, guid: ed05665dd6a324f30b547c73e945503e, type: 3}
-    explanationImageIncorrect: {fileID: 21300000, guid: ea7a5933134754071ad962bad6209f81, type: 3}
+    explanationImageCorrect: {fileID: 21300000, guid: 57f88cd2fdaab4305986fdcd8826beef, type: 3}
+    explanationImageIncorrect: {fileID: 21300000, guid: 761b5f40f620743bd84c52072da2ba11, type: 3}
     explanationAudioCorrect: {fileID: 8300000, guid: a0a7de5633e794519aeccc02353a95f6, type: 3}
     explanationAudioIncorrect: {fileID: 8300000, guid: e36391b30c55546e89927015bca108dc, type: 3}
     answers:

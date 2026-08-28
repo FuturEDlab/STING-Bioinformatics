@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ToggleSwitch : MonoBehaviour
+public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
 {
     [Header("Slider Setup")]
     [SerializeField] private Slider _slider;
@@ -102,6 +102,11 @@ public class ToggleSwitch : MonoBehaviour
     public void ToggleFromHandle()
     {
         SetStateAndStartAnimation(!CurrentValue);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ToggleFromHandle();
     }
 
     public void ToggleByGroupManager(bool valueToSetTo)

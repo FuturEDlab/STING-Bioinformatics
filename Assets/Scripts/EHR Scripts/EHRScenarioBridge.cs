@@ -102,6 +102,13 @@ public class EHRScenarioBridge : MonoBehaviour
         Unsubscribe();
     }
 
+    /// <summary>Reset the terminal to its first authored sequence screen.</summary>
+    public void RestartSequence()
+    {
+        if (player != null)
+            player.StartSequence();
+    }
+
     private void Start()
     {
         if (reportWiringOnStart)
