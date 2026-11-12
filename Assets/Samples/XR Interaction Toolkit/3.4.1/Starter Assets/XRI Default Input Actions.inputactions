@@ -469,7 +469,7 @@
                 {
                     "name": "first",
                     "id": "afdcfbff-e241-4fdd-a6d1-23b0bf273360",
-                    "path": "<XRController>{LeftHand}/pointerRotation",
+                    "path": "<XRController>{LeftHand}/deviceRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -480,7 +480,7 @@
                 {
                     "name": "second",
                     "id": "ed03d944-4c09-4c38-8b68-5c844e18ca7c",
-                    "path": "<XRController>{LeftHand}/deviceRotation",
+                    "path": "<XRController>{LeftHand}/pointerRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1562,7 +1562,7 @@
                 {
                     "name": "first",
                     "id": "3722d501-eb80-4f61-9361-08a5ea7a1394",
-                    "path": "<XRController>{RightHand}/pointerRotation",
+                    "path": "<XRController>{RightHand}/deviceRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1573,7 +1573,7 @@
                 {
                     "name": "second",
                     "id": "2e6ad191-d5aa-4919-aac6-295c83387a72",
-                    "path": "<XRController>{RightHand}/deviceRotation",
+                    "path": "<XRController>{RightHand}/pointerRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
