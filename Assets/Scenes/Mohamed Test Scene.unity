@@ -12027,10 +12027,6 @@ PrefabInstance:
       propertyPath: 'm_StartingInteractionOverridesMap.Array.data[0].overrideGroupMembers.Array.data[0]'
       value: 
       objectReference: {fileID: 1243234562}
-    - target: {fileID: 1439349625194371728, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2103517023785700280, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -12125,10 +12121,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8741572385581099060, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9141852583685917692, guid: 5e738fe53315e4c408d350d3cb9ce14a, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
